@@ -7,7 +7,6 @@ import viewWatchURL from "app/watches/page.jsx";
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
-
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
@@ -35,8 +34,14 @@ function BasketPage() {
     total += parseInt(watch[3]);
   });
 
+  const postgresUrl = process.env.POSTGRES_URL;
+  console.log(postgresUrl);
+
   return (
     <main style={{ display: "contents" }}>
+      <div>
+      {/* Your page content here */}
+    </div>
       {basketItems.map((watch, index) => (
         <div className="grid-container" key={index}>
           <div>

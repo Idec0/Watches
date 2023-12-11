@@ -37,12 +37,13 @@ test to see if the app can prevent SQL injections
 
 
 Done Today:
-Saved the project to GitHub - ran into problrms which made it take longer
-Change style and layout on basket page
-tried to fix when you reload fav page it displays all watches
+Saved the project to GitHub - ran into problems which made it take longer but got it to work
+Changed the style and layout on basket page
+tried to fix the problem - when you reload fav page it displays all watches
 Added a database which i had to setup through vercel.com - ran into alot of problems trying to connect the database to next.js
-ran into problems installing packages - this took awhile to get working
+ran into problems installing packages - I spent a while trying to get working but couldnt get any packages which i wanted to install
 I created a database in vercel and it has a table called discounts, which iam going to use to allow users to apply discounts to thier basket
+npm i @vercel/postgres
 */
 
 const WatchesPage = () => {
