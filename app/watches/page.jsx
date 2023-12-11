@@ -19,10 +19,11 @@ function LoadPage() {
 if you're on the watches page and then click on favourites, you have to then manually refresh the page or else it goes into an infinite refresh loop
 - calculator refreshes the page automatically - causes problems on the view watch, favourites page.
 
+calculator is behind checkout on basket page
+
 can't get sales image to display, so for now i will use a url link
 
-opening the calc on favourite page resets to display all watches
-cant unfavourite watches on the favourites page
+cant unfavourite watches on the favourites page - due to page refreshing, which causes to display all
 when you heart a watch it refreshes the page so if your scrolling down you will be brought back up to the top
 
 refreshing viewWatch page removes everything
@@ -38,10 +39,11 @@ test to see if the app can prevent SQL injections
 Done Today:
 Saved the project to GitHub
 Change style and layout on basket page
+tried to fix when you reload fav page it displays all watches
 
 */
 
-function WatchesPage() {
+const WatchesPage = () => {
   const router = useRouter();
 
   // code to pass a varibale through links
@@ -288,10 +290,11 @@ function WatchesPage() {
 
   if (imgs.length === 0) {
     // If there are no watches in imgs, reset to display all watches
-    localStorage.setItem("loadLikedWatches", false);
+    console.log("imgs empty");
+    localStorage.setItem("loadLikedWatches", "false");
     showFav(false);
   } else if (imgs[0] === "showFav") {
-    localStorage.setItem("loadLikedWatches", true);
+    localStorage.setItem("loadLikedWatches", "true");
     showFav(true);
   }
 
@@ -302,12 +305,12 @@ function WatchesPage() {
         ? {}
         : { filter: "saturate(0%) hue-rotate(0deg)" };
     } else {
-      console.log(localStorage.getItem("loadLikedWatches"));
       return isRedArray[index]
         ? {}
         : { filter: "saturate(0%) hue-rotate(0deg)" };
     }
   };
+
 
   return (
     <main>

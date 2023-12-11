@@ -16,8 +16,6 @@ function LoadPage() {
 }
 
 function FavouritesPage() {
-  {
-  }
 }
 
 export default LoadPage;
