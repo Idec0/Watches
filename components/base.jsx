@@ -35,6 +35,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
           </div>
         </div>
         {appVisible && <App />}
+        {/* update */}
       </div>
     </>
   );
