@@ -36,7 +36,7 @@ test to see if the app can prevent SQL injections
 
 
 Done Today:
-Saved and hosted the project to GitHub
+Saved the project to GitHub
 Change style and layout on basket page
 
 */
