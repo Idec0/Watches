@@ -19,8 +19,6 @@ function LoadPage() {
 if you're on the watches page and then click on favourites, you have to then manually refresh the page or else it goes into an infinite refresh loop
 - calculator refreshes the page automatically - causes problems on the view watch, favourites page.
 
-move the project to GitHub !!!
-
 can't get sales image to display, so for now i will use a url link
 
 opening the calc on favourite page resets to display all watches
@@ -38,11 +36,9 @@ test to see if the app can prevent SQL injections
 
 
 Done Today:
-Ability to add watches to your cart
-Watches display on the basket page
-Ability to remove the watches added in your basket
-Added css gridlayout which took most of the time, since i had to research websites to see the best way to lay it out and also how to use gridlayout 
-Added a total to basket
+Saved and hosted the project to GitHub
+Change style and layout on basket page
+
 */
 
 function WatchesPage() {
@@ -201,7 +197,8 @@ function WatchesPage() {
   const newURL = () => {
     // Construct the new query parameter with the updated variable
     const newQueryParams = new URLSearchParams(window.location.search);
-    newQueryParams.set("imgs", imgs.join(","));
+
+    newQueryParams.set("imgs", imgs.join(","))
 
     // Replace the current URL with the new query parameters
     const newURL = `${window.location.pathname}?${newQueryParams.toString()}`;

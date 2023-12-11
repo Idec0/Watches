@@ -39,7 +39,7 @@ function BasketPage() {
     <main style={{ display: "contents" }}>
       {basketItems.map((watch, index) => (
         <div className="grid-container" key={index}>
-          <div style={{ display: "block" }}>
+          <div>
             <img
               className="item1 displayWatch"
               src={watch[4]}
@@ -67,9 +67,9 @@ function BasketPage() {
           </div>
           {index === 0 && (
             <div className="item3">
-              <p>Buy Area</p>
               <p>Total: £{total}</p>
-              <p>Apply Discount Code ( DropDown ˅ ^)</p>
+              <input type="text" id="discountInput" placeholder="Apply Discount Code:" style={{textAlign: "center", color: "black"}}/>
+              
               <button style={{ color: "black" }}>Proceed to Checkout</button>
             </div>
           )}
