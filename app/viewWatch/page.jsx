@@ -30,7 +30,7 @@ function ViewWatchPage() {
       let img = variable ? variable.split(",") : [];
       // end of code to pass a varibale through links
     }
-  }
+  }, []);
 
   let storedBasketWatches = localStorage.getItem("Basket");
 
