@@ -49,17 +49,20 @@ npm i @vercel/postgres
 const WatchesPage = () => {
   const router = useRouter();
 
-  // code to pass a varibale through links
+  if (typeof window !== 'undefined') {
+  // Code that uses window
+    // code to pass a varibale through links
 
-  // Access the search part of the URL, e.g., '?param1,param2,param3'
-  const search = window.location.search;
-
-  // Extract the variable from the search
-  const variable = new URLSearchParams(search).get("imgs");
-
-  // Parse the variable back into an array
-  let imgs = variable ? variable.split(",") : [];
-  // end of code to pass a varibale through links
+    // Access the search part of the URL, e.g., '?param1,param2,param3'
+    const search = window.location.search;
+  
+    // Extract the variable from the search
+    const variable = new URLSearchParams(search).get("imgs");
+  
+    // Parse the variable back into an array
+    let imgs = variable ? variable.split(",") : [];
+    // end of code to pass a varibale through links
+  }
 
   const [val, setVal] = useState("");
 
