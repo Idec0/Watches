@@ -17,6 +17,7 @@ function LoadPage() {
 
 function ViewWatchPage() {
   // used to stop window error messages
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       // code to pass a varibale through links
 
@@ -29,6 +30,7 @@ function ViewWatchPage() {
       let img = variable ? variable.split(",") : [];
       // end of code to pass a varibale through links
     }
+  }
 
   let storedBasketWatches = localStorage.getItem("Basket");
 
