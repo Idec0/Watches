@@ -207,7 +207,10 @@ const WatchesPage = () => {
 
     // Replace the current URL with the new query parameters
     const newURL = `${window.location.pathname}?${newQueryParams.toString()}`;
-    window.history.replaceState(null, "", newURL);
+    // used to stop window error messages
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, "", newURL);
+    }
 
     router.push("/watches"); // sets url to watches so variables aren't shown on the url
 
@@ -225,7 +228,11 @@ const WatchesPage = () => {
 
     // Replace the current URL with the new query parameters
     const newURL = `${window.location.pathname}?${newQueryParams.toString()}`;
-    window.history.replaceState(null, "", newURL);
+    // used to stop window error messages
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, "", newURL);
+    }
+    
 
     router.push("/viewWatch"); // sets url to viewwatch so variables aren't shown on the url
 
