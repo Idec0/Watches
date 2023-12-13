@@ -16,19 +16,13 @@ function LoadPage() {
 }
 
 function ViewWatchPage() {
-  // used to stop window error messages
+  const [img, setImg] = useState([]); // Move img to a state variable
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // code to pass a varibale through links
-
-      // Access the search part of the URL, e.g., '?param1,param2,param3'
       const search = window.location.search;
-    
-      // Extract the variable from the search
       const variable = new URLSearchParams(search).get("watch");
-      // Parse the variable back into an array
-      let img = variable ? variable.split(",") : [];
-      // end of code to pass a varibale through links
+      setImg(variable ? variable.split(",") : []); // Update the state variable
     }
   }, []);
 
