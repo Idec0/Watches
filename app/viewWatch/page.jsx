@@ -16,16 +16,19 @@ function LoadPage() {
 }
 
 function ViewWatchPage() {
-  // code to pass a varibale through links
+  // used to stop window error messages
+    if (typeof window !== 'undefined') {
+      // code to pass a varibale through links
 
-  // Access the search part of the URL, e.g., '?param1,param2,param3'
-  const search = window.location.search;
-
-  // Extract the variable from the search
-  const variable = new URLSearchParams(search).get("watch");
-  // Parse the variable back into an array
-  let img = variable ? variable.split(",") : [];
-  // end of code to pass a varibale through links
+      // Access the search part of the URL, e.g., '?param1,param2,param3'
+      const search = window.location.search;
+    
+      // Extract the variable from the search
+      const variable = new URLSearchParams(search).get("watch");
+      // Parse the variable back into an array
+      let img = variable ? variable.split(",") : [];
+      // end of code to pass a varibale through links
+    }
 
   let storedBasketWatches = localStorage.getItem("Basket");
 
