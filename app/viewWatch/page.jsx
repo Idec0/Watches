@@ -18,8 +18,6 @@ function LoadPage() {
 function ViewWatchPage() {
   const [img, setImg] = useState([]); // Move img to a state variable
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
       const search = window.location.search;
       const variable = new URLSearchParams(search).get("watch");
       setImg(variable ? variable.split(",") : []); // Update the state variable
