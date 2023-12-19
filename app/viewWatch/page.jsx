@@ -16,7 +16,9 @@ function LoadPage() {
 
 function ViewWatchPage() {
   const [img, setImg] = useState([]);
-  const search = window.location.search;
+  if (typeof window !== "undefined") {
+    const search = window.location.search;
+  }
   const variable = new URLSearchParams(search).get("watch");
 
   useEffect(() => {    
