@@ -16,10 +16,10 @@ function LoadPage() {
 
 function ViewWatchPage() {
   const [img, setImg] = useState([]);
+  const search = window.location.search;
+  const variable = new URLSearchParams(search).get("watch");
 
-  useEffect(() => {
-    const search = window.location.search;
-    const variable = new URLSearchParams(search).get("watch");
+  useEffect(() => {    
     setImg(variable ? variable.split(",") : []);
   }, []);
 
