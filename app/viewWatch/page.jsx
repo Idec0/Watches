@@ -25,8 +25,8 @@ function ViewWatchPage() {
   }
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setImg(variable ? variable.split(",") : []);
+    if (variable) {
+      setImg(variable.split(","));
     }
   }, [variable]);
 
