@@ -47,7 +47,7 @@ npm i @vercel/postgres
 
 const WatchesPage = () => {
   const router = useRouter();
-  
+
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
   // code to pass a varibale through links
@@ -72,7 +72,7 @@ const WatchesPage = () => {
 
   useEffect(() => {
     // Check if window is defined before accessing localStorage
-    if (typeof window !== "undefined") {
+    if (isClient) {
       const storedIsRedArray = localStorage.getItem("isRedArray");
       const storedLikedWatches = localStorage.getItem("likedWatches");
 
@@ -221,9 +221,8 @@ const WatchesPage = () => {
     // used to stop window error messages
     if (typeof window !== 'undefined') {
       window.history.replaceState(null, "", newURL);
+      router.push("/watches"); // sets url to watches so variables aren't shown on the url
     }
-
-    router.push("/watches"); // sets url to watches so variables aren't shown on the url
 
     // reload page
     //window.location.reload();
@@ -242,10 +241,9 @@ const WatchesPage = () => {
     // used to stop window error messages
     if (typeof window !== 'undefined') {
       window.history.replaceState(null, "", newURL);
+      router.push("/viewWatch"); // sets url to viewwatch so variables aren't shown on the url
     }
-    
-
-    router.push("/viewWatch"); // sets url to viewwatch so variables aren't shown on the url
+        
 
     // reload page
     //window.location.reload();
@@ -260,11 +258,15 @@ const WatchesPage = () => {
     }
   };
 
-  if (reload === true) {
-    console.log("reload");
-    setReload(false);
-    filterImage();
-  }
+  useEffect(() => {
+    if (reload) {
+      console.log("reload");
+      setReload(false);
+      filterImage();
+      newURL();
+    }
+  }, [reload]);
+  
 
   const showFav = (loadFav) => {
     console.log("isRedArray:", isRedArray);
