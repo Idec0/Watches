@@ -36,7 +36,9 @@ function BasketPage() {
 
   let total = 0;
   let basketItems = [];
-  basketItems = JSON.parse(localStorage.getItem("Basket")) || [];
+  if (typeof window !== 'undefined') {
+    basketItems = JSON.parse(localStorage.getItem("Basket")) || [];
+  }
   
 
   basketItems.forEach((watch) => {
