@@ -18,10 +18,12 @@ function LoadPage() {
 function ViewWatchPage() {
   const [img, setImg] = useState([]); // Move img to a state variable
 
-      const search = window.location.search;
-      const variable = new URLSearchParams(search).get("watch");
-      setImg(variable ? variable.split(",") : []); // Update the state variable
-    }
+  const search = window.location.search;
+  const variable = new URLSearchParams(search).get("watch");
+
+  useEffect(() => {
+    // Use useEffect to set the state once when the component mounts
+    setImg(variable ? variable.split(",") : []);
   }, []);
 
   let storedBasketWatches = localStorage.getItem("Basket");
