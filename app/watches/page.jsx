@@ -47,17 +47,19 @@ npm i @vercel/postgres
 
 const WatchesPage = () => {
   const router = useRouter();
+  
+  const isClient = typeof window !== 'undefined'; // Check if window is defined
 
   // code to pass a varibale through links
 
   // Access the search part of the URL, e.g., '?param1,param2,param3'
-  const search = window.location.search;
+  const search = isClient ? window.location.search : '';
 
-  // Extract the variable from the search
-  const variable = new URLSearchParams(search).get("imgs");
+   // Extract the variable from the search
+   const variable = isClient ? new URLSearchParams(search).get('imgs') : '';
 
-  // Parse the variable back into an array
-  let imgs = variable ? variable.split(",") : [];
+   // Parse the variable back into an array
+   let imgs = variable ? variable.split(',') : [];
   // end of code to pass a varibale through links
 
 
