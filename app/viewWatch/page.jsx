@@ -25,7 +25,6 @@ function ViewWatchPage() {
   }
 
   useEffect(() => {
-    // Now 'variable' is accessible in the useEffect block
     if (typeof window !== "undefined") {
       setImg(variable ? variable.split(",") : []);
     }
