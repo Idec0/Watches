@@ -45,7 +45,6 @@ I created a database in vercel and it has a table called discounts, which iam go
 npm i @vercel/postgres
 */
 
-
 const WatchesPage = () => {
   const router = useRouter();
 
