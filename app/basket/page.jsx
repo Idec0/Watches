@@ -29,11 +29,15 @@ const Bin = (watch) => {
 };
 
 function BasketPage() {
+  if (typeof window === 'undefined') {
+    // Return null or a loading message when running on the server side
+    return <p>Loading...</p>;
+  }
+
   let total = 0;
   let basketItems = [];
-  if (typeof window !== 'undefined') {
-    basketItems = JSON.parse(localStorage.getItem("Basket")) || [];
-  }
+  basketItems = JSON.parse(localStorage.getItem("Basket")) || [];
+  
 
   basketItems.forEach((watch) => {
     total += parseInt(watch[3]);
