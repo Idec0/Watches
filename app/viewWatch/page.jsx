@@ -16,13 +16,13 @@ function LoadPage() {
 
 function ViewWatchPage() {
   const [img, setImg] = useState([]);
-  if (typeof window !== "undefined") {
-    const search = window.location.search;
-  }
-  const variable = new URLSearchParams(search).get("watch");
 
-  useEffect(() => {    
-    setImg(variable ? variable.split(",") : []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const search = window.location.search;
+      const variable = new URLSearchParams(search).get("watch");
+      setImg(variable ? variable.split(",") : []);
+    }
   }, []);
 
   const AddToBasket = (watchPos) => {
