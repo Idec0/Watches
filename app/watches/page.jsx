@@ -10,7 +10,9 @@ function LoadPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-      {<WatchesPage />}
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <WatchesPage />
+      </React.Suspense>
     </main>
   );
 }
