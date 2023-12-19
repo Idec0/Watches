@@ -2,3 +2,8 @@
 const nextConfig = {}
 
 module.exports = nextConfig
+
+// next.config.js
+module.exports = {
+    // Your configuration options go here
+  }
