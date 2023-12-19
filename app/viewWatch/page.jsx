@@ -30,21 +30,22 @@ function ViewWatchPage() {
 
   const AddToBasket = (watchPos) => {
     let basketList = [];
+    if (typeof window !== 'undefined'){
+      const storedBasket = localStorage.getItem("Basket");
 
-    const storedBasket = localStorage.getItem("Basket");
+      // Parse the stored string as JSON
+      basketList = JSON.parse(storedBasket) || [];
 
-    // Parse the stored string as JSON
-    basketList = JSON.parse(storedBasket) || [];
+      if (!basketList.some((subarray) => subarray.includes(watchPos[2]))) {
+        basketList.push(watchPos);
+      }
 
-    if (!basketList.some((subarray) => subarray.includes(watchPos[2]))) {
-      basketList.push(watchPos);
-    }
+      // Save the updated array back to localStorage
+      localStorage.setItem("Basket", JSON.stringify(basketList));
 
-    // Save the updated array back to localStorage
-    localStorage.setItem("Basket", JSON.stringify(basketList));
-
-    localStorage.setItem("Basket", JSON.stringify(basketList));
-    console.log(localStorage.getItem("Basket"));
+      localStorage.setItem("Basket", JSON.stringify(basketList));
+      console.log(localStorage.getItem("Basket"));
+    }    
   };
 
   console.log(img);
