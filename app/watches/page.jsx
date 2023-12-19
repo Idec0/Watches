@@ -35,7 +35,6 @@ ability to add sales / discounts
 
 test to see if the app can prevent SQL injections
 
-
 Done Today:
 Saved the project to GitHub - ran into problems which made it take longer but got it to work
 Changed the style and layout on basket page
