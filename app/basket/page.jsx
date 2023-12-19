@@ -17,7 +17,9 @@ function LoadPage() {
 
 const Bin = (watch) => {
   let basketList = [];
-  const storedBasket = localStorage.getItem("Basket");
+  if (typeof window !== 'undefined') {
+    const storedBasket = localStorage.getItem("Basket");
+  }  
   basketList = JSON.parse(storedBasket) || [];
   const watchToRemove = basketList.find((subarray) =>
     subarray.includes(watch[2])
