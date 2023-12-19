@@ -28,7 +28,7 @@ function ViewWatchPage() {
     if (typeof window !== "undefined") {
       setImg(variable ? variable.split(",") : []);
     }
-  }, []);
+  }, [variable]);
 
   const AddToBasket = (watchPos) => {
     if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
