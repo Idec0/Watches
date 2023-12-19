@@ -30,7 +30,9 @@ const Bin = (watch) => {
 
 function BasketPage() {
   let total = 0;
+  if (typeof window !== 'undefined') {
   const basketItems = JSON.parse(localStorage.getItem("Basket")) || [];
+  }
 
   basketItems.forEach((watch) => {
     total += parseInt(watch[3]);
