@@ -31,7 +31,7 @@ function ViewWatchPage() {
   }, []);
 
   const AddToBasket = (watchPos) => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
       let basketList = [];
       const storedBasket = localStorage.getItem("Basket");
 
