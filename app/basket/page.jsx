@@ -19,19 +19,20 @@ const Bin = (watch) => {
   let basketList = [];
   if (typeof window !== 'undefined') {
     const storedBasket = localStorage.getItem("Basket");
-  }  
-  basketList = JSON.parse(storedBasket) || [];
-  const watchToRemove = basketList.find((subarray) =>
-    subarray.includes(watch[2])
-  );
-  basketList = basketList.filter((item) => item !== watchToRemove);
-  localStorage.setItem("Basket", JSON.stringify(basketList));
+    basketList = JSON.parse(storedBasket) || [];
+    const watchToRemove = basketList.find((subarray) =>
+      subarray.includes(watch[2])
+    );
+    basketList = basketList.filter((item) => item !== watchToRemove);
+    localStorage.setItem("Basket", JSON.stringify(basketList));
+  }
 };
 
 function BasketPage() {
   let total = 0;
+  let basketItems = [];
   if (typeof window !== 'undefined') {
-  const basketItems = JSON.parse(localStorage.getItem("Basket")) || [];
+    basketItems = JSON.parse(localStorage.getItem("Basket")) || [];
   }
 
   basketItems.forEach((watch) => {
@@ -40,6 +41,7 @@ function BasketPage() {
 
   const postgresUrl = process.env.POSTGRES_URL;
   console.log(postgresUrl);
+
 
   return (
     <main style={{ display: "contents" }}>
