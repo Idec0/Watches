@@ -1,7 +1,4 @@
-"use client";
-
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
 
 function LoadPage() {
@@ -10,50 +7,39 @@ function LoadPage() {
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-      {<ViewWatchPage />}
+      <ViewWatchPage />
     </main>
   );
 }
 
 function ViewWatchPage() {
-  const [img, setImg] = useState([]); // Move img to a state variable
-
-  const search = window.location.search;
-  const variable = new URLSearchParams(search).get("watch");
+  const [img, setImg] = useState([]);
 
   useEffect(() => {
-    // Use useEffect to set the state once when the component mounts
+    const search = window.location.search;
+    const variable = new URLSearchParams(search).get("watch");
     setImg(variable ? variable.split(",") : []);
   }, []);
 
-  //if (typeof window !== 'undefined'){
-    //let storedBasketWatches = localStorage.getItem("Basket");
-  //}  
-
   const AddToBasket = (watchPos) => {
-    let basketList = [];
-    if (typeof window !== 'undefined'){
+    if (typeof window !== "undefined") {
+      let basketList = [];
       const storedBasket = localStorage.getItem("Basket");
 
-      // Parse the stored string as JSON
       basketList = JSON.parse(storedBasket) || [];
 
       if (!basketList.some((subarray) => subarray.includes(watchPos[2]))) {
         basketList.push(watchPos);
       }
 
-      // Save the updated array back to localStorage
-      localStorage.setItem("Basket", JSON.stringify(basketList));
-
       localStorage.setItem("Basket", JSON.stringify(basketList));
       console.log(localStorage.getItem("Basket"));
-    }    
+    }
   };
 
-  console.log(img);
   return (
     <main>
-      <img className="displayWatch" src={img[4]}></img>
+      <img className="displayWatch" src={img[4]} alt="Watch"></img>
       <div className="flex flex-col items-center justify-between">
         <h1>
           <u>
