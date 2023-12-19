@@ -26,7 +26,9 @@ function ViewWatchPage() {
     setImg(variable ? variable.split(",") : []);
   }, []);
 
-  let storedBasketWatches = localStorage.getItem("Basket");
+  //if (typeof window !== 'undefined'){
+    //let storedBasketWatches = localStorage.getItem("Basket");
+  //}  
 
   const AddToBasket = (watchPos) => {
     let basketList = [];
