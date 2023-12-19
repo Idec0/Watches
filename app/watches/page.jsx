@@ -65,18 +65,19 @@ const WatchesPage = () => {
 
   const [reload, setReload] = useState(true);
 
-  const [likedWatches, setLikedWatches] = useState(() => {
-    // Try to get the likedWatches array from localStorage, or default to an empty array
-    if (typeof window !== 'undefined'){
+  const [isRedArray, setIsRedArray] = useState([]);
+  const [likedWatches, setLikedWatches] = useState([]);
+
+  useEffect(() => {
+    // Check if window is defined before accessing localStorage
+    if (typeof window !== "undefined") {
+      const storedIsRedArray = localStorage.getItem("isRedArray");
       const storedLikedWatches = localStorage.getItem("likedWatches");
-      try {
-        return storedLikedWatches ? JSON.parse(storedLikedWatches) : [];
-      } catch (error) {
-        console.log("Error parsing JSON from localStorage:", error);
-        return [];
-      }
+
+      setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
+      setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
     }
-  });
+  }, []);
   
 
   const brands = {
@@ -156,46 +157,48 @@ const WatchesPage = () => {
 
   const [filteredData, setFilteredData] = useState(data); // State variable for filtered options
 
-  const [isRedArray, setIsRedArray] = useState(() => {
-    // Try to get the count from localStorage, or default to an array of false values
-    if (typeof window !== 'undefined'){
-      const storedValue = localStorage.getItem("isRedArray");
-      try {
-        return storedValue
-          ? JSON.parse(storedValue)
-          : new Array(imgs.length).fill(false);
-      } catch (error) {
-        console.error("Error parsing JSON from localStorage:", error);
-        return new Array(imgs.length).fill(false);
-      }
-    }
-  });
+  // const [isRedArray, setIsRedArray] = useState(() => {
+  //   // Try to get the count from localStorage, or default to an array of false values
+  //   if (typeof window !== 'undefined'){
+  //     const storedValue = localStorage.getItem("isRedArray");
+  //     try {
+  //       return storedValue
+  //         ? JSON.parse(storedValue)
+  //         : new Array(imgs.length).fill(false);
+  //     } catch (error) {
+  //       console.error("Error parsing JSON from localStorage:", error);
+  //       return new Array(imgs.length).fill(false);
+  //     }
+  //   }
+  // });
   
 
   const toggleColor = (index) => {
-    console.log(index);
-    const updatedIsRedArray = [...isRedArray];
-    updatedIsRedArray[index] = !updatedIsRedArray[index];
+    if (typeof window !== "undefined") {
+      console.log(index);
+      const updatedIsRedArray = [...isRedArray];
+      updatedIsRedArray[index] = !updatedIsRedArray[index];
 
-    let updatedLikedWatches;
-    let watchPosition = imagePositionMap[imgs[index]][0];
-    console.log(updatedIsRedArray[index]);
-    if (updatedIsRedArray[index]) {
-      console.log(watchPosition);
-      // If the watch is being liked, add its original index to likedWatches
-      updatedLikedWatches = [...likedWatches, watchPosition];
-    } else {
-      // If the watch is being unliked, remove its original index from likedWatches
-      updatedLikedWatches = likedWatches.filter(
-        (watchIndex) => watchIndex !== watchPosition
-      );
+      let updatedLikedWatches;
+      let watchPosition = imagePositionMap[imgs[index]][0];
+      console.log(updatedIsRedArray[index]);
+      if (updatedIsRedArray[index]) {
+        console.log(watchPosition);
+        // If the watch is being liked, add its original index to likedWatches
+        updatedLikedWatches = [...likedWatches, watchPosition];
+      } else {
+        // If the watch is being unliked, remove its original index from likedWatches
+        updatedLikedWatches = likedWatches.filter(
+          (watchIndex) => watchIndex !== watchPosition
+        );
+      }
+
+      setLikedWatches(updatedLikedWatches);
+      localStorage.setItem("likedWatches", JSON.stringify(updatedLikedWatches));
+
+      setIsRedArray(updatedIsRedArray);
+      console.log(isRedArray[likedWatches[index]]);
     }
-
-    setLikedWatches(updatedLikedWatches);
-    localStorage.setItem("likedWatches", JSON.stringify(updatedLikedWatches));
-
-    setIsRedArray(updatedIsRedArray);
-    console.log(isRedArray[likedWatches[index]]);
   };
 
   const filterImage = () => {
