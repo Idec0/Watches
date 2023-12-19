@@ -50,25 +50,19 @@ npm i @vercel/postgres
 const WatchesPage = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    const isClient = typeof window !== 'undefined';
+  const isClient = typeof window !== 'undefined'; // Check if window is defined
 
-    if (isClient) {
-      // code to pass a varibale through links
+  // code to pass a varibale through links
 
-      // Access the search part of the URL, e.g., '?param1,param2,param3'
-      const search = isClient ? window.location.search : '';
+  // Access the search part of the URL, e.g., '?param1,param2,param3'
+  const search = isClient ? window.location.search : '';
 
-      // Extract the variable from the search
-      const variable = isClient ? new URLSearchParams(search).get('imgs') : '';
+   // Extract the variable from the search
+   const variable = isClient ? new URLSearchParams(search).get('imgs') : '';
 
-      // Parse the variable back into an array
-      let imgs = variable ? variable.split(',') : [];
-    // end of code to pass a varibale through links
-      
-    }
-  }, []);
-
+   // Parse the variable back into an array
+   let imgs = variable ? variable.split(',') : [];
+  // end of code to pass a varibale through links
 
 
   const [val, setVal] = useState("");
