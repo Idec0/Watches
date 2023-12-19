@@ -60,20 +60,24 @@ const WatchesPage = () => {
   let imgs = variable ? variable.split(",") : [];
   // end of code to pass a varibale through links
 
+
   const [val, setVal] = useState("");
 
   const [reload, setReload] = useState(true);
 
   const [likedWatches, setLikedWatches] = useState(() => {
     // Try to get the likedWatches array from localStorage, or default to an empty array
-    const storedLikedWatches = localStorage.getItem("likedWatches");
-    try {
-      return storedLikedWatches ? JSON.parse(storedLikedWatches) : [];
-    } catch (error) {
-      console.log("Error parsing JSON from localStorage:", error);
-      return [];
+    if (typeof window !== 'undefined'){
+      const storedLikedWatches = localStorage.getItem("likedWatches");
+      try {
+        return storedLikedWatches ? JSON.parse(storedLikedWatches) : [];
+      } catch (error) {
+        console.log("Error parsing JSON from localStorage:", error);
+        return [];
+      }
     }
   });
+  
 
   const brands = {
     boss: [
@@ -154,16 +158,19 @@ const WatchesPage = () => {
 
   const [isRedArray, setIsRedArray] = useState(() => {
     // Try to get the count from localStorage, or default to an array of false values
-    const storedValue = localStorage.getItem("isRedArray");
-    try {
-      return storedValue
-        ? JSON.parse(storedValue)
-        : new Array(imgs.length).fill(false);
-    } catch (error) {
-      console.error("Error parsing JSON from localStorage:", error);
-      return new Array(imgs.length).fill(false);
+    if (typeof window !== 'undefined'){
+      const storedValue = localStorage.getItem("isRedArray");
+      try {
+        return storedValue
+          ? JSON.parse(storedValue)
+          : new Array(imgs.length).fill(false);
+      } catch (error) {
+        console.error("Error parsing JSON from localStorage:", error);
+        return new Array(imgs.length).fill(false);
+      }
     }
   });
+  
 
   const toggleColor = (index) => {
     console.log(index);
@@ -319,6 +326,7 @@ const WatchesPage = () => {
         : { filter: "saturate(0%) hue-rotate(0deg)" };
     }
   };
+  
 
 
   return (
