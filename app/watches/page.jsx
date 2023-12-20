@@ -4,6 +4,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(()=>import("components/base.jsx"), {ssr:false});
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
