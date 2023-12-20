@@ -71,16 +71,18 @@ const WatchesPage = () => {
   const [likedWatches, setLikedWatches] = useState([]);
 
   // Wrap code that relies on client-side features in a check for window
-  if (typeof window !== 'undefined') {
+  
     useEffect(() => {
-      const storedIsRedArray = localStorage.getItem("isRedArray");
-      const storedLikedWatches = localStorage.getItem("likedWatches");
+      const isClient = typeof window !== 'undefined';
+      if (isClient) {
+        const storedIsRedArray = localStorage.getItem("isRedArray");
+        const storedLikedWatches = localStorage.getItem("likedWatches");
 
-      setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
-      setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
+        setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
+        setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
+      }
     }, []);
-  }
-
+  
   
 
   const brands = {
