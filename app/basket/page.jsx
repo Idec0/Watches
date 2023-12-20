@@ -50,12 +50,12 @@ function BasketPage() {
       const storedBasket = localStorage.getItem("Basket");
       const parsedBasket = JSON.parse(storedBasket) || [];
       setBasketItems(parsedBasket);
-
+  
       let calculatedTotal = 0;
       parsedBasket.forEach((watch) => {
         calculatedTotal += parseInt(watch[3]);
       });
-
+  
       setTotal(calculatedTotal);
     }
   }, []);
