@@ -175,7 +175,7 @@ const WatchesPage = () => {
   
 
   const toggleColor = (index) => {
-    if (typeof window !== "undefined") {
+    if (isClient) {
       console.log(index);
       const updatedIsRedArray = [...isRedArray];
       updatedIsRedArray[index] = !updatedIsRedArray[index];
