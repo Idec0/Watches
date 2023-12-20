@@ -6,7 +6,7 @@ import viewWatchURL from "app/watches/page.jsx";
 import dynamic from 'next/dynamic';
 
 function LoadPage() {
-  const [appVisible, setAppVisible] = useState(typeof window !== "undefined" ? localStorage.appVisible : false);
+  const [appVisible, setAppVisible] = useState(false);
 
   const BasketPageNoSSR = dynamic(() => import('basket/page.jsx'), {
     ssr: false,
@@ -42,8 +42,8 @@ const Bin = (watch) => {
 };
 
 function BasketPage() {
-  const [total, setTotal] = useState(typeof window !== "undefined" ? localStorage.total : 0);
-  const [basketItems, setBasketItems] = useState([typeof window !== "undefined" ? localStorage.basketItems : null]);
+  const [total, setTotal] = useState(0);
+  const [basketItems, setBasketItems] = useState([]);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
