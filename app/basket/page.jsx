@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
 
-  const BasketPageNoSSR = dynamic(() => import('basket\page.jsx'), {
+  const BasketPageNoSSR = dynamic(() => import('basket/page.jsx'), {
     ssr: false,
   });
 
