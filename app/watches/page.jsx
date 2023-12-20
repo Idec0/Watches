@@ -77,11 +77,9 @@ const WatchesPage = () => {
       if (isClient) {
         const storedIsRedArray = localStorage.getItem("isRedArray");
         const storedLikedWatches = localStorage.getItem("likedWatches");
-        const storedLoadLikedWatches = localStorage.getItem("loadLikedWatches");
 
         setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
         setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
-        setLikedWatches(storedLoadLikedWatches ? JSON.parse(storedLoadLikedWatches) : "false");
       }
     }, []);
   
