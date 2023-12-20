@@ -314,15 +314,16 @@ const WatchesPage = () => {
   }, [isRedArray]);
 
   //const [loadLikedWatches, setLoadLikedWatches] = useState(false);
-
-  if (imgs.length === 0) {
-    // If there are no watches in imgs, reset to display all watches
-    console.log("imgs empty");
-    localStorage.setItem("loadLikedWatches", "false");
-    showFav(false);
-  } else if (imgs[0] === "showFav") {
-    localStorage.setItem("loadLikedWatches", "true");
-    showFav(true);
+  if (typeof window !== 'undefined') {
+    if (imgs.length === 0) {
+      // If there are no watches in imgs, reset to display all watches
+      console.log("imgs empty");
+      localStorage.setItem("loadLikedWatches", "false");
+      showFav(false);
+    } else if (imgs[0] === "showFav") {
+      localStorage.setItem("loadLikedWatches", "true");
+      showFav(true);
+    }
   }
 
   const getImgStyle = (index) => {
