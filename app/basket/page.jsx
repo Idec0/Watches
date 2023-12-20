@@ -43,7 +43,7 @@ const Bin = (watch) => {
 
 function BasketPage() {
   const [total, setTotal] = useState(0);
-  const [basketItems, setBasketItems] = useState([]);
+  const [basketItems, setBasketItems] = useState([null]);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
