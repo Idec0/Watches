@@ -9,10 +9,8 @@ function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <React.Suspense fallback={<div>Loading...</div>}>
-        <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-        <WatchesPage />
-      </React.Suspense>
+      <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
+      <WatchesPage />
     </main>
   );
 }
@@ -73,7 +71,6 @@ const WatchesPage = () => {
   const [likedWatches, setLikedWatches] = useState([]);
 
   useEffect(() => {
-    // Check if window is defined before accessing localStorage
     if (isClient) {
       const storedIsRedArray = localStorage.getItem("isRedArray");
       const storedLikedWatches = localStorage.getItem("likedWatches");
@@ -81,7 +78,7 @@ const WatchesPage = () => {
       setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
       setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
     }
-  }, []);
+  }, [isClient]);
   
 
   const brands = {
@@ -183,25 +180,26 @@ const WatchesPage = () => {
       const updatedIsRedArray = [...isRedArray];
       updatedIsRedArray[index] = !updatedIsRedArray[index];
 
-      let updatedLikedWatches;
-      let watchPosition = imagePositionMap[imgs[index]][0];
-      console.log(updatedIsRedArray[index]);
-      if (updatedIsRedArray[index]) {
-        console.log(watchPosition);
-        // If the watch is being liked, add its original index to likedWatches
-        updatedLikedWatches = [...likedWatches, watchPosition];
-      } else {
-        // If the watch is being unliked, remove its original index from likedWatches
-        updatedLikedWatches = likedWatches.filter(
-          (watchIndex) => watchIndex !== watchPosition
-        );
-      }
+      requestAnimationFrame(() => {
+        let updatedLikedWatches;
+        let watchPosition = imagePositionMap[imgs[index]][0];
+        console.log(updatedIsRedArray[index]);
+        if (updatedIsRedArray[index]) {
+          console.log(watchPosition);
+          // If the watch is being liked, add its original index to likedWatches
+          updatedLikedWatches = [...likedWatches, watchPosition];
+        } else {
+          // If the watch is being unliked, remove its original index from likedWatches
+          updatedLikedWatches = likedWatches.filter(
+            (watchIndex) => watchIndex !== watchPosition
+          );
+        }
+        setLikedWatches(updatedLikedWatches);
+        localStorage.setItem("likedWatches", JSON.stringify(updatedLikedWatches));
 
-      setLikedWatches(updatedLikedWatches);
-      localStorage.setItem("likedWatches", JSON.stringify(updatedLikedWatches));
-
-      setIsRedArray(updatedIsRedArray);
-      console.log(isRedArray[likedWatches[index]]);
+        setIsRedArray(updatedIsRedArray);
+        console.log(isRedArray[likedWatches[index]]);
+      });
     }
   };
 

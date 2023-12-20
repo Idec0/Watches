@@ -1,59 +1,60 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
 import viewWatchURL from "app/watches/page.jsx";
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
+
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-      {<BasketPage />}
+      <BasketPage />
     </main>
   );
 }
 
 const Bin = (watch) => {
-  let basketList = [];
   if (typeof window !== 'undefined') {
+    let basketList = [];
     const storedBasket = localStorage.getItem("Basket");
     basketList = JSON.parse(storedBasket) || [];
-    const watchToRemove = basketList.find((subarray) =>
+    const watchToRemoveIndex = basketList.findIndex((subarray) =>
       subarray.includes(watch[2])
     );
-    basketList = basketList.filter((item) => item !== watchToRemove);
-    localStorage.setItem("Basket", JSON.stringify(basketList));
+    if (watchToRemoveIndex !== -1) {
+      basketList.splice(watchToRemoveIndex, 1);
+      localStorage.setItem("Basket", JSON.stringify(basketList));
+    }
   }
 };
 
 function BasketPage() {
-  if (typeof window === 'undefined') {
-    // Return null or a loading message when running on the server side
-    return <p>Loading...</p>;
-  }
+  const [total, setTotal] = useState(0);
+  const [basketItems, setBasketItems] = useState([]);
 
-  let total = 0;
-  let basketItems = [];
-  if (typeof window !== 'undefined') {
-    basketItems = JSON.parse(localStorage.getItem("Basket")) || [];
-  }
-  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedBasket = localStorage.getItem("Basket");
+      const parsedBasket = JSON.parse(storedBasket) || [];
+      setBasketItems(parsedBasket);
 
-  basketItems.forEach((watch) => {
-    total += parseInt(watch[3]);
-  });
+      let calculatedTotal = 0;
+      parsedBasket.forEach((watch) => {
+        calculatedTotal += parseInt(watch[3]);
+      });
+
+      setTotal(calculatedTotal);
+    }
+  }, []);
 
   const postgresUrl = process.env.POSTGRES_URL;
   console.log(postgresUrl);
 
-
   return (
     <main style={{ display: "contents" }}>
-      <div>
-      {/* Your page content here */}
-    </div>
+      <div>{/* Your page content here */}</div>
       {basketItems.map((watch, index) => (
         <div className="grid-container" key={index}>
           <div>
@@ -85,8 +86,7 @@ function BasketPage() {
           {index === 0 && (
             <div className="item3">
               <p>Total: £{total}</p>
-              <input type="text" id="discountInput" placeholder="Apply Discount Code:" style={{textAlign: "center", color: "black"}}/>
-              
+              <input type="text" id="discountInput" placeholder="Apply Discount Code:" style={{ textAlign: "center", color: "black" }} />
               <button style={{ color: "black" }}>Proceed to Checkout</button>
             </div>
           )}
