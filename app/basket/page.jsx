@@ -27,7 +27,7 @@ import React, { useEffect, useState } from "react";
 import viewWatchURL from "app/watches/page.jsx";
 
 const Bin = (watch) => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined' && window.localStorage) {
     let basketList = [];
     const storedBasket = localStorage.getItem("Basket");
     basketList = JSON.parse(storedBasket) || [];
@@ -46,7 +46,7 @@ function BasketPage() {
   const [basketItems, setBasketItems] = useState([]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && window.localStorage) {
       const storedBasket = localStorage.getItem("Basket");
       const parsedBasket = JSON.parse(storedBasket) || [];
       setBasketItems(parsedBasket);
