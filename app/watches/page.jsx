@@ -4,9 +4,6 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
-
-const Editor = dynamic(()=>import("components/base.jsx"), {ssr:false});
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
@@ -80,9 +77,11 @@ const WatchesPage = () => {
       if (isClient) {
         const storedIsRedArray = localStorage.getItem("isRedArray");
         const storedLikedWatches = localStorage.getItem("likedWatches");
+        const storedLoadLikedWatches = localStorage.getItem("loadLikedWatches");
 
         setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
         setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
+        setLikedWatches(storedLoadLikedWatches ? JSON.parse(storedLoadLikedWatches) : "false");
       }
     }, []);
   
@@ -316,7 +315,7 @@ const WatchesPage = () => {
     console.log("isRedArray updated:", isRedArray);
   }, [isRedArray]);
 
-  const [loadLikedWatches, setLoadLikedWatches] = useState(false);
+  //const [loadLikedWatches, setLoadLikedWatches] = useState(false);
 
   if (imgs.length === 0) {
     // If there are no watches in imgs, reset to display all watches
