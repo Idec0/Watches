@@ -3,14 +3,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
 import viewWatchURL from "app/watches/page.jsx";
-import dynamic from 'next/dynamic';
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
-
-  const BasketPageNoSSR = dynamic(() => import('basket/page.jsx'), {
-    ssr: false,
-  });
 
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">

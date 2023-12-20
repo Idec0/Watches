@@ -21,8 +21,8 @@
 
 body {
   background-color: var(--light);
-  color: rgb(var(--foreground-rgb));
-
+  color: rgb(var(--background-end-rgb));
+  
   /*
   background: linear-gradient(
       to bottom,
@@ -112,7 +112,7 @@ button:hover {
   background-color: var(--dark);
 }
 input {
-  color: red;
+  color: rgb(0, 0, 0);
 }
 
 .centerHeader {
