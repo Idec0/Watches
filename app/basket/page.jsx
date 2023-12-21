@@ -3,10 +3,20 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
 import viewWatchURL from "app/watches/page.jsx";
+import { queryDatabase } from 'app/db.js';
 
-function LoadPage() {
+// get data from database
+export async function getStaticProps() {
+  const data = await queryDatabase();
+  return {
+    props: { data },
+    revalidate: 60, // In seconds, adjust as needed
+  };
+}
+
+export default function LoadPage({ data }) {
   const [appVisible, setAppVisible] = useState(false);
-
+  console.log(data);
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
@@ -96,4 +106,4 @@ function BasketPage() {
   );
 }
 
-export default LoadPage;
+//export default LoadPage;
