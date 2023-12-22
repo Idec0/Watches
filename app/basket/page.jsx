@@ -3,20 +3,37 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
 import viewWatchURL from "app/watches/page.jsx";
-import { queryDatabase } from 'app/db.js';
 
-// get data from database
-export async function getStaticProps() {
-  const data = await queryDatabase();
-  return {
-    props: { data },
-    revalidate: 60, // In seconds, adjust as needed
-  };
-}
-
-export default function LoadPage({ data }) {
+function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
-  console.log(data);
+
+  // data from database
+  const [data, setData] = useState(null);
+
+  const path = require('path');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("a");
+        const response = await fetch('api/data.js');
+        console.log("b");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        console.log("c");
+        const result = await response.json();
+        console.log("d");
+        setData(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(JSON.stringify(data, null, 2));
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
@@ -58,9 +75,6 @@ function BasketPage() {
       setTotal(calculatedTotal);
     }
   }, []);
-
-  const postgresUrl = process.env.POSTGRES_URL;
-  console.log(postgresUrl);
 
   return (
     <main style={{ display: "contents" }}>
@@ -106,4 +120,4 @@ function BasketPage() {
   );
 }
 
-//export default LoadPage;
+export default LoadPage;

@@ -37,6 +37,8 @@ test to see if the app can prevent SQL injections
 
 Done Today:
 Website has been build and deployed on vercel
+database is connected to the website, so now i can recieve data from the database
+added security to prevent SQL injections in db.js 
 */
 
 const WatchesPage = () => {
