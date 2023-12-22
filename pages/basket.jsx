@@ -4,7 +4,6 @@ import 'styles/globals.css';
 import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
 import viewWatchURL from "pages/watches.jsx";
-//import { outputs } from "app/api/db.js";
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
@@ -49,6 +48,7 @@ const Bin = (watch) => {
       basketList.splice(watchToRemoveIndex, 1);
       localStorage.setItem("Basket", JSON.stringify(basketList));
     }
+    window.location.reload();
   }
 };
 

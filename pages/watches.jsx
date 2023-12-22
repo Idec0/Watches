@@ -265,7 +265,6 @@ const WatchesPage = () => {
   const showFav = (loadFav) => {
     console.log("isRedArray:", isRedArray);
     if (likedWatches.length > 0 && loadFav === true) {
-      console.log("asd");
       // If there are liked watches, update the imgs array and filteredData
       const likedWatchImages = likedWatches.map(
         (index) => imgList.flat()[index]
@@ -336,7 +335,7 @@ const WatchesPage = () => {
           : { filter: "saturate(0%) hue-rotate(0deg)" };
       }
     } else {
-      // Handle the case where localStorage is not available
+      // Handles the case where localStorage is not available
       return {};
     }
   };
