@@ -1,7 +1,7 @@
 "use client";
 
 import 'styles/globals.css';
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
 import { useRouter } from "next/navigation";
@@ -202,47 +202,46 @@ const WatchesPage = () => {
     imgs = filteredData
       .map((brand) => brands[brand.toLowerCase()].map((watch) => watch[0]))
       .flat();
+    console.log(imgs);
     newURL();
   };
 
   const newURL = () => {
     // Construct the new query parameter with the updated variable
     const newQueryParams = new URLSearchParams(window.location.search);
-
+    console.log(imgs);
     newQueryParams.set("imgs", imgs.join(","))
 
     // Replace the current URL with the new query parameters
     const newURL = `${window.location.pathname}?${newQueryParams.toString()}`;
     // used to stop window error messages
-    if (typeof window !== 'undefined') {
+    if (isClient) {
       window.history.replaceState(null, "", newURL);
-      router.push("/watches"); // sets url to watches so variables aren't shown on the url
+      //router.push("/watches");
     }
 
     // reload page
     //window.location.reload();
   };
 
-   const viewWatchURL = useCallback(
-    (index) => {
-      let dataToAdd = [];
-      dataToAdd.push(imagePositionMap[index]);
-      dataToAdd.push(imgList[imagePositionMap[index][0]]);
-
-      // Construct the new query parameter with the updated variable
-      const newQueryParams = new URLSearchParams(window.location.search);
-      newQueryParams.set("watch", dataToAdd.join(","));
-
-      // Replace the current URL with the new query parameters
-      const newURL = `${window.location.pathname}?${newQueryParams.toString()}`;
-      // used to stop window error messages
-      if (isClient) {
-        window.history.replaceState(null, "", newURL);
-        router.push("/viewWatch");
-      }
-    },
-   [imagePositionMap, imgList, router, isClient]
-  );
+  const viewWatchURL = (index) => {
+    let dataToAdd = [];
+    dataToAdd.push(imagePositionMap[index]);
+    dataToAdd.push(imgList[imagePositionMap[index][0]]);
+  
+    // Construct the new query parameter with the updated variable
+    const newQueryParams = new URLSearchParams();
+    newQueryParams.set("watch", dataToAdd.join(","));
+  
+    // Used to stop window error messages
+    if (isClient) {
+      // Use router.push to navigate to the "/viewWatches" page with the new query parameters
+      router.push({
+        pathname: "/viewWatch",
+        query: { watch: dataToAdd.join(",") }
+      });
+    }
+  };
 
   const checkKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -311,7 +310,6 @@ const WatchesPage = () => {
         localStorage.setItem("loadLikedWatches", "false");
         showFav(false);
       } else if (imgs[0] === "showFav") {
-        console.log("ggg");
         // Set the loadingFavorites state to true before calling showFav(true)
         setLoadingFavorites(true);
         localStorage.setItem("loadLikedWatches", "true");
