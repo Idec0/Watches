@@ -1,8 +1,6 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
-//export const outputs = "asd";
-
 dotenv.config();
 
 const pool = new Pool({
