@@ -1,8 +1,9 @@
 "use client";
+import 'styles/globals.css';
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
-import salesImage from "app/salesImage.jpg";
+import salesImage from "pages/salesImage.jpg";
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);

@@ -1,29 +1,24 @@
 "use client";
 
+import 'styles/globals.css';
 import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
-import viewWatchURL from "app/watches/page.jsx";
+import viewWatchURL from "pages/watches.jsx";
+//import { outputs } from "app/api/db.js";
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
 
-  // data from database
   const [data, setData] = useState(null);
-
-  const path = require('path');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("a");
-        const response = await fetch('api/data.js');
-        console.log("b");
+        const response = await fetch('/api/db.js?discountCode=DISCOUNT123');
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        console.log("c");
         const result = await response.json();
-        console.log("d");
         setData(result);
       } catch (error) {
         console.error('Error fetching data:', error);

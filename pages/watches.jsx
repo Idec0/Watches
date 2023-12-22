@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
+import 'styles/globals.css';
+import React, { useEffect, useCallback } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
 import { useRouter } from "next/navigation";
@@ -37,12 +38,18 @@ test to see if the app can prevent SQL injections
 
 Done Today:
 Website has been build and deployed on vercel
-database is connected to the website, so now i can recieve data from the database
+database is connected to the website, so now i can recieve data from the database - cant yet
 added security to prevent SQL injections in db.js 
 */
 
 const WatchesPage = () => {
   const router = useRouter();
+
+  const [val, setVal] = useState("");
+  const [reload, setReload] = useState(true);
+  const [isRedArray, setIsRedArray] = useState([]);
+  const [likedWatches, setLikedWatches] = useState([]);
+  const [filteredData, setFilteredData] = useState(data); // State variable for filtered options
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
@@ -58,27 +65,17 @@ const WatchesPage = () => {
    let imgs = variable ? variable.split(',') : [];
   // end of code to pass a varibale through links
 
-
-  const [val, setVal] = useState("");
-
-  const [reload, setReload] = useState(true);
-
-  const [isRedArray, setIsRedArray] = useState([]);
-  const [likedWatches, setLikedWatches] = useState([]);
-
   // Wrap code that relies on client-side features in a check for window
   
-    useEffect(() => {
-      const isClient = typeof window !== 'undefined';
-      if (isClient) {
-        const storedIsRedArray = localStorage.getItem("isRedArray");
-        const storedLikedWatches = localStorage.getItem("likedWatches");
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedIsRedArray = localStorage.getItem("isRedArray");
+      const storedLikedWatches = localStorage.getItem("likedWatches");
 
-        setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
-        setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
-      }
-    }, []);
-  
+      setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
+      setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
+    }
+  }, []);
   
 
   const brands = {
@@ -156,7 +153,10 @@ const WatchesPage = () => {
     });
   }
 
-  const [filteredData, setFilteredData] = useState(data); // State variable for filtered options
+  // If imgs is empty, set it to the default list
+  if (imgs.length === 0) {
+    imgs = imgList.flat(); // Assuming imgList is defined somewhere in your component
+  }
 
   // const [isRedArray, setIsRedArray] = useState(() => {
   //   // Try to get the count from localStorage, or default to an array of false values
@@ -175,31 +175,24 @@ const WatchesPage = () => {
   
 
   const toggleColor = (index) => {
-    if (isClient) {
-      console.log(index);
+    if (typeof window !== 'undefined') {
       const updatedIsRedArray = [...isRedArray];
       updatedIsRedArray[index] = !updatedIsRedArray[index];
 
-      requestAnimationFrame(() => {
-        let updatedLikedWatches;
-        let watchPosition = imagePositionMap[imgs[index]][0];
-        console.log(updatedIsRedArray[index]);
-        if (updatedIsRedArray[index]) {
-          console.log(watchPosition);
-          // If the watch is being liked, add its original index to likedWatches
-          updatedLikedWatches = [...likedWatches, watchPosition];
-        } else {
-          // If the watch is being unliked, remove its original index from likedWatches
-          updatedLikedWatches = likedWatches.filter(
-            (watchIndex) => watchIndex !== watchPosition
-          );
-        }
-        setLikedWatches(updatedLikedWatches);
-        localStorage.setItem("likedWatches", JSON.stringify(updatedLikedWatches));
+      let updatedLikedWatches;
+      let watchPosition = imagePositionMap[imgs[index]][0];
 
-        setIsRedArray(updatedIsRedArray);
-        console.log(isRedArray[likedWatches[index]]);
-      });
+      if (updatedIsRedArray[index]) {
+        updatedLikedWatches = [...likedWatches, watchPosition];
+      } else {
+        updatedLikedWatches = likedWatches.filter(
+          (watchIndex) => watchIndex !== watchPosition
+        );
+      }
+
+      setLikedWatches(updatedLikedWatches);
+      localStorage.setItem("likedWatches", JSON.stringify(updatedLikedWatches));
+      setIsRedArray(updatedIsRedArray);
     }
   };
 
@@ -228,26 +221,26 @@ const WatchesPage = () => {
     //window.location.reload();
   };
 
-  const viewWatchURL = (index) => {
-    let dataToAdd = [];
-    dataToAdd.push(imagePositionMap[index]);
-    dataToAdd.push(imgList[imagePositionMap[index][0]]);
-    // Construct the new query parameter with the updated variable
-    const newQueryParams = new URLSearchParams(window.location.search);
-    newQueryParams.set("watch", dataToAdd.join(","));
+   const viewWatchURL = useCallback(
+    (index) => {
+      let dataToAdd = [];
+      dataToAdd.push(imagePositionMap[index]);
+      dataToAdd.push(imgList[imagePositionMap[index][0]]);
 
-    // Replace the current URL with the new query parameters
-    const newURL = `${window.location.pathname}?${newQueryParams.toString()}`;
-    // used to stop window error messages
-    if (typeof window !== 'undefined') {
-      window.history.replaceState(null, "", newURL);
-      router.push("/viewWatch"); // sets url to viewwatch so variables aren't shown on the url
-    }
-        
+      // Construct the new query parameter with the updated variable
+      const newQueryParams = new URLSearchParams(window.location.search);
+      newQueryParams.set("watch", dataToAdd.join(","));
 
-    // reload page
-    //window.location.reload();
-  };
+      // Replace the current URL with the new query parameters
+      const newURL = `${window.location.pathname}?${newQueryParams.toString()}`;
+      // used to stop window error messages
+      if (isClient) {
+        window.history.replaceState(null, "", newURL);
+        router.push("/viewWatch");
+      }
+    },
+   [imagePositionMap, imgList, router, isClient]
+  );
 
   const checkKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -260,12 +253,12 @@ const WatchesPage = () => {
 
   useEffect(() => {
     if (reload) {
-      console.log("reload");
+      console.log("Reload");
       setReload(false);
       filterImage();
       newURL();
     }
-  }, [reload]);
+  }, [reload, filterImage, newURL]);
   
 
   const showFav = (loadFav) => {
@@ -301,15 +294,12 @@ const WatchesPage = () => {
   };
 
   useEffect(() => {
-    console.log("imgs array:", imgs);
     // Initially display all watches
     setFilteredData(data);
     // Save to localStorage whenever isRedArray changes
     localStorage.setItem("isRedArray", JSON.stringify(isRedArray));
-    console.log("isRedArray updated:", isRedArray);
   }, [isRedArray]);
 
-  //const [loadLikedWatches, setLoadLikedWatches] = useState(false);
   if (typeof window !== 'undefined') {
     if (imgs.length === 0) {
       // If there are no watches in imgs, reset to display all watches
@@ -323,15 +313,20 @@ const WatchesPage = () => {
   }
 
   const getImgStyle = (index) => {
-    if (localStorage.getItem("loadLikedWatches") === "true") {
-      console.log(localStorage.getItem("loadLikedWatches"));
-      return isRedArray[likedWatches[index]]
-        ? {}
-        : { filter: "saturate(0%) hue-rotate(0deg)" };
+    if (typeof window !== 'undefined' && localStorage) {
+      if (localStorage.getItem("loadLikedWatches") === "true") {
+        console.log(localStorage.getItem("loadLikedWatches"));
+        return isRedArray[likedWatches[index]]
+          ? {}
+          : { filter: "saturate(0%) hue-rotate(0deg)" };
+      } else {
+        return isRedArray[index]
+          ? {}
+          : { filter: "saturate(0%) hue-rotate(0deg)" };
+      }
     } else {
-      return isRedArray[index]
-        ? {}
-        : { filter: "saturate(0%) hue-rotate(0deg)" };
+      // Handle the case where localStorage is not available
+      return {};
     }
   };
   
