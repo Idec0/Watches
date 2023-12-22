@@ -4,6 +4,7 @@ import 'styles/globals.css';
 import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
 import viewWatchURL from "pages/watches.jsx";
+import { queryDatabase } from 'pages/api/db';
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
@@ -11,9 +12,11 @@ function LoadPage() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
+    const discountCode = 'DISCOUNT123';
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/db.js?discountCode=DISCOUNT123');
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(discountCode)}`);
+        console.log(response);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -23,11 +26,12 @@ function LoadPage() {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
   }, []);
 
   console.log(JSON.stringify(data, null, 2));
+
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
@@ -53,6 +57,18 @@ const Bin = (watch) => {
 };
 
 function BasketPage() {
+  // Fetch discounts based on discount code
+  const discountCode = 'DISCOUNT123'; // Replace with the actual discount code
+  queryDatabase(discountCode)
+    .then((discounts) => {
+      // Use the discounts data as needed
+      console.log(discounts);
+    })
+    .catch((error) => {
+      console.error('Error fetching discounts:', error);
+    });
+
+
   const [total, setTotal] = useState(0);
   const [basketItems, setBasketItems] = useState([]);
 

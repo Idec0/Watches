@@ -11,14 +11,14 @@ const pool = new Pool({
   port: process.env.POSTGRES_PORT,
 });
 
-// export async function queryDatabase(discountCode) {
-//   try {
-//     const client = await pool.connect();
-//     const result = await client.query('SELECT * FROM discounts WHERE Discount_code = $1', [discountCode]);
-//     client.release();
-//     return result.rows;
-//   } catch (error) {
-//     console.error('Error querying the database:', error);
-//     throw error;
-//   }
-// }
+export async function queryDatabase(discountCode) {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM discounts WHERE Discount_code = $1', [discountCode]);
+    client.release();
+    return result.rows;
+  } catch (error) {
+    console.error('Error querying the database:', error);
+    throw error;
+  }
+}

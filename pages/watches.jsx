@@ -17,29 +17,24 @@ function LoadPage() {
 }
 
 /* TODO:
-if you're on the watches page and then click on favourites, you have to then manually refresh the page or else it goes into an infinite refresh loop
-- calculator refreshes the page automatically - causes problems on the view watch, favourites page.
-
 calculator is behind checkout on basket page
 
 can't get sales image to display, so for now i will use a url link
 
-cant unfavourite watches on the favourites page - due to page refreshing, which causes to display all
-when you heart a watch it refreshes the page so if your scrolling down you will be brought back up to the top
-
-refreshing viewWatch page removes everything
-
-need to add auto refresh to the basket page when you remove a watch 
-
 user login / signup
+
 ability to add sales / discounts
+
+move brand data to database - also add ability to add / edit watches and brands
 
 test to see if the app can prevent SQL injections
 
 Done Today:
 Website has been build and deployed on vercel
-database is connected to the website, so now i can recieve data from the database - this requires me to change the whole layout since i didnt have a file changed pages, which is the way you are meant to do it
+database is connected to the website, so now i can recieve data from the database - this requires me to change the whole layout since i didn't have a file called pages, which is the way you are meant to do it
 added security to prevent SQL injections in db.js 
+refreshing the viewWatch page doesn't remove all the data anymore
+basket page auto refreshes when you bin / remove an item
 */
 
 const WatchesPage = () => {
