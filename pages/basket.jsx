@@ -4,7 +4,6 @@ import 'styles/globals.css';
 import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
 import viewWatchURL from "pages/watches.jsx";
-import { queryDatabase } from 'pages/api/db';
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
@@ -57,18 +56,6 @@ const Bin = (watch) => {
 };
 
 function BasketPage() {
-  // Fetch discounts based on discount code
-  const discountCode = 'DISCOUNT123'; // Replace with the actual discount code
-  queryDatabase(discountCode)
-    .then((discounts) => {
-      // Use the discounts data as needed
-      console.log(discounts);
-    })
-    .catch((error) => {
-      console.error('Error fetching discounts:', error);
-    });
-
-
   const [total, setTotal] = useState(0);
   const [basketItems, setBasketItems] = useState([]);
 
