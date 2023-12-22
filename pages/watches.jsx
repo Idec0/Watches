@@ -49,7 +49,6 @@ const WatchesPage = () => {
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
   const [likedWatches, setLikedWatches] = useState([]);
-  const [filteredData, setFilteredData] = useState(data); // State variable for filtered options
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
@@ -158,6 +157,8 @@ const WatchesPage = () => {
     imgs = imgList.flat(); // Assuming imgList is defined somewhere in your component
   }
 
+  const [filteredData, setFilteredData] = useState(data); // State variable for filtered options
+
   // const [isRedArray, setIsRedArray] = useState(() => {
   //   // Try to get the count from localStorage, or default to an array of false values
   //   if (typeof window !== 'undefined'){
@@ -178,18 +179,15 @@ const WatchesPage = () => {
     if (typeof window !== 'undefined') {
       const updatedIsRedArray = [...isRedArray];
       updatedIsRedArray[index] = !updatedIsRedArray[index];
-
+  
       let updatedLikedWatches;
-      let watchPosition = imagePositionMap[imgs[index]][0];
-
+  
       if (updatedIsRedArray[index]) {
-        updatedLikedWatches = [...likedWatches, watchPosition];
+        updatedLikedWatches = [...likedWatches, index];
       } else {
-        updatedLikedWatches = likedWatches.filter(
-          (watchIndex) => watchIndex !== watchPosition
-        );
+        updatedLikedWatches = likedWatches.filter((watchIndex) => watchIndex !== index);
       }
-
+  
       setLikedWatches(updatedLikedWatches);
       localStorage.setItem("likedWatches", JSON.stringify(updatedLikedWatches));
       setIsRedArray(updatedIsRedArray);
