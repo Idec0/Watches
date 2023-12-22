@@ -193,6 +193,7 @@ const WatchesPage = () => {
       setIsRedArray(updatedIsRedArray);
     }
   };
+  
 
   const filterImage = () => {
     imgs = filteredData
