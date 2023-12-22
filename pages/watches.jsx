@@ -38,7 +38,7 @@ test to see if the app can prevent SQL injections
 
 Done Today:
 Website has been build and deployed on vercel
-database is connected to the website, so now i can recieve data from the database - cant yet
+database is connected to the website, so now i can recieve data from the database - this requires me to change the whole layout since i didnt have a file changed pages, which is the way you are meant to do it
 added security to prevent SQL injections in db.js 
 */
 
