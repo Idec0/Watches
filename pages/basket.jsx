@@ -10,7 +10,7 @@ function LoadPage() {
 
   const [data, setData] = useState(null);
 
-  let discount_amount = 0;
+  let discountAmount = 0;
 
   useEffect(() => {
     const discountCode = 'DISCOUNT123';
@@ -33,7 +33,7 @@ function LoadPage() {
 
   try{
     console.log(data.discounts[0].discount_amount);
-    discount_amount = data.discounts[0].discount_amount;
+    discountAmount = data.discounts[0].discount_amount;
   }catch{
     console.log(data);
   }
@@ -41,7 +41,8 @@ function LoadPage() {
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-      <BasketPage />
+      <BasketPage discountAmount={discountAmount} />
+
     </main>
   );
 }
@@ -62,7 +63,7 @@ const Bin = (watch) => {
   }
 };
 
-function BasketPage() {
+function BasketPage({discountAmount}) {
   const [total, setTotal] = useState(0);
   const [basketItems, setBasketItems] = useState([]);
 
@@ -114,8 +115,9 @@ function BasketPage() {
           </div>
           {index === 0 && (
             <div className="item3">
-              <p>Total: £{total}</p>
+              <p>Total: £{total} - {total - (total * (discountAmount / 100))}</p>
               <input type="text" id="discountInput" placeholder="Apply Discount Code:" style={{ textAlign: "center", color: "black" }} />
+              <p>{discountAmount}%</p>
               <button style={{ color: "black" }}>Proceed to Checkout</button>
             </div>
           )}
