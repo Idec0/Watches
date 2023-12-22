@@ -10,6 +10,8 @@ function LoadPage() {
 
   const [data, setData] = useState(null);
 
+  let discount_amount = 0;
+
   useEffect(() => {
     const discountCode = 'DISCOUNT123';
     const fetchData = async () => {
@@ -23,13 +25,18 @@ function LoadPage() {
         setData(result);
       } catch (error) {
         console.error('Error fetching data:', error);
-      }
+      }      
     };
   
     fetchData();
   }, []);
 
-  console.log(JSON.stringify(data, null, 2));
+  try{
+    console.log(data.discounts[0].discount_amount);
+    discount_amount = data.discounts[0].discount_amount;
+  }catch{
+    console.log(data);
+  }
 
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
