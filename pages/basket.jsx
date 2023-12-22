@@ -115,7 +115,7 @@ function BasketPage({discountAmount}) {
           </div>
           {index === 0 && (
             <div className="item3">
-              <p>Total: £{total} - {total - (total * (discountAmount / 100))}</p>
+              <p>Total: £{total} - £{(total - (total * (discountAmount / 100))).toFixed(2)}</p>
               <input type="text" id="discountInput" placeholder="Apply Discount Code:" style={{ textAlign: "center", color: "black" }} />
               <p>{discountAmount}%</p>
               <button style={{ color: "black" }}>Proceed to Checkout</button>
