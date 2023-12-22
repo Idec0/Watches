@@ -49,6 +49,7 @@ const WatchesPage = () => {
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
   const [likedWatches, setLikedWatches] = useState([]);
+  const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
@@ -63,6 +64,8 @@ const WatchesPage = () => {
    // Parse the variable back into an array
    let imgs = variable ? variable.split(',') : [];
   // end of code to pass a varibale through links
+
+  console.log(imgs);
 
   // Wrap code that relies on client-side features in a check for window
   
@@ -263,6 +266,7 @@ const WatchesPage = () => {
   const showFav = (loadFav) => {
     console.log("isRedArray:", isRedArray);
     if (likedWatches.length > 0 && loadFav === true) {
+      console.log("asd");
       // If there are liked watches, update the imgs array and filteredData
       const likedWatchImages = likedWatches.map(
         (index) => imgList.flat()[index]
@@ -299,17 +303,27 @@ const WatchesPage = () => {
     localStorage.setItem("isRedArray", JSON.stringify(isRedArray));
   }, [isRedArray]);
 
-  if (typeof window !== 'undefined') {
-    if (imgs.length === 0) {
-      // If there are no watches in imgs, reset to display all watches
-      console.log("imgs empty");
-      localStorage.setItem("loadLikedWatches", "false");
-      showFav(false);
-    } else if (imgs[0] === "showFav") {
-      localStorage.setItem("loadLikedWatches", "true");
-      showFav(true);
+  useEffect(() => {  
+    if (typeof window !== 'undefined') {
+      console.log(imgs);
+      if (imgs.length === 0) {
+        console.log("imgs empty");
+        localStorage.setItem("loadLikedWatches", "false");
+        showFav(false);
+      } else if (imgs[0] === "showFav") {
+        console.log("ggg");
+        // Set the loadingFavorites state to true before calling showFav(true)
+        setLoadingFavorites(true);
+        localStorage.setItem("loadLikedWatches", "true");
+        showFav(true);
+      }
     }
-  }
+    if (loadingFavorites) {
+      // If favorites are being loaded, reset the state and return to avoid infinite loop
+      setLoadingFavorites(false);
+      return;
+    }
+  }, [loadingFavorites, imgs, showFav]);
 
   const getImgStyle = (index) => {
     if (typeof window !== 'undefined' && localStorage) {
