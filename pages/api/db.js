@@ -22,5 +22,3 @@ const pool = new Pool({
 //     throw error;
 //   }
 // }
-
-
