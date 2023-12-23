@@ -25,7 +25,7 @@ user login / signup
 
 ability to add sales / discounts
 
-move brand data to database - also add ability to add / edit watches and brands
+move brands data to database - also add ability to add / edit watches and brands
 
 test to see if the app can prevent SQL injections
 
