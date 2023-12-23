@@ -21,11 +21,15 @@ calculator is behind checkout on basket page
 
 discounts saves when you refresh the basket page
 
+checks if the discount is valid / indate
+
 make the watches dispaly in alphabetical order due to name - add it for their brand when I add forms for new brands
 
-user login / signup
+Use brands table instead of the dictionary
 
-ability to add sales / discounts
+user login / signup - add a page which is only for staff
+
+ability to add sales / discounts - staff only
 
 move brands data to database - also add ability to add / edit watches and brands
 
@@ -41,6 +45,7 @@ basket page auto refreshes when you bin / remove an item
 search bar auto filters as you're typing instead of having to hit enter to search 
 You can now apply discounts buy typing it in the basket, which then shows you the percentage of with the new price - gets the info from the database
 Sales image now works so now i dont have to use a url link
+made a brands table - will use this instead of dictionary at some point
 */
 
 const WatchesPage = () => {
