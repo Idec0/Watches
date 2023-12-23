@@ -21,7 +21,7 @@ calculator is behind checkout on basket page
 
 discounts saves when you refresh the basket page
 
-make the watches dispaly in alphabetical order due to name
+make the watches dispaly in alphabetical order due to name - add it for their brand when I add forms for new brands
 
 user login / signup
 
