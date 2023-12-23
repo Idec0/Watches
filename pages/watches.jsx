@@ -29,12 +29,15 @@ move brand data to database - also add ability to add / edit watches and brands
 
 test to see if the app can prevent SQL injections
 
+grabbing data and then applying the discount can take a bit of time - 5 seconds
+
 Done Today:
 Website has been build and deployed on vercel
 database is connected to the website, so now i can recieve data from the database - this requires me to change the whole layout since i didn't have a file called pages, which is the way you are meant to do it
 added security to prevent SQL injections in db.js 
 refreshing the viewWatch page doesn't remove all the data anymore
 basket page auto refreshes when you bin / remove an item
+search bar auto filters as you're typing instead of having to hit enter to search 
 */
 
 const WatchesPage = () => {
@@ -59,8 +62,6 @@ const WatchesPage = () => {
    // Parse the variable back into an array
    let imgs = variable ? variable.split(',') : [];
   // end of code to pass a varibale through links
-
-  console.log(imgs);
 
   // Wrap code that relies on client-side features in a check for window
   
@@ -197,14 +198,12 @@ const WatchesPage = () => {
     imgs = filteredData
       .map((brand) => brands[brand.toLowerCase()].map((watch) => watch[0]))
       .flat();
-    console.log(imgs);
     newURL();
   };
 
   const newURL = () => {
     // Construct the new query parameter with the updated variable
     const newQueryParams = new URLSearchParams(window.location.search);
-    console.log(imgs);
     newQueryParams.set("imgs", imgs.join(","))
 
     // Replace the current URL with the new query parameters
@@ -238,14 +237,15 @@ const WatchesPage = () => {
     }
   };
 
-  const checkKeyDown = (event) => {
-    if (event.key === "Enter") {
-      setFilteredData(
-        data.filter((op) => op.toLowerCase().includes(val.toLowerCase()))
-      );
-      setReload(true);
-    }
+  const checkKeyDown = (e) => {
+    const updatedValue = e.target.value;
+    setFilteredData(
+      data.filter((op) => op.toLowerCase().includes(updatedValue.toLowerCase()))
+    );
+    console.log(filteredData);
+    setReload(true);
   };
+  
 
   useEffect(() => {
     if (reload) {
@@ -265,7 +265,6 @@ const WatchesPage = () => {
         (index) => imgList.flat()[index]
       );
       imgs = likedWatchImages;
-      console.log(imgs);
       setFilteredData(
         data.filter((op) => likedWatchImages.includes(brands[op.toLowerCase()]))
       );
@@ -298,7 +297,6 @@ const WatchesPage = () => {
 
   useEffect(() => {  
     if (typeof window !== 'undefined') {
-      console.log(imgs);
       if (imgs.length === 0) {
         console.log("imgs empty");
         localStorage.setItem("loadLikedWatches", "false");
@@ -346,8 +344,11 @@ const WatchesPage = () => {
         <input
           list="data"
           value={val}
-          onChange={(e) => setVal(e.target.value)}
-          onKeyDown={checkKeyDown}
+          onChange={(e) => {
+            e.persist(); // Persist the synthetic event
+            setVal(e.target.value);
+            checkKeyDown(e);
+          }}
           placeholder="Search"
         />
         <datalist id="data">
@@ -355,7 +356,7 @@ const WatchesPage = () => {
             <option key={op}>{op}</option>
           ))}
         </datalist>
-        {/*<h1>{val}</h1>*/}
+        {<h1>{val}</h1>}
       </div>
       <div className="watches-container row">
         {imgs.map((img, index) => (
