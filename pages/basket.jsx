@@ -36,9 +36,7 @@ const Bin = (watch) => {
 function BasketPage() {
   const [total, setTotal] = useState(0);
   const [basketItems, setBasketItems] = useState([]);
-  const [data, setData] = useState(null);
   const [discountAmount, setDiscountAmount] = useState(0); // Use useState for discountAmount
-  const discountCode = "DISCOUNT123";
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -58,21 +56,25 @@ function BasketPage() {
   const checkKeyDown = async (event) => {
     if (event.key === "Enter") {
       try {
-        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(discountCode)}`);
+        const discountInputValue = event.target.value; // Get the value from the input
+
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(discountInputValue)}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result = await response.json();
-        setData(result);
 
         // Update total and discountAmount with the new values
         if (result.discounts && result.discounts.length > 0) {
           const newDiscountAmount = result.discounts[0].discount_amount;
           setDiscountAmount(newDiscountAmount);
+          return;
         }
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
+      setDiscountAmount(0);
     }
   };
 

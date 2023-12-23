@@ -21,6 +21,8 @@ calculator is behind checkout on basket page
 
 can't get sales image to display, so for now i will use a url link
 
+discounts saves when you refresh the basket page
+
 user login / signup
 
 ability to add sales / discounts
@@ -32,11 +34,12 @@ test to see if the app can prevent SQL injections
 
 Done Today:
 Website has been build and deployed on vercel
-database is connected to the website, so now i can recieve data from the database - this requires me to change the whole layout since i didn't have a file called pages, which is the way you are meant to do it
+database is connected to the website, so now i can recieve data from the database - this required me to change the whole layout since I didn't have a directory called pages, which is the way you are meant to do it
 added security to prevent SQL injections in db.js 
 refreshing the viewWatch page doesn't remove all the data anymore
 basket page auto refreshes when you bin / remove an item
 search bar auto filters as you're typing instead of having to hit enter to search 
+You can now apply discounts buy typing it in the basket, which then shows you the percentage of with the new price - gets the info from the database
 */
 
 const WatchesPage = () => {
@@ -155,23 +158,7 @@ const WatchesPage = () => {
     imgs = imgList.flat(); // Assuming imgList is defined somewhere in your component
   }
 
-  const [filteredData, setFilteredData] = useState(data); // State variable for filtered options
-
-  // const [isRedArray, setIsRedArray] = useState(() => {
-  //   // Try to get the count from localStorage, or default to an array of false values
-  //   if (typeof window !== 'undefined'){
-  //     const storedValue = localStorage.getItem("isRedArray");
-  //     try {
-  //       return storedValue
-  //         ? JSON.parse(storedValue)
-  //         : new Array(imgs.length).fill(false);
-  //     } catch (error) {
-  //       console.error("Error parsing JSON from localStorage:", error);
-  //       return new Array(imgs.length).fill(false);
-  //     }
-  //   }
-  // });
-  
+  const [filteredData, setFilteredData] = useState(data); // State variable for filtered options  
 
   const toggleColor = (index) => {
     if (typeof window !== 'undefined') {
