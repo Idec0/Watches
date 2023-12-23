@@ -95,13 +95,6 @@ const WatchesPage = () => {
         399,
       ],
     ],
-    fossil: [
-      [
-        "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/f/s/fs5380_grey.jpg",
-        "Mens Neutra Chronograph Watch FS5380",
-        159,
-      ],
-    ],
     casio: [
       [
         "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/2/1/21-42-671_01_1.jpg",
@@ -116,11 +109,11 @@ const WatchesPage = () => {
         199,
       ],
     ],
-    tissot: [
+    fossil: [
       [
-        "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/3/23-52-420_grey.jpg",
-        "PRC 200 Stainless Steel Blue Dial Chronograph Watch T114.417.11.047.00",
-        480,
+        "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/f/s/fs5380_grey.jpg",
+        "Mens Neutra Chronograph Watch FS5380",
+        159,
       ],
     ],
     oris: [
@@ -130,6 +123,13 @@ const WatchesPage = () => {
         1900,
       ],
     ],
+    tissot: [
+      [
+        "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/3/23-52-420_grey.jpg",
+        "PRC 200 Stainless Steel Blue Dial Chronograph Watch T114.417.11.047.00",
+        480,
+      ],
+    ],    
   };
 
   /* list of every watch */
