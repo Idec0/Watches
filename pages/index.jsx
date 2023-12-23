@@ -3,7 +3,8 @@ import 'styles/globals.css';
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
-import salesImage from "pages/salesImage.jpg";
+import Image from 'next/image'
+import salesImage from "public/salesImage.jpg";
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
@@ -18,12 +19,10 @@ function LoadPage() {
 
 function IndexPage() {
   {
-    console.log(salesImage);
     return (
       <main>
-        <img
-          src="https://www.houseofwatches.co.uk/media/wysiwyg/HoW-CM-2023-v2_01__1920x554.jpg"
-          alt=""
+        <Image
+          src={salesImage} // Use the imported image
         />
       </main>
     );

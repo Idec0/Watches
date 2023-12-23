@@ -19,8 +19,6 @@ function LoadPage() {
 /* TODO:
 calculator is behind checkout on basket page
 
-can't get sales image to display, so for now i will use a url link
-
 discounts saves when you refresh the basket page
 
 user login / signup
@@ -40,6 +38,7 @@ refreshing the viewWatch page doesn't remove all the data anymore
 basket page auto refreshes when you bin / remove an item
 search bar auto filters as you're typing instead of having to hit enter to search 
 You can now apply discounts buy typing it in the basket, which then shows you the percentage of with the new price - gets the info from the database
+Sales image now works so now i dont have to use a url link
 */
 
 const WatchesPage = () => {
