@@ -21,6 +21,8 @@ calculator is behind checkout on basket page
 
 discounts saves when you refresh the basket page
 
+make the watches dispaly in alphabetical order due to name
+
 user login / signup
 
 ability to add sales / discounts
