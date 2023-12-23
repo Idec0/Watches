@@ -9,7 +9,7 @@ export default async function handler(request, response) {
     if (!discountCode) {
       return response.status(400).json({ error: 'Discount code is required.' });
     }
-
+    // $1 prevents SQL injections
     const result = await client.query('SELECT * FROM discounts WHERE Discount_code = $1', [discountCode]);
     const discounts = result.rows;
 
