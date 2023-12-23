@@ -7,7 +7,7 @@ import Image from 'next/image'
 import salesImage from "public/salesImage.jpg";
 
 function LoadPage() {
-  const [appVisible, setAppVisible] = useState(false);
+  const [appVisible, setAppVisible] = useState(false); 
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
@@ -23,6 +23,7 @@ function IndexPage() {
       <main>
         <Image
           src={salesImage} // Use the imported image
+          alt="Picture of Watch banner"
         />
       </main>
     );

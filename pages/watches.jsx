@@ -25,7 +25,7 @@ checks if the discount is valid / indate
 
 make the watches dispaly in alphabetical order due to name - add it for their brand when I add forms for new brands
 
-Use brands table instead of the dictionary
+Use brands table instead of the array
 
 user login / signup - add a page which is only for staff
 
@@ -45,7 +45,8 @@ basket page auto refreshes when you bin / remove an item
 search bar auto filters as you're typing instead of having to hit enter to search 
 You can now apply discounts buy typing it in the basket, which then shows you the percentage of with the new price - gets the info from the database
 Sales image now works so now i dont have to use a url link
-made a brands table - will use this instead of dictionary at some point
+made a brands table - will use this instead of array at some point
+tried to replace the brands array with the table data but it causes infinite rendering loop
 */
 
 const WatchesPage = () => {
@@ -56,6 +57,7 @@ const WatchesPage = () => {
   const [isRedArray, setIsRedArray] = useState([]);
   const [likedWatches, setLikedWatches] = useState([]);
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
+  //const [brands, setBrands] = useState(null);
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
@@ -82,8 +84,31 @@ const WatchesPage = () => {
       setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
     }
   }, []);
-  
 
+  const fetchBrandsData = async () => {
+    try {
+      const response = await fetch('/api/data?discount_code=Brands');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+  
+      // Log the result from the API
+      console.log(result.discounts);
+  
+      // Store the result in localStorage
+      //setBrands(result.discounts);
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBrandsData();
+  }, []);
+
+  // keep just incase database gets deleted
   const brands = {
     boss: [
       [
@@ -139,12 +164,38 @@ const WatchesPage = () => {
     ],    
   };
 
-  /* list of every watch */
+  // Use regular expressions to extract relevant information -- change string into an array
+  //let brandMatches = brands.match(/{"id":\d+,"brand_name":"([^"]+)","image_url":"([^"]+)","product_name":"([^"]+)","price":"([^"]+)"/g);
 
+
+  /* list of every watch */
   let imgList = [];
   let data = [];
   const imagePositionMap = {};
   let watchListIndex = 0;
+
+  // if (brands && typeof brands === 'object') {
+  //   let imgList = [];
+  //   let data = [];
+  //   const imagePositionMap = {};
+  //   let watchListIndex = 0;
+  
+  //   // Iterate over each brand
+  //   for (const brand of brands) {
+  //     const { brand_name, image_url, product_name, price } = brand;
+      
+  //     data.push(brand_name);
+  
+  //     // Assuming each brand has a single imageURL
+  //     imgList.push(image_url);
+  //     imagePositionMap[image_url] = [watchListIndex, product_name, price];
+      
+  //     watchListIndex++;
+  //   }
+  // }
+
+
+  // used for dictionary already defined -- keep just incase database gets deleted
   for (const brand in brands) {
     data.push(brand);
     brands[brand].forEach((imageURL) => {
@@ -325,7 +376,6 @@ const WatchesPage = () => {
     }
   };
   
-
 
   return (
     <main>
