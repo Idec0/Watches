@@ -136,34 +136,34 @@ const WatchesPage = () => {
         449,
       ],
     ],
-    // citizen: [
-    //   [
-    //     "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/2/2/22-39-592_grey.jpg",
-    //     "Ladies Axiom Rose Gold Plated Black Dial Leather Strap Watch GA1058-16E",
-    //     199,
-    //   ],
-    // ],
-    // fossil: [
-    //   [
-    //     "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/f/s/fs5380_grey.jpg",
-    //     "Mens Neutra Chronograph Watch FS5380",
-    //     159,
-    //   ],
-    // ],
-    // oris: [
-    //   [
-    //     "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/4/24-56-127_grey.jpg",
-    //     "Mens Divers Sixty-Five Brown Leather Strap Watch 733 7720 4055-07 5 21 02",
-    //     1900,
-    //   ],
-    // ],
-    // tissot: [
-    //   [
-    //     "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/3/23-52-420_grey.jpg",
-    //     "PRC 200 Stainless Steel Blue Dial Chronograph Watch T114.417.11.047.00",
-    //     480,
-    //   ],
-    // ],    
+    citizen: [
+      [
+        "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/2/2/22-39-592_grey.jpg",
+        "Ladies Axiom Rose Gold Plated Black Dial Leather Strap Watch GA1058-16E",
+        199,
+      ],
+    ],
+    fossil: [
+      [
+        "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/f/s/fs5380_grey.jpg",
+        "Mens Neutra Chronograph Watch FS5380",
+        159,
+      ],
+    ],
+    oris: [
+      [
+        "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/4/24-56-127_grey.jpg",
+        "Mens Divers Sixty-Five Brown Leather Strap Watch 733 7720 4055-07 5 21 02",
+        1900,
+      ],
+    ],
+    tissot: [
+      [
+        "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/3/23-52-420_grey.jpg",
+        "PRC 200 Stainless Steel Blue Dial Chronograph Watch T114.417.11.047.00",
+        480,
+      ],
+    ],    
   };
   
   /* list of every watch */
@@ -174,9 +174,6 @@ const WatchesPage = () => {
 
   // used for dictionary already defined (brandsBackup) -- keep just incase database gets deleted
   if(brands === null){
-    // stop infinite rendering 
-    //return <div>Loading...</div>;
-
     for (const brand in brandsBackup) {
       data.push(brand);
       brandsBackup[brand].forEach((imageURL) => {
@@ -190,7 +187,6 @@ const WatchesPage = () => {
         watchListIndex++;
       });
     }
-    console.log("aa");
   }
   
   if (brands && typeof brands === 'object'  && Object.keys(brands).length > 0) {
@@ -204,7 +200,6 @@ const WatchesPage = () => {
       // Assuming each brand has a single imageURL
       imgList.push(image_url);
       imagePositionMap[image_url] = [watchListIndex, brand_name, product_name, price];
-      console.log(imagePositionMap)
       watchListIndex++;
     }
   }
