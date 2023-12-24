@@ -25,8 +25,6 @@ checks if the discount is valid / indate
 
 make the watches dispaly in alphabetical order due to name - add it for their brand when I add forms for new brands
 
-Use brands table instead of the array
-
 user login / signup - add a page which is only for staff
 
 ability to add sales / discounts - staff only
