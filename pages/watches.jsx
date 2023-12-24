@@ -46,7 +46,7 @@ search bar auto filters as you're typing instead of having to hit enter to searc
 You can now apply discounts buy typing it in the basket, which then shows you the percentage of with the new price - gets the info from the database
 Sales image now works so now i dont have to use a url link
 made a brands table - will use this instead of array at some point
-tried to replace the brands array with the table data but it causes infinite rendering loop
+tried to replace the brands array with the table data but it causes an infinite rendering loop
 */
 
 const WatchesPage = () => {
@@ -56,8 +56,9 @@ const WatchesPage = () => {
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
   const [likedWatches, setLikedWatches] = useState([]);
+  const [filteredData, setFilteredData] = useState([]); // State variable for filtered options  
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
-  //const [brands, setBrands] = useState(null);
+  const [brands, setBrands] = useState(null);
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
@@ -92,12 +93,11 @@ const WatchesPage = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
-  
-      // Log the result from the API
+
       console.log(result.discounts);
-  
+
       // Store the result in localStorage
-      //setBrands(result.discounts);
+      setBrands(result.discounts);
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -109,7 +109,7 @@ const WatchesPage = () => {
   }, []);
 
   // keep just incase database gets deleted
-  const brands = {
+  const brandsBackup = {
     boss: [
       [
         "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/2/3/23-29-421_grey.jpg",
@@ -163,59 +163,53 @@ const WatchesPage = () => {
       ],
     ],    
   };
-
-  // Use regular expressions to extract relevant information -- change string into an array
-  //let brandMatches = brands.match(/{"id":\d+,"brand_name":"([^"]+)","image_url":"([^"]+)","product_name":"([^"]+)","price":"([^"]+)"/g);
-
-
+  
   /* list of every watch */
   let imgList = [];
   let data = [];
   const imagePositionMap = {};
   let watchListIndex = 0;
 
-  // if (brands && typeof brands === 'object') {
-  //   let imgList = [];
-  //   let data = [];
-  //   const imagePositionMap = {};
-  //   let watchListIndex = 0;
-  
-  //   // Iterate over each brand
-  //   for (const brand of brands) {
-  //     const { brand_name, image_url, product_name, price } = brand;
-      
-  //     data.push(brand_name);
-  
-  //     // Assuming each brand has a single imageURL
-  //     imgList.push(image_url);
-  //     imagePositionMap[image_url] = [watchListIndex, product_name, price];
-      
-  //     watchListIndex++;
-  //   }
-  // }
+  // used for dictionary already defined (brandsBackup) -- keep just incase database gets deleted
+  if(brands === null){
+    // stop infinite rendering 
+    //return <div>Loading...</div>;
 
+    for (const brand in brandsBackup) {
+      data.push(brand);
+      brandsBackup[brand].forEach((imageURL) => {
+        imgList.push(imageURL[0]);
+        imagePositionMap[imageURL[0]] = [
+          watchListIndex,
+          brand,
+          imageURL[1],
+          imageURL[2],
+        ];
+        watchListIndex++;
+      });
+    }
+  }
+  
+  if (brands && typeof brands === 'object') {
+    const brandsArray = brands ? Object.entries(brands) : [];
 
-  // used for dictionary already defined -- keep just incase database gets deleted
-  for (const brand in brands) {
-    data.push(brand);
-    brands[brand].forEach((imageURL) => {
-      imgList.push(imageURL[0]);
-      imagePositionMap[imageURL[0]] = [
-        watchListIndex,
-        brand,
-        imageURL[1],
-        imageURL[2],
-      ];
+    for (const [brandKey, brandData] of brandsArray) {
+      const { brand_name, image_url, product_name, price } = brandData;
+      
+      data.push(brand_name);
+      
+      // Assuming each brand has a single imageURL
+      imgList.push(image_url);
+      imagePositionMap[image_url] = [watchListIndex, brand_name, product_name, price];
+      
       watchListIndex++;
-    });
+    }
   }
 
   // If imgs is empty, set it to the default list
   if (imgs.length === 0) {
     imgs = imgList.flat(); // Assuming imgList is defined somewhere in your component
   }
-
-  const [filteredData, setFilteredData] = useState(data); // State variable for filtered options  
 
   const toggleColor = (index) => {
     if (typeof window !== 'undefined') {
@@ -291,11 +285,15 @@ const WatchesPage = () => {
   
 
   useEffect(() => {
-    if (reload) {
+    const handleReload = () => {
       console.log("Reload");
       setReload(false);
       filterImage();
       newURL();
+    };
+  
+    if (reload) {
+      handleReload();
     }
   }, [reload, filterImage, newURL]);
   
@@ -413,12 +411,12 @@ const WatchesPage = () => {
                 ></img>
               </div>
               <img src={img} alt={`Watch ${index}`} />
-              <div className="center">
+              <div className="center">           
                 <h1>
                   <b>
                     {imagePositionMap[img]
-                      ? imagePositionMap[img][1].charAt(0).toUpperCase() +
-                        imagePositionMap[img][1].slice(1)
+                      ? imagePositionMap[img][1]?.charAt(0).toUpperCase() +
+                        imagePositionMap[img][1]?.slice(1)
                       : "N/A"}{" "}
                   </b>
                 </h1>
