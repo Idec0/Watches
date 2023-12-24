@@ -365,7 +365,7 @@ const WatchesPage = () => {
     data = [];
     imagePositionMap = {};
     watchListIndex = 0;
-    return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Loading...</div>;
+    return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: "5vh" }}>Loading...</div>;
   }
 
   const getImgStyle = (index) => {
