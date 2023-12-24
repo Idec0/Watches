@@ -47,6 +47,8 @@ You can now apply discounts buy typing it in the basket, which then shows you th
 Sales image now works so now i dont have to use a url link
 made a brands table - will use this instead of array at some point
 tried to replace the brands array with the table data but it causes an infinite rendering loop
+Fixed the infinite rendering loop, so now the data is from the database - this was due to the database being null so it would refresh until the data from the database wasn't null
+The database is stored on a server on Vercel.
 */
 
 const WatchesPage = () => {
@@ -134,40 +136,40 @@ const WatchesPage = () => {
         449,
       ],
     ],
-    citizen: [
-      [
-        "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/2/2/22-39-592_grey.jpg",
-        "Ladies Axiom Rose Gold Plated Black Dial Leather Strap Watch GA1058-16E",
-        199,
-      ],
-    ],
-    fossil: [
-      [
-        "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/f/s/fs5380_grey.jpg",
-        "Mens Neutra Chronograph Watch FS5380",
-        159,
-      ],
-    ],
-    oris: [
-      [
-        "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/4/24-56-127_grey.jpg",
-        "Mens Divers Sixty-Five Brown Leather Strap Watch 733 7720 4055-07 5 21 02",
-        1900,
-      ],
-    ],
-    tissot: [
-      [
-        "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/3/23-52-420_grey.jpg",
-        "PRC 200 Stainless Steel Blue Dial Chronograph Watch T114.417.11.047.00",
-        480,
-      ],
-    ],    
+    // citizen: [
+    //   [
+    //     "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/2/2/22-39-592_grey.jpg",
+    //     "Ladies Axiom Rose Gold Plated Black Dial Leather Strap Watch GA1058-16E",
+    //     199,
+    //   ],
+    // ],
+    // fossil: [
+    //   [
+    //     "https://www.houseofwatches.co.uk/media/catalog/product/cache/34b4a13777517e40e5b794fdc3ecddeb/f/s/fs5380_grey.jpg",
+    //     "Mens Neutra Chronograph Watch FS5380",
+    //     159,
+    //   ],
+    // ],
+    // oris: [
+    //   [
+    //     "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/4/24-56-127_grey.jpg",
+    //     "Mens Divers Sixty-Five Brown Leather Strap Watch 733 7720 4055-07 5 21 02",
+    //     1900,
+    //   ],
+    // ],
+    // tissot: [
+    //   [
+    //     "https://www.houseofwatches.co.uk/media/catalog/product/cache/dcbf10923bf8373a37990fd538c120d9/2/3/23-52-420_grey.jpg",
+    //     "PRC 200 Stainless Steel Blue Dial Chronograph Watch T114.417.11.047.00",
+    //     480,
+    //   ],
+    // ],    
   };
   
   /* list of every watch */
   let imgList = [];
   let data = [];
-  const imagePositionMap = {};
+  let imagePositionMap = {};
   let watchListIndex = 0;
 
   // used for dictionary already defined (brandsBackup) -- keep just incase database gets deleted
@@ -188,9 +190,10 @@ const WatchesPage = () => {
         watchListIndex++;
       });
     }
+    console.log("aa");
   }
   
-  if (brands && typeof brands === 'object') {
+  if (brands && typeof brands === 'object'  && Object.keys(brands).length > 0) {
     const brandsArray = brands ? Object.entries(brands) : [];
 
     for (const [brandKey, brandData] of brandsArray) {
@@ -201,7 +204,7 @@ const WatchesPage = () => {
       // Assuming each brand has a single imageURL
       imgList.push(image_url);
       imagePositionMap[image_url] = [watchListIndex, brand_name, product_name, price];
-      
+      console.log(imagePositionMap)
       watchListIndex++;
     }
   }
@@ -356,6 +359,15 @@ const WatchesPage = () => {
     }
   }, [loadingFavorites, imgs, showFav]);
 
+  if (brands === null) {
+    // stop infinite loading when recieving data
+    imgList = [];
+    data = [];
+    imagePositionMap = {};
+    watchListIndex = 0;
+    return <div>Loading...</div>;
+  }
+
   const getImgStyle = (index) => {
     if (typeof window !== 'undefined' && localStorage) {
       if (localStorage.getItem("loadLikedWatches") === "true") {
@@ -411,7 +423,7 @@ const WatchesPage = () => {
                 ></img>
               </div>
               <img src={img} alt={`Watch ${index}`} />
-              <div className="center">           
+              <div className="center">        
                 <h1>
                   <b>
                     {imagePositionMap[img]
