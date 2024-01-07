@@ -33,7 +33,8 @@ move brands data to database - also add ability to add / edit watches and brands
 
 test to see if the app can prevent SQL injections
 
-website - https://e-commerce-bc.payloadcms.app
+website - https://watches-ruby.vercel.app
+e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
 Website has been build and deployed on vercel
