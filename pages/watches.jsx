@@ -53,6 +53,7 @@ discounts out of date do not work
 discounts saves when you refresh the basket page
 added a table to store user details - this also stores a hashed version of the user's password for security reasons
 made a page for login and sign-up
+password doesn't match hashed password
 */
 
 const WatchesPage = () => {
