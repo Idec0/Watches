@@ -10,19 +10,19 @@ const Navbar = ({ appVisible, setAppVisible }) => {
 
   return (
     <>
-      <div className="w-full h-20 bg-emerald-800 sticky top-0">
+      <div className="w-full h-20 bg-emerald-800 sticky top-0 navbar">
         <div className="container mx-auto px-4 h-full">
           <div className="flex justify-between items-center h-full">
             <ul className="md:flex gap-x-6 text-white  items-center">
               <li>
-                <Link href={"/"}>Home</Link>
+                <Link href={"/"}  style={{color:"white"}}>Home</Link>
               </li>
               <li>
-                <Link href={"/watches"}>Watches</Link>
+                <Link href={"/watches"}  style={{color:"white"}}>Watches</Link>
               </li>
               <li>
                 <button type="button" onClick={() => showCalc()}>
-                  <p>Calculator</p>
+                  <p style={{color:"white"}}>Calculator</p>
                 </button>
               </li>
               <li>
@@ -30,7 +30,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
               </li>
 
               <Link href={"/basket"}>🛒</Link>
-              <Link href={"/basket"}>👤</Link>
+              <Link href={"/login"}>👤</Link>
             </ul>
           </div>
         </div>

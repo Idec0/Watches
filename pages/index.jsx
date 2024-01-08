@@ -22,7 +22,7 @@ function IndexPage() {
     return (
       <main>
         <Image
-          src={salesImage} // Use the imported image
+          src={salesImage}
           alt="Picture of Watch banner"
         />
       </main>

@@ -44,6 +44,11 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: "Fira Sans", sans-serif;
+  color: black;
+}
+
+.navbar {
+  z-index: 1;
 }
 
 .App {
@@ -226,6 +231,8 @@ input {
   gap: 10px;
   /* background-color: #2196f3; */
   padding: 10px;
+  padding-left: 0;
+  padding-right: 7px;
 }
 
 .grid-container > div {
@@ -233,4 +240,40 @@ input {
   text-align: center;
   padding: 20px 0;
   font-size: 30px;
+}
+
+.split-grid-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-areas:
+    "watches text1"
+    "watches text1"
+    "watches text1";
+  gap: 10px;
+  /* background-color: #2196f3; */
+  padding: 10px;
+  padding-left: 0;
+}
+
+.split-grid-container > div {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+
+.login-right-content input, .login-right-content button{
+  width: 100%;
+  text-align: center;
+  margin: 25px 0;
+}
+
+.login-right-content input:first-child{
+  margin-top: 100px;
+}
+
+.login-right-content button{
+  background-color: white;
+  color: black;
+  padding: 0;
 }

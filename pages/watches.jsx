@@ -17,13 +17,13 @@ function LoadPage() {
 }
 
 /* TODO:
-calculator is behind checkout on basket page
+add data validation to inputs - code which checks when create account button is clicked
 
-discounts saves when you refresh the basket page
+make the watches display in alphabetical order due to name - add it for their brand when I add forms for new brands
 
-checks if the discount is valid / indate
+error happens when you click on watch image in basket
 
-make the watches dispaly in alphabetical order due to name - add it for their brand when I add forms for new brands
+quantity to basket
 
 user login / signup - add a page which is only for staff
 
@@ -45,10 +45,14 @@ basket page auto refreshes when you bin / remove an item
 search bar auto filters as you're typing instead of having to hit enter to search 
 You can now apply discounts buy typing it in the basket, which then shows you the percentage of with the new price - gets the info from the database
 Sales image now works so now i dont have to use a url link
-made a brands table - will use this instead of array at some point
-tried to replace the brands array with the table data but it causes an infinite rendering loop
+Replaced the brands array with the table data so the data is now saved online in a database, but it caused an infinite rendering loop
 Fixed the infinite rendering loop, so now the data is from the database - this was due to the database being null so it would refresh until the data from the database wasn't null
 The database is stored on a server on Vercel.
+calculator is no longer behind checkout on basket page
+discounts out of date do not work
+discounts saves when you refresh the basket page
+added a table to store user details - this also stores a hashed version of the user's password for security reasons
+made a page for login and sign-up
 */
 
 const WatchesPage = () => {
