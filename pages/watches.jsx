@@ -43,7 +43,7 @@ added security to prevent SQL injections in db.js
 refreshing the viewWatch page doesn't remove all the data anymore
 basket page auto refreshes when you bin / remove an item
 search bar auto filters as you're typing instead of having to hit enter to search 
-You can now apply discounts buy typing it in the basket, which then shows you the percentage of with the new price - gets the info from the database
+You can now apply discounts by typing it in the basket, which then shows you the percentage of with the new price - gets the info from the database
 Sales image now works so now i dont have to use a url link
 Replaced the brands array with the table data so the data is now saved online in a database, but it caused an infinite rendering loop
 Fixed the infinite rendering loop, so now the data is from the database - this was due to the database being null so it would refresh until the data from the database wasn't null
@@ -51,7 +51,7 @@ The database is stored on a server on Vercel.
 calculator is no longer behind checkout on basket page
 discounts out of date do not work
 discounts saves when you refresh the basket page
-added a table to store user details - this also stores a hashed version of the user's password for security reasons
+added a table to store user's details - this also stores a hashed version of the user's password for security reasons
 made a page for login and sign-up
 password doesn't match hashed password
 */
