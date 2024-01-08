@@ -19,6 +19,10 @@ function LoadPage() {
 /* TODO:
 add data validation to inputs - code which checks when create account button is clicked
 
+fix hashed password not matching password even if its right
+
+liked watches reset to non when you click on a page which isnt watches or likedWatches, try saving it to local storage instead of useState
+
 make the watches display in alphabetical order due to name - add it for their brand when I add forms for new brands
 
 error happens when you click on watch image in basket
