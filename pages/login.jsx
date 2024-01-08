@@ -37,13 +37,13 @@ function IndexPage() {
         const result = await response.json();
         console.log(result);
 
-        // user = result;
-        // if(user !== "Unauthorized"){
-        //   console.log("password correct");
-        // }
-        // else{
-        //   console.log("Password was incorrect");
-        // }
+        user = result;
+        if(user !== "Unauthorized"){
+          console.log("password correct");
+        }
+        else{
+          console.log("Password was incorrect");
+        }
 
       }catch (error) {
         console.error('Error fetching data:', error);
