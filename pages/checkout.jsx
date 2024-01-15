@@ -11,18 +11,19 @@ import { useStripe, useElements, CardElement, Elements } from "@stripe/react-str
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-function LoadPage() {
+function LoadPage({amount}) {
   const [appVisible, setAppVisible] = useState(false); 
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-      {<CheckoutPage />}
+      <CheckoutPage amount={amount} />
     </main>
   );
 }
 
-function CheckoutPage(amount) {
+function CheckoutPage({amount}) {
+  console.log(amount);
 
   const [clientSecret, setClientSecret] = useState('');
 
