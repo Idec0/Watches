@@ -17,9 +17,18 @@ function LoadPage() {
 }
 
 /* TODO:
-add data validation to inputs - code which checks when create account button is clicked
 
-fix hashed password not matching password even if its right
+sign out button - cant sign in multiple of times
+
+when you click checkout, and you dont have an account - give user option to login or sign-up
+
+when you login through checkout - make it take you back to checkout instead of home page
+
+view purchase history
+
+save payment method
+
+stripe.com to check payment method
 
 liked watches reset to non when you click on a page which isnt watches or likedWatches, try saving it to local storage instead of useState
 
@@ -37,27 +46,18 @@ move brands data to database - also add ability to add / edit watches and brands
 
 test to see if the app can prevent SQL injections
 
+stripe (Track Payments) - https://dashboard.stripe.com/test/products?active=true
+
 website - https://watches-ruby.vercel.app
 e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
-Website has been build and deployed on vercel
-database is connected to the website, so now i can recieve data from the database - this required me to change the whole layout since I didn't have a directory called pages, which is the way you are meant to do it
-added security to prevent SQL injections in db.js 
-refreshing the viewWatch page doesn't remove all the data anymore
-basket page auto refreshes when you bin / remove an item
-search bar auto filters as you're typing instead of having to hit enter to search 
-You can now apply discounts by typing it in the basket, which then shows you the percentage of with the new price - gets the info from the database
-Sales image now works so now i dont have to use a url link
-Replaced the brands array with the table data so the data is now saved online in a database, but it caused an infinite rendering loop
-Fixed the infinite rendering loop, so now the data is from the database - this was due to the database being null so it would refresh until the data from the database wasn't null
-The database is stored on a server on Vercel.
-calculator is no longer behind checkout on basket page
-discounts out of date do not work
-discounts saves when you refresh the basket page
-added a table to store user's details - this also stores a hashed version of the user's password for security reasons
-made a page for login and sign-up
-password doesn't match hashed password
+Fixed hashed password not matching password even if its right
+When you login it takes you to the home page
+Add data validation to inputs - email must contain @ - email and username must be unique, password has to match confirm password, password must be at least 8 char to help keep user's password protected , username must be at least 4 char long, also no input field can be left blank. Every input field has a max char of 255 to stop users from over doing it also the database can only hold upto 255 char for each field to save memory so i can hold more data without having to update the storage
+Input validation - if changes are needed then it will display text to let the user know that they need to make changes
+Added a checkout page
+The checkout page includes a credit card form which checks if the credit card is real also when the user completes the payment form, it records the payment, so you can see how much was paid, and if it was successful or not - this was done through a third party called Stripe. - This took most of the time to get working. I set Stripe to testing so no payments are actual made, plus they give you a free credit card to test it with.
 */
 
 const WatchesPage = () => {

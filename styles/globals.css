@@ -277,3 +277,17 @@ input {
   color: black;
   padding: 0;
 }
+
+.login-right-content-p {
+  height: 21px;
+}
+
+.signup-left-content p {
+  font-size: 15px;
+  color: red;
+}
+
+.signup-left-content input, .signup-left-content button {
+  margin-bottom: 0;
+  margin-top: 0;
+}

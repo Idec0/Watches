@@ -40,6 +40,10 @@ function IndexPage() {
         user = result;
         if(user !== "Unauthorized"){
           console.log("password correct");
+          if (typeof window !== 'undefined') {
+            localStorage.setItem("loggedIn", true);        
+          }
+          window.location.href = "/";
         }
         else{
           console.log("Password was incorrect");

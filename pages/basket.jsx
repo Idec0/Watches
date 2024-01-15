@@ -75,8 +75,8 @@ function BasketPage() {
     try {
       const response = await fetch(`/api/data?discount_code=${encodeURIComponent(discountInputValue)}`);
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
         return false;
+        //throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
   
@@ -149,7 +149,9 @@ function BasketPage() {
               <p>Discount: {discountAmount}%</p>
               <p>New Total: £{(total - (total * (discountAmount / 100))).toFixed(2)}</p>
               <input type="text" id="discountInput" placeholder="Apply Discount Code:" onKeyDown={checkKeyDown} style={{ textAlign: "center", color: "black" }} />
-              <button style={{ color: "black" }}>Proceed to Checkout</button>
+              <a href='/checkout' amount='{{(total - (total * (discountAmount / 100))).toFixed(2)}}'>
+                <button style={{ color: "black" }}>Proceed to Checkout</button>
+              </a>
             </div>
           )}
         </div>
