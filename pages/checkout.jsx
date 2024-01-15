@@ -45,7 +45,8 @@ function CheckoutPage(amount) {
 }
 
 // credit card layout
-const CheckoutForm = (amount) => {
+const CheckoutForm = ({amount}) => {
+  console.log(amount)
   const stripe = useStripe();
   const elements = useElements();
 
@@ -60,7 +61,7 @@ const CheckoutForm = (amount) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: amount,
+          amount: 15000,
         }),
         
       });

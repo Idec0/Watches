@@ -7,10 +7,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 export default async function handler(req, res) {
 
   const { amount } = req.body;
+
+  if (isNaN(amount)) {
+    console.log("Invalid amount", amount);
+  }
+
   try {
     console.log(amount);
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 10000,  // Amount in cents
+      amount: amount,  // Amount in cents
       currency: 'GBP',
       description: 'Example Payment',
     });

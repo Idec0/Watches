@@ -18,6 +18,8 @@ function LoadPage() {
 
 /* TODO:
 
+amount is null so for now the payments are 15000 - use page paymentIntent.js to set amount - also basket where it is originally sent
+
 sign out button - cant sign in multiple of times
 
 when you click checkout, and you dont have an account - give user option to login or sign-up
