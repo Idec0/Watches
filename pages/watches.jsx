@@ -18,6 +18,8 @@ function LoadPage() {
 
 /* TODO:
 
+work on admin table discounts - css
+
 work on checkout page
 
 view purchase history
@@ -34,11 +36,13 @@ error happens when you click on watch image in basket
 
 quantity to basket
 
-ability to add sales / discounts - staff only
+admin panel - ability to add sales / discounts
 
-move brands data to database - edit watches and brands
+admin panel - edit watches and discounts
 
 when you login through checkout - make it take you back to checkout instead of home page
+
+purchasing items from basket should reset your basket
 
 test to see if the app can prevent SQL injections
 

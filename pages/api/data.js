@@ -10,6 +10,13 @@ export default async function handler(request, response) {
     if (!discountCode) {
       return response.status(400).json({ error: 'Discount code is required.' });
     }
+    // get all discounts
+    if(discountCode === "get_discounts"){
+      result = await client.query('SELECT * FROM discounts');
+      const discounts = result.rows;
+      return response.status(200).json(discounts);
+    }
+
     // add new watch
     if(discountCode.length > 10 && discountCode.slice(0, 10) === "brand_name"){
       const queryParams = new URLSearchParams(discountCode);

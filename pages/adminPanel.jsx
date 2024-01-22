@@ -6,6 +6,8 @@ import Navbar from "components/base.jsx";
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false); 
 
+  let discounts = []
+
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
@@ -16,9 +18,24 @@ function LoadPage() {
 
 function AdminPage() {
   const [title, setTitle] = useState("Admin Panel")
+  const [discounts, setdiscounts] = useState([])
 
-  const setDisplayTitle = (text) => {
+  const setDisplayTitle = async (text) => {
     setTitle(text);
+    if(text === "Edit Discounts"){
+        try {
+            // get discounts
+            const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_discounts")}`);
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const result = await response.json();
+            console.log(result);
+            setdiscounts(result);
+          }catch (error) {
+            console.error('Error fetching data:', error);
+          }
+    }
   }
 
   const addNewWatch = async () => {
@@ -67,7 +84,17 @@ function AdminPage() {
               </>
             )}
             {title === "Edit Discounts" && (
-              <p></p>
+              discounts.map((discount) => (
+                <div className='discount-container'>
+                  {/* <p>Discount Code</p>
+                  <p>Discount Amount</p>
+                  <p>End Date</p> */}
+                    
+                  <p>{discount.discount_code}</p>
+                  <p>{discount.discount_amount}</p>
+                  <p>{discount.end_date}</p>
+                </div>
+              ))
             )}
           </div>
         </div>

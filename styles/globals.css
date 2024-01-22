@@ -417,3 +417,10 @@ input {
   background-color: #13204b;
   border-radius: 4px;
 }
+
+.discount-container {
+  display: flex;
+  margin: 0;
+  margin: 10px;
+  justify-content: space-evenly;
+}
