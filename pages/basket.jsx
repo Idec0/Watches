@@ -4,6 +4,7 @@ import 'styles/globals.css';
 import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
 import viewWatchURL from "pages/watches.jsx";
+import Link from 'next/link';
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
@@ -36,7 +37,8 @@ const Bin = (watch) => {
 function BasketPage() {
   const [total, setTotal] = useState(0);
   const [basketItems, setBasketItems] = useState([]);
-  const [discountAmount, setDiscountAmount] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);  
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -50,6 +52,10 @@ function BasketPage() {
       });
 
       setTotal(calculatedTotal);
+    }
+
+    if (typeof window !== 'undefined') {
+      setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
     }
   }, []);
 
@@ -148,10 +154,18 @@ function BasketPage() {
               <p>Total: £{total.toFixed(2)}</p>
               <p>Discount: {discountAmount}%</p>
               <p>New Total: £{(total - (total * (discountAmount / 100))).toFixed(2)}</p>
-              <input type="text" id="discountInput" placeholder="Apply Discount Code:" onKeyDown={checkKeyDown} style={{ textAlign: "center", color: "black" }} />
-              <a href='/checkout' amount='{{(total - (total * (discountAmount / 100))).toFixed(2)}}'>
+              <input type="text" id="discountInput" placeholder="Apply Discount Code" onKeyDown={checkKeyDown} style={{ textAlign: "center", color: "black" }} />
+              {loggedIn === "false" && (
+              <Link href={"/login"}>
                 <button style={{ color: "black" }}>Proceed to Checkout</button>
-              </a>
+              </Link>
+            )}            
+              {loggedIn !== "false" && (
+                <Link href={`/checkout?amount=${(total - (total * (discountAmount / 100))).toFixed(2)}`}>
+                  <button style={{ color: "black" }}>Proceed to Checkout</button>
+                </Link>
+              )}
+              
             </div>
           )}
         </div>

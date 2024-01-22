@@ -1,12 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-
-const imgs = [];
+import { useRouter } from "next/router";
 
 const Navbar = ({ appVisible, setAppVisible }) => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  
+  const router = useRouter();
   const showCalc = () => {
     setAppVisible(!appVisible);
   };
+
+  const logout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("loggedIn", false);
+      router.push("/login");
+    }
+  }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
+    }
+  }, []); 
 
   return (
     <>
@@ -30,7 +45,22 @@ const Navbar = ({ appVisible, setAppVisible }) => {
               </li>
 
               <Link href={"/basket"}>🛒</Link>
-              <Link href={"/login"}>👤</Link>
+              {loggedIn === "false" && (
+              <li>
+                <Link href={"/login"}>👤</Link>
+              </li>
+            )}
+              {loggedIn !== "false" && (
+              <li>
+                <div className="dropdown">
+                  <p>👤</p>
+                  <div className="dropdown-content">
+                    <button type="button" onClick={() => logout()}>Logout</button>
+                  </div>
+                </div>
+              </li>
+            )}
+
             </ul>
           </div>
         </div>

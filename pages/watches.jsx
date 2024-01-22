@@ -18,12 +18,6 @@ function LoadPage() {
 
 /* TODO:
 
-amount is null so for now the payments are 15000 - use page checkout.jsx to set amount - also basket where it is originally sent
-
-sign out button - cant sign in multiple of times
-
-when you click checkout, and you dont have an account - give user option to login or sign-up
-
 when you login through checkout - make it take you back to checkout instead of home page
 
 view purchase history
@@ -54,13 +48,15 @@ website - https://watches-ruby.vercel.app
 e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
-Fixed hashed password not matching password even if its right
-When you login it takes you to the home page
-Add data validation to inputs - email must contain @ - email and username must be unique, password has to match confirm password, password must be at least 8 char to help keep user's password protected , username must be at least 4 char long, also no input field can be left blank. Every input field has a max char of 255 to stop users from over doing it also the database can only hold upto 255 char for each field to save memory so i can hold more data without having to update the storage
-Input validation - if changes are needed then it will display text to let the user know that they need to make changes
-Added a checkout page
-The checkout page includes a credit card form which checks if the credit card is real also when the user completes the payment form, it records the payment, so you can see how much was paid, and if it was successful or not - this was done through a third party called Stripe. - This took most of the time to get working. I set Stripe to testing so no payments are actual made, plus they give you a free credit card to test it with.
+amount is no longer null so now the payment is the price of the amount which also includes the discount
+Added a successful payment page
+You now can't order items unless you are logged in.
+You can now log out.
+when you click checkout, and you dont have an account, the page will redirect you to the login page
+fixed filter searchbar not working since I changed the dictionary due to the database being on vercel
+fixed filter searchbar duplicating boss watches
 */
+
 
 const WatchesPage = () => {
   const router = useRouter();
@@ -85,6 +81,7 @@ const WatchesPage = () => {
 
    // Parse the variable back into an array
    let imgs = variable ? variable.split(',') : [];
+   console.log(imgs);
   // end of code to pass a varibale through links
 
   // Wrap code that relies on client-side features in a check for window
@@ -241,15 +238,21 @@ const WatchesPage = () => {
   
 
   const filterImage = () => {
+    console.log(brands);
     imgs = filteredData
-      .map((brand) => brands[brand.toLowerCase()].map((watch) => watch[0]))
-      .flat();
+      .flatMap((brand) =>
+        brands
+          .filter((b) => b.brand_name.toLowerCase() === brand.toLowerCase())
+          .map((watch) => watch.image_url)
+      );
+    console.log(imgs);
     newURL();
   };
 
   const newURL = () => {
     // Construct the new query parameter with the updated variable
     const newQueryParams = new URLSearchParams(window.location.search);
+    console.log(imgs);
     newQueryParams.set("imgs", imgs.join(","))
 
     // Replace the current URL with the new query parameters
@@ -285,8 +288,9 @@ const WatchesPage = () => {
 
   const checkKeyDown = (e) => {
     const updatedValue = e.target.value;
+    
     setFilteredData(
-      data.filter((op) => op.toLowerCase().includes(updatedValue.toLowerCase()))
+      [...new Set(data.filter((op) => op.toLowerCase().includes(updatedValue.toLowerCase())))]
     );
     console.log(filteredData);
     setReload(true);
@@ -316,12 +320,12 @@ const WatchesPage = () => {
       );
       imgs = likedWatchImages;
       setFilteredData(
-        data.filter((op) => likedWatchImages.includes(brands[op.toLowerCase()]))
+        [...new Set(data.filter((op) => likedWatchImages.includes(brands[op.toLowerCase()])))]
       );
     } else {
       // If there are no liked watches, reset to display all watches
       imgs = imgList.flat(); // flatten the imgList array
-      setFilteredData(data);
+      setFilteredData([...new Set(data)]);
     }
 
     const updatedLikedWatches = imgs.reduce((acc, img, index) => {
@@ -340,7 +344,7 @@ const WatchesPage = () => {
 
   useEffect(() => {
     // Initially display all watches
-    setFilteredData(data);
+    setFilteredData([...new Set(data)]);
     // Save to localStorage whenever isRedArray changes
     localStorage.setItem("isRedArray", JSON.stringify(isRedArray));
   }, [isRedArray]);
@@ -414,7 +418,7 @@ const WatchesPage = () => {
             <option key={op}>{op}</option>
           ))}
         </datalist>
-        {<h1>{val}</h1>}
+        {/* {<h1>{val}</h1>} */}
       </div>
       <div className="watches-container row">
         {imgs.map((img, index) => (
