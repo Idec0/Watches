@@ -22,8 +22,6 @@ function IndexPage() {
     const LoginButtonClicked = async () => {
       var email = document.getElementById("email").value
       var password = document.getElementById("password").value
-      console.log(email);
-      console.log(password);
 
       // get email and password from user table
       try {
@@ -41,7 +39,8 @@ function IndexPage() {
         if(user !== "Unauthorized"){
           console.log("password correct");
           if (typeof window !== 'undefined') {
-            localStorage.setItem("loggedIn", true);        
+            localStorage.setItem("loggedIn", true);    
+            localStorage.setItem("admin", user.user[0].admin);              
           }
           window.location.href = "/";
         }

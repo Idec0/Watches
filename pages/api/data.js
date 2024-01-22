@@ -10,6 +10,21 @@ export default async function handler(request, response) {
     if (!discountCode) {
       return response.status(400).json({ error: 'Discount code is required.' });
     }
+    // add new watch
+    if(discountCode.length > 10 && discountCode.slice(0, 10) === "brand_name"){
+      const queryParams = new URLSearchParams(discountCode);
+      const brand_name = queryParams.get("brand_name");
+      const image_url = queryParams.get("image_url");
+      const product_name = queryParams.get("product_name");
+      const price = queryParams.get("price");
+      await client.query('BEGIN');
+      await client.query(
+        "INSERT INTO brands (brand_name, image_url, product_name, price) VALUES ($1, $2, $3, $4)",[brand_name, image_url, product_name, price]
+      );
+      await client.query('COMMIT')
+      return;
+    }
+
     // check if username is already taken
     if(discountCode.length > 13 && discountCode.slice(0, 13) === "usernameCheck"){
       const queryParams = new URLSearchParams(discountCode);

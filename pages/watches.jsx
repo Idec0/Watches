@@ -18,7 +18,7 @@ function LoadPage() {
 
 /* TODO:
 
-when you login through checkout - make it take you back to checkout instead of home page
+work on checkout page
 
 view purchase history
 
@@ -34,11 +34,11 @@ error happens when you click on watch image in basket
 
 quantity to basket
 
-user login / signup - add a page which is only for staff
-
 ability to add sales / discounts - staff only
 
-move brands data to database - also add ability to add / edit watches and brands
+move brands data to database - edit watches and brands
+
+when you login through checkout - make it take you back to checkout instead of home page
 
 test to see if the app can prevent SQL injections
 
@@ -52,9 +52,12 @@ amount is no longer null so now the payment is the price of the amount which als
 Added a successful payment page
 You now can't order items unless you are logged in.
 You can now log out.
+Turned login button into a drop down - which changes due to you being logged in and if you are admin.
 when you click checkout, and you dont have an account, the page will redirect you to the login page
 fixed filter searchbar not working since I changed the dictionary due to the database being on vercel
 fixed filter searchbar duplicating boss watches
+Started making the admin panel
+Added the ability to add a watch, through the admin panel
 */
 
 

@@ -346,6 +346,7 @@ input {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
   z-index: 1;
+  text-align: center;
 }
 
 .dropdown-content button {
@@ -354,4 +355,65 @@ input {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.admin-panel-container {
+  height: 100%;
+  background-color: #13204b;
+}
+
+.admin-panel-container button{
+  padding-top: 50px;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.item1 {
+  grid-area: text1;
+}
+
+.admin-panel-grid-container {
+  display: grid;
+  height: 80vh;
+  grid-template-columns: 20% 80%;
+  grid-template-areas:
+    "sidebar text1"
+    "sidebar text1"
+    "sidebar text1";
+  gap: 10px;
+  /* background-color: #2196f3; */
+  padding: 10px;
+  padding-left: 0;
+}
+
+.admin-panel-grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  font-size: 30px;
+}
+
+.admin-panel-details {
+  height: 100%;
+  background-color: #333;
+}
+
+.admin-panel-details u {
+  color: white;
+  margin-top: 10px;
+}
+
+.admin-panel-details input {
+  margin: 15px;
+  text-align: center;
+  width: 500px;
+}
+
+.admin-panel-details button {
+  margin: 15px;
+  text-align: center;
+  width: 500px;
+  background-color: #13204b;
+  border-radius: 4px;
 }

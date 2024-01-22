@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 const Navbar = ({ appVisible, setAppVisible }) => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [admin, setAdmin] = useState(false);
   
   const router = useRouter();
   const showCalc = () => {
@@ -20,6 +21,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
+      setAdmin(localStorage.getItem("admin") ? localStorage.getItem("admin") : false);
     }
   }, []); 
 
@@ -47,7 +49,12 @@ const Navbar = ({ appVisible, setAppVisible }) => {
               <Link href={"/basket"}>🛒</Link>
               {loggedIn === "false" && (
               <li>
-                <Link href={"/login"}>👤</Link>
+                <div className="dropdown">
+                  <p>👤</p>
+                  <div className="dropdown-content">
+                    <Link href={"/login"}>Login</Link>
+                  </div>
+                </div>
               </li>
             )}
               {loggedIn !== "false" && (
@@ -55,6 +62,9 @@ const Navbar = ({ appVisible, setAppVisible }) => {
                 <div className="dropdown">
                   <p>👤</p>
                   <div className="dropdown-content">
+                  {admin !== "false" && (
+                    <Link href={"/adminPanel"}>Admin Panel</Link>
+                  )}
                     <button type="button" onClick={() => logout()}>Logout</button>
                   </div>
                 </div>
