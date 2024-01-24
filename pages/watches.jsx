@@ -18,6 +18,8 @@ function LoadPage() {
 
 /* TODO:
 
+edit watches table is too big - delete button is of the page
+
 work on checkout page
 
 view purchase history
