@@ -17,6 +17,52 @@ export default async function handler(request, response) {
       return response.status(200).json(discounts);
     }
 
+    // save discount changes
+    if(discountCode.length > 21 && discountCode.slice(0, 21) === "save_discount_changes"){
+      const queryParams = new URLSearchParams(discountCode);
+      const discount_code = queryParams.get("discount_code");
+      const discount_amount = queryParams.get("discount_amount");
+      const end_date = queryParams.get("end_date");
+      console.log(discount_code);
+      console.log(discount_amount);
+      console.log(end_date);
+
+      var date = new Date(end_date);
+      var formattedDate = date.toDateString() + " " + date.toTimeString() + " GMT+0000 (Greenwich Mean Time)";
+      await client.query('BEGIN');
+      await client.query(
+        "UPDATE discounts SET discount_amount = $2, end_date = $3 WHERE discount_code = $1", [discount_code, discount_amount, date]
+      );
+      await client.query('COMMIT')
+      return;
+    }
+
+    // delete discount
+    if(discountCode.length > 15 && discountCode.slice(0, 15) === "delete_discount"){
+      const queryParams = new URLSearchParams(discountCode);
+      const discount_code = queryParams.get("delete_discount");
+      await client.query('BEGIN');
+      await client.query(
+        'DELETE FROM discounts WHERE discount_code = $1',[discount_code]
+      );
+      await client.query('COMMIT')
+      return response.status(200).json("Successful");
+    }
+
+    // add new discount
+    if(discountCode.length > 12 && discountCode.slice(0, 12) === "add_discount"){
+      const queryParams = new URLSearchParams(discountCode);
+      const discount_code = queryParams.get("discount_code");
+      const discount_amount = queryParams.get("discount_amount");
+      const end_date = queryParams.get("end_date");
+      await client.query('BEGIN');
+      await client.query(
+        "INSERT INTO discounts (discount_code, discount_amount, end_date) VALUES ($1, $2, $3)",[discount_code, discount_amount, end_date]
+      );
+      await client.query('COMMIT')
+      return response.status(200).json("Successful");
+    }
+
     // add new watch
     if(discountCode.length > 10 && discountCode.slice(0, 10) === "brand_name"){
       const queryParams = new URLSearchParams(discountCode);
@@ -29,7 +75,7 @@ export default async function handler(request, response) {
         "INSERT INTO brands (brand_name, image_url, product_name, price) VALUES ($1, $2, $3, $4)",[brand_name, image_url, product_name, price]
       );
       await client.query('COMMIT')
-      return;
+      return response.status(200).json("Successful");
     }
 
     // check if username is already taken

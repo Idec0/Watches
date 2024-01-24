@@ -18,8 +18,6 @@ function LoadPage() {
 
 /* TODO:
 
-work on admin table discounts - css
-
 work on checkout page
 
 view purchase history
@@ -36,9 +34,9 @@ error happens when you click on watch image in basket
 
 quantity to basket
 
-admin panel - ability to add sales / discounts
+admin panel - ability to add sales (Maybe)
 
-admin panel - edit watches and discounts
+admin panel - edit watches
 
 when you login through checkout - make it take you back to checkout instead of home page
 
@@ -52,16 +50,12 @@ website - https://watches-ruby.vercel.app
 e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
-amount is no longer null so now the payment is the price of the amount which also includes the discount
-Added a successful payment page
-You now can't order items unless you are logged in.
-You can now log out.
-Turned login button into a drop down - which changes due to you being logged in and if you are admin.
-when you click checkout, and you dont have an account, the page will redirect you to the login page
-fixed filter searchbar not working since I changed the dictionary due to the database being on vercel
-fixed filter searchbar duplicating boss watches
-Started making the admin panel
-Added the ability to add a watch, through the admin panel
+Displayed discounts in the admin panel
+Added css to the discount page
+added the ability to change the amount and end date on discount - this also changes and saves the data in the database
+You can now add and delete discounts
+You can now view all watches
+I started on editing watches but brands is undefined
 */
 
 
