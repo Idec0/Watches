@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { loadStripe } from '@stripe/stripe-js';
 
 import { useStripe, useElements, CardElement, Elements } from "@stripe/react-stripe-js";
+import Link from 'next/link';
 
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
@@ -16,15 +17,15 @@ function LoadPage() {
   const [appVisible, setAppVisible] = useState(false); 
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex min-h-screen flex-col items-center p-24">      
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-      <CheckoutPage amount={amount} />
+      <CheckoutPage />
     </main>
   );
 }
 
 function CheckoutPage() {
-  const router = useRouter();
+  const [basketItems, setBasketItems] = useState([]);
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
@@ -38,12 +39,69 @@ function CheckoutPage() {
 
   // end of code to pass a varibale through links
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedBasket = localStorage.getItem("Basket");
+      
+      const parsedBasket = JSON.parse(storedBasket) || [];
+      setBasketItems(parsedBasket);
+    }
+  }, []);
+
   return (
     <main>
-      <p>Checkout Page</p>
-      <Elements stripe={stripePromise}>
-        <CheckoutForm amount={ amount } />
-      </Elements>
+      {/* <p>Checkout Page</p> */}
+      <div className='checkout-grid-container'>
+        <div className='payment'>
+          <div className='payment-container'>
+            <div className='payment-container-input'>
+              <input placeholder='Address Line 1'></input>
+              <input placeholder='Address Line 2'></input>
+              <input placeholder='Town/City'></input>
+              <input placeholder='Postcode'></input>
+            </div>
+          </div>
+        </div>
+        <div className='items'>
+          <div className='order-summary-container'>
+            <h1><u>Order Summary</u></h1>
+            {basketItems.map((watch, index) => (
+              <div className="order-summary-grid-container" key={index}>
+                <div style={{margin: 'auto'}}>
+                  <img
+                    className="watch"
+                    src={watch[4]}
+                    alt={watch[2]}
+                    onClick={() => viewWatchURL(watch)}
+                    style={{ cursor: "pointer", height: "150px", width: "150px" }}
+                  />
+                </div>
+                <div className="watchName">
+                  <h1>
+                    <u>
+                      <b style={{fontSize: '24px'}}>{watch[2]}</b>
+                    </u>
+                  </h1>
+                  <p>£{watch[3]}</p>
+                </div>                
+              </div>
+            ))}
+            <div className="price">
+              <p>Total: £{amount}</p>
+              <Link href={`/checkout?amount=${amount}`}>
+                <button style={{ color: "black" }}>Place Order</button>
+              </Link>                    
+            </div>
+          <div className='paymentDetails'>
+              <div className='payment-container-items'>
+                <Elements stripe={stripePromise}>
+                  <CheckoutForm amount={ amount } />
+                </Elements>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      
     </main>
   );
 }
@@ -75,6 +133,7 @@ const CheckoutForm = ({amount}) => {
     };
 
     fetchClientSecret();
+
   }, []);
 
   const cardElementOptions = {

@@ -211,6 +211,38 @@ input {
   margin-top: 30px;
 }
 
+.goTobasket-container {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.goTobasket {
+  display: grid;
+  width: 30%;
+  height: 30%;
+  background-color: lightblue;
+  position: absolute;
+}
+
+.goTobasket button {
+  background-color: paleturquoise;
+  height: 30%;
+  width: 30%;
+  padding: 0;
+  margin: auto;
+  text-align: center;
+}
+
+.goTobasket p {
+  text-align: center;
+}
+
+.goTobasket p:first-child {
+  margin-top: auto;
+}
+
 /* basket page */
 
 .item1 {
@@ -403,7 +435,8 @@ input {
 
 .admin-panel-details {
   height: 100%;
-  background-color: #333;
+  background-color: #333;  
+  padding-bottom: 10px;
 }
 
 .admin-panel-details u {
@@ -437,7 +470,7 @@ input {
   display: flex;
   margin: 0;
   margin: 10px;
-  justify-content: space-evenly;
+  justify-content: space-evenly;  
 }
 
 table {
@@ -454,4 +487,100 @@ td, th{
 
 tr {
   height: 30px;
+}
+
+.items {
+  grid-area: items;
+}
+
+.payment {
+  grid-area: payment;
+  display: flex;
+  align-items: center;
+}
+
+.payment-container {
+  height: auto;
+  padding: 10px;
+  width: 60%;
+  background-color: lightblue;
+  margin: 50px auto;
+}
+
+.payment-container-input {
+  align-content: center;
+}
+
+.payment-container-input input {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.order-summary-container {
+  height: auto;
+  width: 80%;
+  background-color: lightblue;
+  margin: 50px auto; 
+}
+
+.payment-container-items {
+  position: relative;
+  top: 50px;
+  margin-top: 10px;
+  padding: 10px 70px;
+  background-color: lightblue;
+}
+
+.checkout-grid-container {
+  display: grid;
+  height: 80vh;
+  grid-template-columns: 50% 50%;
+  grid-template-areas:
+    "payment items"
+    "payment items"
+    "payment items";
+}
+
+.checkout-grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  font-size: 30px;
+}
+
+.watch {
+  grid-area: watch;
+}
+
+.watchName {
+  grid-area: watchName;
+}
+
+.paymentDetails {
+  grid-area: paymentDetails;
+}
+
+.price {
+  grid-area: price;
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+}
+
+.order-summary-grid-container {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-template-areas:
+    "watch watchName"
+    "price price"
+    "paymentDetails paymentDetails";
+  /* background-color: #2196f3; */
+}
+
+.order-summary-grid-container > div {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  text-align: center;
+  padding: 5px 0;
+  font-size: 24px;
 }

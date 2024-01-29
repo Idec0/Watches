@@ -18,7 +18,7 @@ function LoadPage() {
 
 /* TODO:
 
-brand name is undefined when editing on admin panel
+navbar layout - login icon on the far right or have all in the middle
 
 work on checkout page
 
@@ -26,19 +26,15 @@ view purchase history
 
 save payment method
 
-stripe.com to check payment method
-
 liked watches reset to non when you click on a page which isnt watches or likedWatches, try saving it to local storage instead of useState
-
-make the watches display in alphabetical order due to name - add it for their brand when I add forms for new brands
 
 error happens when you click on watch image in basket
 
-quantity to basket
+quantity to basket - when you add the same item from view basket it adds one to quantity
 
 admin panel - ability to add sales (Maybe)
 
-admin panel - edit watches
+admin panel - view customer accounts (Maybe) - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
 
 when you login through checkout - make it take you back to checkout instead of home page
 
@@ -47,6 +43,7 @@ purchasing items from basket should reset your basket
 css to make the website better on mobile
 
 test to see if the app can prevent SQL injections
+
 
 stripe (Track Payments) - https://dashboard.stripe.com/test/products?active=true
 
@@ -58,7 +55,13 @@ Changed css style on every page since I didn't relize the default zoom was on 15
 I set a max-width on the watches page so only up to 5 watches can be displayed on each line instead of 6, this means theres a larger white spacing therefore all the content is in the center so no matter where the user looks they will always be drawn to the center of the page, which is where the content is displayed
 I have tried to change the height of each row in the table but failed, the reason it won't change is due to the display being table-row but i can't change it to anything else since it messses up the whole table
 Fixed edit watches table being too big
-if you hover over ... for image url it will display the whole url
+If you hover over ... for image url it will display the whole url
+Fixed brand name being undefined when editing on admin panel
+fixed basket item displaying in the middle of the page if there was only one item
+Admin panel is done for now until I find other things to add - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend certain accounts, i might also think about adding the ability to add sales which applies to all watches automatically
+Watches display in alphabetical order due to brand name and product name
+Done some styling on the checkout page
+when you add to basket it gives you a choice to go to your basket or continue shopping 
 */
 
 
@@ -107,8 +110,6 @@ const WatchesPage = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
-
-      console.log(result.discounts);
 
       // Store the result in localStorage
       setBrands(result.discounts);
@@ -202,7 +203,12 @@ const WatchesPage = () => {
   }
   
   if (brands && typeof brands === 'object'  && Object.keys(brands).length > 0) {
-    const brandsArray = brands ? Object.entries(brands) : [];
+
+    // Sort the array by brand_name and product name
+    const sortedProductName = brands.sort((a, b) => a.product_name.localeCompare(b.product_name));
+    const sortedBrands = sortedProductName.sort((a, b) => a.brand_name.localeCompare(b.brand_name));
+
+    const brandsArray =  sortedBrands ? Object.entries(sortedBrands) : [];
 
     for (const [brandKey, brandData] of brandsArray) {
       const { brand_name, image_url, product_name, price } = brandData;
@@ -242,21 +248,18 @@ const WatchesPage = () => {
   
 
   const filterImage = () => {
-    console.log(brands);
     imgs = filteredData
       .flatMap((brand) =>
         brands
           .filter((b) => b.brand_name.toLowerCase() === brand.toLowerCase())
           .map((watch) => watch.image_url)
       );
-    console.log(imgs);
     newURL();
   };
 
   const newURL = () => {
     // Construct the new query parameter with the updated variable
     const newQueryParams = new URLSearchParams(window.location.search);
-    console.log(imgs);
     newQueryParams.set("imgs", imgs.join(","))
 
     // Replace the current URL with the new query parameters
@@ -296,14 +299,12 @@ const WatchesPage = () => {
     setFilteredData(
       [...new Set(data.filter((op) => op.toLowerCase().includes(updatedValue.toLowerCase())))]
     );
-    console.log(filteredData);
     setReload(true);
   };
   
 
   useEffect(() => {
     const handleReload = () => {
-      console.log("Reload");
       setReload(false);
       filterImage();
       newURL();
@@ -356,7 +357,6 @@ const WatchesPage = () => {
   useEffect(() => {  
     if (typeof window !== 'undefined') {
       if (imgs.length === 0) {
-        console.log("imgs empty");
         localStorage.setItem("loadLikedWatches", "false");
         showFav(false);
       } else if (imgs[0] === "showFav") {
@@ -439,11 +439,8 @@ const WatchesPage = () => {
               <img src={img} alt={`Watch ${index}`} />
               <div className="center">        
                 <h1>
-                  <b>
-                    {imagePositionMap[img]
-                      ? imagePositionMap[img][1]?.charAt(0).toUpperCase() +
-                        imagePositionMap[img][1]?.slice(1)
-                      : "N/A"}{" "}
+                  <b style={{textTransform: 'capitalize'}}>
+                  {imagePositionMap[img] ? imagePositionMap[img][1] : "N/A"}{" "}
                   </b>
                 </h1>
                 <p>

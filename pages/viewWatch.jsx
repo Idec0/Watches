@@ -17,8 +17,10 @@ function LoadPage() {
 
 function ViewWatchPage() {
   const [img, setImg] = useState([]);
+  const [goToBasketElement, setGoToBasketElement] = useState(null);
 
   let variable;
+
 
   if (typeof window !== "undefined") {
     const search = window.location.search;
@@ -29,6 +31,7 @@ function ViewWatchPage() {
     if (variable) {
       setImg(variable.split(","));
     }
+    setGoToBasketElement("none");
   }, [variable]);
 
   const AddToBasket = (watchPos) => {
@@ -45,27 +48,46 @@ function ViewWatchPage() {
       localStorage.setItem("Basket", JSON.stringify(basketList));
       console.log(localStorage.getItem("Basket"));
     }
+    var element = document.getElementById("goTobasket-container");    
+    element.style.display = "flex";
+    setGoToBasketElement(element.style.display);
   };
+
+  const continueShopping = () => {
+    var element = document.getElementById("goTobasket-container");    
+    element.style.display = "none";
+    setGoToBasketElement(element.style.display);
+  }
 
   return (
     <main>
-      <img className="displayWatch" src={img[4]} alt="Watch"></img>
-      <div className="displayWatchInfo">
-        <h1>
-          <u>
-            <b>
-              {img[1]
-                ? img[1].charAt(0).toUpperCase() + img[1].slice(1)
-                : "N/A"}{" "}
-            </b>
-          </u>
-        </h1>
-        <p>{img[2]}</p>
-        <p>£{img[3]}</p>
-        <button style={{ color: "black" }} onClick={() => AddToBasket(img)}>
-          Add To Basket
-        </button>
+      <div id="goTobasket-container" className='goTobasket-container'>
+        <div className='goTobasket'>
+          <p>Item added to your basket</p>
+          <button>Go To Basket</button>
+          <p onClick={() => continueShopping()}><u style={{cursor: 'pointer'}}>Continue Shopping</u></p>
+        </div>
       </div>
+      
+      {goToBasketElement === "none" && (
+        <>
+          <img className="displayWatch" src={img[4]} alt="Watch"></img>
+          <div className="displayWatchInfo">
+            <h1>
+              <u>
+                <b style={{textTransform: 'capitalize'}}>
+                  {img ? img[1] : "N/A"}{" "}
+                </b>
+              </u>
+            </h1>
+            <p>{img[2]}</p>
+            <p>£{img[3]}</p>
+            <button style={{ color: "black" }} onClick={() => AddToBasket(img)}>
+              Add To Basket
+            </button>
+          </div>
+        </>
+      )}
     </main>
   );
 }
