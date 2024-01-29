@@ -226,8 +226,7 @@ function AdminPage() {
     }else{
       discountElement.innerHTML = "Save";
       discountDeleteElement.style.display = 'block';
-
-      discountType.push(watch.brand);
+      discountType.push(watch.brand_name);
       discountType.push(watch.image_url);
       discountType.push(watch.price);
 
@@ -260,21 +259,21 @@ function AdminPage() {
           <div className='admin-panel-details'>
             <h1><u>{ title }</u></h1>
             {title === "Edit Watches" && (
-              <table>
+              <table style={{margin: 'auto 50px'}}>
                 <tr>
                   <th>Product Name</th>
                   <th>Brand</th>
                   <th>Image Url</th>
-                  <th>Price</th>
+                  <th>Price (£)</th>
                 </tr>
                 {watches.map((watch) => (
                   <tr key={watch.product_name}>
                     <td>{watch.product_name}</td>
                     <td id={`${watch.product_name} brand`}>{watch.brand_name}</td>
-                    <td id={`${watch.product_name} image_url`}>...</td>
+                    <td id={`${watch.product_name} image_url`} title={watch.image_url}>...</td>
                     <td id={`${watch.product_name} price`}>{watch.price}</td>
-                    <button onClick={() => editWatch(watch)} style={{width: '150px'}} id={watch.product_name}>Edit</button>
-                    <button onClick={() => deleteWatch(watch)} style={{width: '150px', color: 'red', display: 'none'}} id={`${watch.product_name} delete`}>Delete</button>
+                    <button onClick={() => editWatch(watch)} style={{width: '150px', marginLeft: '10px'}} id={watch.product_name}>Edit</button>
+                    <button onClick={() => deleteWatch(watch)} style={{width: '150px', color: 'red', display: 'none', marginLeft: '10px'}} id={`${watch.product_name} delete`}>Delete</button>
                   </tr>
                 ))}
               </table>
@@ -300,8 +299,8 @@ function AdminPage() {
                     <td>{discount.discount_code}</td>
                     <td id={`${discount.discount_code} amount`}>{discount.discount_amount}</td>
                     <td id={`${discount.discount_code} date`}>{new Date(discount.end_date).toISOString().split('T')[0]}</td>
-                    <button onClick={() => editDiscount(discount)} style={{width: '150px'}} id={discount.discount_code}>Edit</button>
-                    <button onClick={() => deleteDiscount(discount)} style={{width: '150px', color: 'red', display: 'none'}} id={`${discount.discount_code} delete`}>Delete</button>
+                    <button onClick={() => editDiscount(discount)} style={{width: '150px', marginLeft: '10px'}} id={discount.discount_code}>Edit</button>
+                    <button onClick={() => deleteDiscount(discount)} style={{width: '150px', color: 'red', display: 'none', marginLeft: '10px'}} id={`${discount.discount_code} delete`}>Delete</button>
                   </tr>
                 ))}
               </table>

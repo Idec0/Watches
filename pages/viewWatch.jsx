@@ -8,7 +8,7 @@ function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
 
   return (
-    <main className="flex min-h-screen flex-col justify-between p-24">
+    <main className="flex min-h-screen flex-col p-24">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
       <ViewWatchPage />
     </main>
@@ -50,7 +50,7 @@ function ViewWatchPage() {
   return (
     <main>
       <img className="displayWatch" src={img[4]} alt="Watch"></img>
-      <div className="flex flex-col items-center justify-between">
+      <div className="displayWatchInfo">
         <h1>
           <u>
             <b>

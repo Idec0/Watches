@@ -18,7 +18,7 @@ function LoadPage() {
 
 /* TODO:
 
-edit watches table is too big - delete button is of the page
+brand name is undefined when editing on admin panel
 
 work on checkout page
 
@@ -44,6 +44,8 @@ when you login through checkout - make it take you back to checkout instead of h
 
 purchasing items from basket should reset your basket
 
+css to make the website better on mobile
+
 test to see if the app can prevent SQL injections
 
 stripe (Track Payments) - https://dashboard.stripe.com/test/products?active=true
@@ -52,12 +54,11 @@ website - https://watches-ruby.vercel.app
 e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
-Displayed discounts in the admin panel
-Added css to the discount page
-added the ability to change the amount and end date on discount - this also changes and saves the data in the database
-You can now add and delete discounts
-You can now view all watches
-I started on editing watches but brands is undefined
+Changed css style on every page since I didn't relize the default zoom was on 150% so if i use it on another web browser it doesn't look right
+I set a max-width on the watches page so only up to 5 watches can be displayed on each line instead of 6, this means theres a larger white spacing therefore all the content is in the center so no matter where the user looks they will always be drawn to the center of the page, which is where the content is displayed
+I have tried to change the height of each row in the table but failed, the reason it won't change is due to the display being table-row but i can't change it to anything else since it messses up the whole table
+Fixed edit watches table being too big
+if you hover over ... for image url it will display the whole url
 */
 
 

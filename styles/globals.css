@@ -135,6 +135,7 @@ input {
   flex-wrap: wrap;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
+  max-width: 1400px;
 }
 
 /*
@@ -200,6 +201,14 @@ input {
   height: 400px;
   width: 400px;
   float: left;
+  margin-top: 30px;
+}
+
+.displayWatchInfo {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 30px;
 }
 
 /* basket page */
@@ -223,16 +232,14 @@ input {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 33% 33% 33%;
+  grid-template-columns: 25% 42% 33%;
   grid-template-areas:
     "watches text1 footer"
     "watches text1 ..."
     "watches text1 ...";
-  gap: 10px;
   /* background-color: #2196f3; */
-  padding: 10px;
+  padding: 20px 0;
   padding-left: 0;
-  padding-right: 7px;
 }
 
 .grid-container > div {
@@ -400,22 +407,30 @@ input {
 }
 
 .admin-panel-details u {
-  color: white;
+  color: white;  
   margin-top: 10px;
 }
 
+.admin-panel-details h1 {
+  padding-top: 30px;
+}
+
 .admin-panel-details input {
-  margin: 15px;
+  margin: 50px auto;
   text-align: center;
-  width: 500px;
+  width: 700px;
+  padding: 10px;
+  display: block;
 }
 
 .admin-panel-details button {
-  margin: 15px;
+  margin: 50px auto;
   text-align: center;
-  width: 500px;
+  width: 700px;
+  padding: 10px;
   background-color: #13204b;
   border-radius: 4px;
+  display: block;
 }
 
 .discount-container {
@@ -434,9 +449,9 @@ td, th{
   border: 1px solid #ffffff;
   padding: 8px;
   text-align: center;
+  height: 30px;
 }
 
-.td {
-  display: block;
-  border: 0px solid #ffffff;
+tr {
+  height: 30px;
 }
