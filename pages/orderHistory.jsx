@@ -17,11 +17,21 @@ function LoadPage() {
 
 function OrderHistoryPage() {
   const [orders, setOrders] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
+    }
+
+  }, []);
 
   const displayOrders = async () => {
     try {
       // get discounts
-      const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_orders")}`);
+      var user = {getOrders: loggedIn}
+      const queryParams = new URLSearchParams(user).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

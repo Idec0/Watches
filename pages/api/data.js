@@ -17,8 +17,10 @@ export default async function handler(request, response) {
       return response.status(200).json(discounts);
     }
     // get all orders
-    if(discountCode === "get_orders"){
-      result = await client.query('SELECT * FROM orders');
+    if(discountCode.length > 9 && discountCode.slice(0, 9) === "getOrders"){
+      const queryParams = new URLSearchParams(discountCode);
+      const user = queryParams.get("getOrders");
+      const result = await client.query('SELECT * FROM orders WHERE user = $1', [user]);
       const orders = result.rows;
       return response.status(200).json(orders);
     }

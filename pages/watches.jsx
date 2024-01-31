@@ -20,6 +20,8 @@ function LoadPage() {
 
 navbar layout - login icon on the far right or have all in the middle
 
+fix view order history not displaying certain users orders
+
 view products only shows product for that user
 
 work on checkout page
