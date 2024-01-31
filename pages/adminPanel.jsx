@@ -93,13 +93,7 @@ function AdminPage() {
 
 
       for (let i = 0; i < elements.length; i++) {
-        var tdElement = document.createElement("td");
-    
-        tdElement.className = "td";
-        tdElement.innerHTML = discountType[i];
-
-        elements[i].innerHTML = "";
-        elements[i].appendChild(tdElement);
+        elements[i].innerHTML = discountType[i];
       }
 
       // save changes
@@ -181,9 +175,6 @@ function AdminPage() {
     var discountDeleteElement = document.getElementById(`${watch.product_name} delete`);
 
     let elements = [];
-    console.log(discountBrandElement);
-    console.log(discountImgElement);
-    console.log(discountPriceElement);
     elements.push(discountBrandElement);
     elements.push(discountImgElement);
     elements.push(discountPriceElement);
@@ -195,18 +186,12 @@ function AdminPage() {
       discountDeleteElement.style.display = 'none';
 
       discountType.push(discountBrandElement.children[0].value);
-      discountType.push(discountImgElement.children[0].value);
+      discountType.push("...");
       discountType.push(discountPriceElement.children[0].value);
 
 
       for (let i = 0; i < elements.length; i++) {
-        var tdElement = document.createElement("td");
-    
-        tdElement.className = "td";
-        tdElement.innerHTML = discountType[i];
-
-        elements[i].innerHTML = "";
-        elements[i].appendChild(tdElement);
+        elements[i].innerHTML = discountType[i];
       }
 
       // save changes

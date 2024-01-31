@@ -2,10 +2,10 @@
 import 'styles/globals.css';
 import React, { useEffect } from "react";
 import { useState } from "react";
-import Navbar from "components/base.jsx";
-import { useRouter } from "next/navigation";
+//import Navbar from "components/base.jsx";
 
 import { loadStripe } from '@stripe/stripe-js';
+import { useRouter } from 'next/router';
 
 import { useStripe, useElements, CardElement, Elements } from "@stripe/react-stripe-js";
 import Link from 'next/link';
@@ -13,19 +13,26 @@ import Link from 'next/link';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-function LoadPage() {
-  const [appVisible, setAppVisible] = useState(false); 
+// function LoadPage() {
+//   const [appVisible, setAppVisible] = useState(false); 
 
-  return (
-    <main className="flex min-h-screen flex-col items-center p-24">      
-      <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-      <CheckoutPage />
-    </main>
-  );
-}
+//   return (
+//     <main className="flex min-h-screen flex-col items-center p-24">      
+//       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
+//       <CheckoutPage />
+//     </main>
+//   );
+// }
 
 function CheckoutPage() {
   const [basketItems, setBasketItems] = useState([]);
+  const [productItems, setProductItems] = useState([]);
+  const [addressLine1Text, setAddressLine1Text] = useState('');
+  const [addressLine2Text, setAddressLine2Text] = useState('');
+  const [cityText, setCityText] = useState('');
+  const [postcodeText, setPostcodeText] = useState('');
+  const [price, setPrice] = useState(0);
+
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
@@ -34,18 +41,25 @@ function CheckoutPage() {
   // Access the search part of the URL, e.g., '?param1,param2,param3'
   const search = isClient ? window.location.search : '';
 
-   // Extract the variable from the search
-   const amount = isClient ? new URLSearchParams(search).get('amount') : '';
+  // Extract the variable from the search
+  const amount = isClient ? new URLSearchParams(search).get('amount') : '';
 
   // end of code to pass a varibale through links
-
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedBasket = localStorage.getItem("Basket");
       
       const parsedBasket = JSON.parse(storedBasket) || [];
       setBasketItems(parsedBasket);
+
+      var products = [];
+
+      for (var i = 0; i < parsedBasket.length; i++) {              
+        products.push(parsedBasket[i][2]);
+      }
+      setProductItems(products);
     }
+    setPrice(amount?amount:0);
   }, []);
 
   return (
@@ -53,17 +67,21 @@ function CheckoutPage() {
       {/* <p>Checkout Page</p> */}
       <div className='checkout-grid-container'>
         <div className='payment'>
-          <div className='payment-container'>
-            <div className='payment-container-input'>
-              <input placeholder='Address Line 1'></input>
-              <input placeholder='Address Line 2'></input>
-              <input placeholder='Town/City'></input>
-              <input placeholder='Postcode'></input>
+          <div className='order-summary-container'>
+            <div className='order-summary-container-input'>
+              <input placeholder='Address Line 1' id="addressLine1"></input>
+              <p className = 'login-right-content-p'>{addressLine1Text}</p>
+              <input placeholder='Address Line 2' id="addressLine2"></input>
+              <p className = 'login-right-content-p'>{addressLine2Text}</p>
+              <input placeholder='Town/City' id="city"></input>
+              <p className = 'login-right-content-p'>{cityText}</p>
+              <input placeholder='Postcode' id="postcode"></input>
+              <p className = 'login-right-content-p'>{postcodeText}</p>
             </div>
           </div>
         </div>
         <div className='items'>
-          <div className='order-summary-container'>
+          <div className='payment-container'>
             <h1><u>Order Summary</u></h1>
             {basketItems.map((watch, index) => (
               <div className="order-summary-grid-container" key={index}>
@@ -87,15 +105,22 @@ function CheckoutPage() {
               </div>
             ))}
             <div className="price">
-              <p>Total: £{amount}</p>
-              <Link href={`/checkout?amount=${amount}`}>
+              <p>Total: £{price}</p>
+              <Link href={`/checkout?amount=${price}`}>
                 <button style={{ color: "black" }}>Place Order</button>
               </Link>                    
             </div>
           <div className='paymentDetails'>
               <div className='payment-container-items'>
                 <Elements stripe={stripePromise}>
-                  <CheckoutForm amount={ amount } />
+                  <CheckoutForm 
+                    amount={amount}
+                    setAddressLine1Text={setAddressLine1Text}
+                    setAddressLine2Text={setAddressLine2Text}
+                    setCityText={setCityText}
+                    setPostcodeText={setPostcodeText} 
+                    basketItems={productItems}
+                  />
                 </Elements>
               </div>
             </div>
@@ -107,16 +132,18 @@ function CheckoutPage() {
 }
 
 // credit card layout
-const CheckoutForm = ({amount}) => {
+const CheckoutForm = ({ amount, setAddressLine1Text, setAddressLine2Text, setCityText, setPostcodeText, basketItems }) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [clientSecret, setClientSecret] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     // Fetch client secret from your server
     const amount_num = Number(amount);
-    console.log(amount_num);
+    setPrice(amount_num);
     const fetchClientSecret = async () => {
       const response = await fetch("/api/paymentIntent", {
         method: "POST",
@@ -132,6 +159,10 @@ const CheckoutForm = ({amount}) => {
       setClientSecret(data.clientSecret);
     };
 
+    if (typeof window !== 'undefined') {
+      setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
+    }
+
     fetchClientSecret();
 
   }, []);
@@ -141,14 +172,62 @@ const CheckoutForm = ({amount}) => {
   };
 
   const handlePayment = async (event) => {
-    event.preventDefault();
+    // address validation
+    var addressLine1 = document.getElementById("addressLine1");
+    var addressLine2 = document.getElementById("addressLine2");
+    var city = document.getElementById("city");
+    var postcode = document.getElementById("postcode");
+    setAddressLine1Text("");
+    setAddressLine2Text("");
+    setCityText("");
+    setPostcodeText("");
+    if(addressLine1.value === ""){
+      setAddressLine1Text("Can't be left blank!");
+      return;
+    }
+    if(addressLine2.value === ""){
+      setAddressLine2Text("Can't be left blank!");
+      return;
+    }
+    if(city.value === ""){
+      setCityText("Can't be left blank!");
+      return;
+    }
+    if(postcode.value === ""){
+      setPostcodeText("Can't be left blank!");
+      return;
+    }
+    if(postcode.value.length < 7 || postcode.value.length > 9){
+      setPostcodeText("Postcode must be valid");
+      return;
+    }
+    // event.preventDefault();
 
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
       return;
     }
+    // add new order 
+    try {
+      var date = new Date();
+      var orderDate = date.toJSON().slice(0, 10);
 
+      date.setDate(date.getDate() + 14);
+      var deliveryDate = date.toJSON().slice(0, 10);
+
+      // add new user to database
+      var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: price, deliveryDate: deliveryDate}
+      const queryParams = new URLSearchParams(order).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    
+    // send card details
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -157,7 +236,6 @@ const CheckoutForm = ({amount}) => {
         },
       },
     });
-
     if (result.error) {
       console.error(result.error.message);
     } else {
@@ -170,12 +248,12 @@ const CheckoutForm = ({amount}) => {
   };
 
   return (
-    <form onSubmit={handlePayment}>
+    <>
       <CardElement options={cardElementOptions} />
-      <button type="submit" disabled={!stripe}>
+      <button type="submit" onClick={() => handlePayment()} disabled={!stripe}>
         Pay
       </button>
-    </form>
+    </>
   );
 };
 

@@ -65,7 +65,8 @@ const Navbar = ({ appVisible, setAppVisible }) => {
                   {admin !== "false" && (
                     <Link href={"/adminPanel"}>Admin Panel</Link>
                   )}
-                    <button type="button" onClick={() => logout()}>Logout</button>
+                    <a href={"/orderHistory"}><p style={{cursor: 'pointer'}}>History</p></a>
+                    <p style={{cursor: 'pointer'}} type="button" onClick={() => logout()}>Logout</p>
                   </div>
                 </div>
               </li>

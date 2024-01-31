@@ -16,6 +16,28 @@ export default async function handler(request, response) {
       const discounts = result.rows;
       return response.status(200).json(discounts);
     }
+    // get all orders
+    if(discountCode === "get_orders"){
+      result = await client.query('SELECT * FROM orders');
+      const orders = result.rows;
+      return response.status(200).json(orders);
+    }
+
+    // add new order
+    if(discountCode.length > 8 && discountCode.slice(0, 8) === "newOrder"){
+      const queryParams = new URLSearchParams(discountCode);
+      const user = queryParams.get("user");
+      const orderDate = queryParams.get("orderDate");
+      const products = queryParams.get("products");
+      const price = queryParams.get("price");
+      const deliveryDate = queryParams.get("deliveryDate");
+      await client.query('BEGIN');
+      await client.query(
+        'INSERT INTO orders ("user", orderDate, products, price, deliveryDate) VALUES ($1, $2, $3, $4, $5)',[user, orderDate, products, price, deliveryDate]
+      );
+      await client.query('COMMIT')
+      return response.status(200).json("Successful");
+    }
 
     // save discount changes
     if(discountCode.length > 21 && discountCode.slice(0, 21) === "save_discount_changes"){

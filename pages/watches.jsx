@@ -20,13 +20,13 @@ function LoadPage() {
 
 navbar layout - login icon on the far right or have all in the middle
 
-work on checkout page
+view products only shows product for that user
 
-view purchase history
+work on checkout page
 
 save payment method
 
-liked watches reset to non when you click on a page which isnt watches or likedWatches, try saving it to local storage instead of useState
+liked watches reset to non when you refreah the page -- narrowd it to be on line 333 - 339
 
 error happens when you click on watch image in basket
 
@@ -40,6 +40,8 @@ when you login through checkout - make it take you back to checkout instead of h
 
 purchasing items from basket should reset your basket
 
+admin can search for specific watch or discount instead of having to scroll down and find it in a table
+
 css to make the website better on mobile
 
 test to see if the app can prevent SQL injections
@@ -51,19 +53,17 @@ website - https://watches-ruby.vercel.app
 e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
-Changed css style on every page since I didn't relize the default zoom was on 150% so if i use it on another web browser it doesn't look right
-I set a max-width on the watches page so only up to 5 watches can be displayed on each line instead of 6, this means theres a larger white spacing therefore all the content is in the center so no matter where the user looks they will always be drawn to the center of the page, which is where the content is displayed
-I have tried to change the height of each row in the table but failed, the reason it won't change is due to the display being table-row but i can't change it to anything else since it messses up the whole table
-Fixed edit watches table being too big
-If you hover over ... for image url it will display the whole url
-Fixed brand name being undefined when editing on admin panel
-fixed basket item displaying in the middle of the page if there was only one item
-Admin panel is done for now until I find other things to add - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend certain accounts, i might also think about adding the ability to add sales which applies to all watches automatically
-Watches display in alphabetical order due to brand name and product name
-Done some styling on the checkout page
-when you add to basket it gives you a choice to go to your basket or continue shopping 
+Fixed the problem when you save changes in edit mode the text has a border and isn't center
+Fixed login and logout page styling
+Done more styling on checkout page
+Added validation on checkout page
+When user purchase an item it saves the data to the order table so i can use this detail for showing users purchase history
+You can now view your order history
+Made it so the products display in a list instead of displaying all on one line (Order History page)
+I spend most of my time making changes to css on pages, getting the products to save onto a table, also have input validations took a while to get working since i ran into many problems
+I have also spent alot of time researching about other shopping websites to see how I can improve on mine
+Tried to fix favourite watches - manage to narrow the problem down, refrshing the page resets all liked watches to unliked, but i found a way to make it so you can refresh the page without losing your liked watches but it displays the watches as null so I am trying to workout a solution for inbetween to make it work properly
 */
-
 
 const WatchesPage = () => {
   const router = useRouter();
@@ -88,7 +88,6 @@ const WatchesPage = () => {
 
    // Parse the variable back into an array
    let imgs = variable ? variable.split(',') : [];
-   console.log(imgs);
   // end of code to pass a varibale through links
 
   // Wrap code that relies on client-side features in a check for window
@@ -316,7 +315,7 @@ const WatchesPage = () => {
   }, [reload, filterImage, newURL]);
   
 
-  const showFav = (loadFav) => {
+  const showFav = (loadFav = true) => {
     console.log("isRedArray:", isRedArray);
     if (likedWatches.length > 0 && loadFav === true) {
       // If there are liked watches, update the imgs array and filteredData
@@ -334,7 +333,6 @@ const WatchesPage = () => {
     }
 
     const updatedLikedWatches = imgs.reduce((acc, img, index) => {
-      let watchPosition = imagePositionMap[imgs[index]][0];
       const imgIndex = imgList.flat().indexOf(img);
       if (likedWatches.includes(imgIndex)) {
         acc.push(imgIndex);
@@ -373,6 +371,7 @@ const WatchesPage = () => {
     }
   }, [loadingFavorites, imgs, showFav]);
 
+
   if (brands === null) {
     // stop infinite loading when recieving data
     imgList = [];
@@ -385,7 +384,6 @@ const WatchesPage = () => {
   const getImgStyle = (index) => {
     if (typeof window !== 'undefined' && localStorage) {
       if (localStorage.getItem("loadLikedWatches") === "true") {
-        console.log(localStorage.getItem("loadLikedWatches"));
         return isRedArray[likedWatches[index]]
           ? {}
           : { filter: "saturate(0%) hue-rotate(0deg)" };

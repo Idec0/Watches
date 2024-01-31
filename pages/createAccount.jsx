@@ -117,16 +117,16 @@ function IndexPage() {
     }
 
     return (
-      <main>
+      <main style={{width: '100%'}}>
         <div className='split-grid-container'>
-          <div className='item1'>
+          <div className='watchPic'>
             <Image
               src={watchImage}
               alt="Picture of Watch banner"
               width={600}
             />
           </div>
-          <div className='item2'>
+          <div className='input'>
             <div className='login-right-content signup-left-content'>              
               <input style={{marginTop: '0px'}} placeholder='Username' id="username"/>
               <p className = 'login-right-content-p'>{usernameText}</p>

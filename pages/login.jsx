@@ -39,7 +39,7 @@ function IndexPage() {
         if(user !== "Unauthorized"){
           console.log("password correct");
           if (typeof window !== 'undefined') {
-            localStorage.setItem("loggedIn", true);    
+            localStorage.setItem("loggedIn", user.user[0].username);    
             localStorage.setItem("admin", user.user[0].admin);              
           }
           window.location.href = "/";
@@ -54,16 +54,16 @@ function IndexPage() {
     }
 
     return (
-      <main>
+      <main style={{width: '100%'}}>
         <div className='split-grid-container'>
-          <div className='item1'>
+          <div className='watchPic'>
             <Image
               src={watchImage}
               alt="Picture of Watch banner"
               width={600}
             />
           </div>
-          <div className='item2'>
+          <div className='input'>
             <div className='login-right-content'>              
               <input placeholder='Email' type="email" id="email" />
               <input placeholder='Password' type='password' id="password" />

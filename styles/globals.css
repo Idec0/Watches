@@ -281,13 +281,22 @@ input {
   font-size: 30px;
 }
 
+.watchPic {
+  grid-area: watchPic;
+}
+
+.input {
+  grid-area: input;
+  margin: auto 0;
+}
+
 .split-grid-container {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 45% 55%;
   grid-template-areas:
-    "watches text1"
-    "watches text1"
-    "watches text1";
+    "watchPic input"
+    "watchPic input"
+    "watchPic input";
   gap: 10px;
   /* background-color: #2196f3; */
   padding: 10px;
@@ -305,10 +314,6 @@ input {
   width: 100%;
   text-align: center;
   margin: 25px 0;
-}
-
-.login-right-content input:first-child{
-  margin-top: 100px;
 }
 
 .login-right-content button{
@@ -525,10 +530,9 @@ tr {
 
 .payment-container-items {
   position: relative;
-  top: 50px;
-  margin-top: 10px;
   padding: 10px 70px;
   background-color: lightblue;
+  margin: 0px auto;
 }
 
 .checkout-grid-container {
@@ -583,4 +587,28 @@ tr {
   text-align: center;
   padding: 5px 0;
   font-size: 24px;
+}
+
+/* order summary */
+
+
+.order-summary-container {
+  height: auto;
+  padding: 20px;
+  width: auto;
+  background-color: lightblue;
+  margin: 50px auto;
+}
+
+.order-summary-container-input {
+  align-content: center;
+}
+
+.order-summary-container-input input {
+  text-align: center;
+}
+
+.order-summary-container-input p {
+  font-size: 16px;
+  color: red;
 }
