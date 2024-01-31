@@ -22,6 +22,7 @@ export default async function handler(request, response) {
       const user = queryParams.get("getOrders");
       const result = await client.query('SELECT * FROM orders WHERE user = $1', [user]);
       const orders = result.rows;
+      console.log(orders);
       return response.status(200).json(orders);
     }
 
