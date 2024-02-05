@@ -53,12 +53,14 @@ function AdminPage() {
   const addNewWatch = async () => {
     var brand_name = document.getElementById("brand_name").value
     var image_url = document.getElementById("image_url").value
+    var image_url2 = document.getElementById("image_url2").value
+    var image_url3 = document.getElementById("image_url3").value
     var product_name = document.getElementById("product_name").value
     var price = document.getElementById("price").value
 
     try {
-      // add new user to database
-      var watch = {brand_name: brand_name, image_url: image_url, product_name: product_name, price: price}
+      // add new watch to database
+      var watch = {brand_name: brand_name, image_url: image_url, image_url2: image_url2, image_url3: image_url3, product_name: product_name, price: price}
       const queryParams = new URLSearchParams(watch).toString();
       const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
       if (!response.ok) {
@@ -266,8 +268,10 @@ function AdminPage() {
             {title === "Add a New Watch" && (
               <>
                 <input placeholder='Brand' id="brand_name" />
-                <input placeholder='Image Url'id="image_url" />
                 <input placeholder='Product Name' id="product_name" />
+                <input placeholder='Main Image Url'id="image_url" />
+                <input placeholder='Image Url 2'id="image_url2" />
+                <input placeholder='Image Url 3'id="image_url3" />
                 <input placeholder='Price' id="price" />
                 <button onClick={() => addNewWatch()}>Add New Watch</button>
               </>

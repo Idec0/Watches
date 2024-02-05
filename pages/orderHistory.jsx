@@ -17,19 +17,19 @@ function LoadPage() {
 
 function OrderHistoryPage() {
   const [orders, setOrders] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
+      var username = localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false;
     }
+    displayOrders(username);
 
   }, []);
 
-  const displayOrders = async () => {
+  const displayOrders = async (username) => {
     try {
       // get discounts
-      var user = {getOrders: loggedIn}
+      var user = {getOrders: username}
       const queryParams = new URLSearchParams(user).toString();
       const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
       if (!response.ok) {
@@ -41,8 +41,6 @@ function OrderHistoryPage() {
       console.error('Error fetching data:', error);
     }
   }
-
-  displayOrders();
 
   {
     return (

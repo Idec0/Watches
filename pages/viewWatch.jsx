@@ -17,6 +17,7 @@ function LoadPage() {
 
 function ViewWatchPage() {
   const [img, setImg] = useState([]);
+  const [imgs, setImgs] = useState([]);
   const [goToBasketElement, setGoToBasketElement] = useState(null);
 
   let variable;
@@ -27,13 +28,28 @@ function ViewWatchPage() {
     variable = new URLSearchParams(search).get("watch");
   }
 
-  useEffect(() => {
+  useEffect( async () => {
     if (variable) {
-      setImg(variable.split(","));
+      var imgs = variable.split(",");
+      setImg(imgs);
+
+      // get img 2 & 3
+      try {
+        var watch = {getImages: "True", product_name: imgs[2]}
+        const queryParams = new URLSearchParams(watch).toString();
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        setImgs(result.imgs[0]);
+      }catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
     setGoToBasketElement("none");
   }, [variable]);
-
+  
   const AddToBasket = (watchPos) => {
     if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
       let basketList = [];
@@ -59,19 +75,39 @@ function ViewWatchPage() {
     setGoToBasketElement(element.style.display);
   }
 
+  const viewWatches = () => {
+    window.location.href ="/watches";
+  }
+
+  const gotToBasket = () => {
+    window.location.href ="/basket";
+  }
+
+  const changeImg = (img) => {
+    var imgElement = document.getElementById(`mainImg`);
+    imgElement.src = img;
+  }
+  
   return (
     <main>
       <div id="goTobasket-container" className='goTobasket-container'>
         <div className='goTobasket'>
           <p>Item added to your basket</p>
-          <button>Go To Basket</button>
-          <p onClick={() => continueShopping()}><u style={{cursor: 'pointer'}}>Continue Shopping</u></p>
+          <button onClick={() => gotToBasket()}>Go To Basket</button>
+          <p onClick={() => continueShopping()}><u onClick={() => viewWatches()} style={{cursor: 'pointer'}}>Continue Shopping</u></p>
         </div>
       </div>
       
-      {goToBasketElement === "none" && (
-        <>
-          <img className="displayWatch" src={img[4]} alt="Watch"></img>
+      {goToBasketElement === "none" && (        
+        <div className='imageSlideAndWatchContainer'>
+          <div className='imageSlide'>
+            <img className="displayWatch" onClick={() => changeImg(img[4])} src={img[4]} alt="Watch" style={{ width: '90%', height: '30%', cursor: 'pointer' }} />
+            <img className="displayWatch" onClick={() => changeImg(imgs.image_url_2)} src={imgs.image_url_2} alt="Watch" style={{ width: '90%', height: '30%', cursor: 'pointer' }} />
+            <img className="displayWatch" onClick={() => changeImg(imgs.image_url_3)} src={imgs.image_url_3} alt="Watch" style={{ width: '90%', height: '30%', cursor: 'pointer' }} />
+          </div>
+
+          <img className="displayWatch" src={img[4]} style={{height: '680px', width: '680px'}} alt="Watch" id="mainImg" />
+
           <div className="displayWatchInfo">
             <h1>
               <u>
@@ -86,7 +122,7 @@ function ViewWatchPage() {
               Add To Basket
             </button>
           </div>
-        </>
+        </div>        
       )}
     </main>
   );

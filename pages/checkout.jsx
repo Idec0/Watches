@@ -241,8 +241,10 @@ const CheckoutForm = ({ amount, setAddressLine1Text, setAddressLine2Text, setCit
     } else {
       if (result.paymentIntent.status === "succeeded") {
         console.log("Payment succeeded!");
-        window.location.href ="/successful";
+        // reset basket
+        localStorage.setItem("Basket", "[]");
         // Redirect or show success message
+        window.location.href ="/successful";
       }
     }
   };

@@ -10,6 +10,27 @@ export default async function handler(request, response) {
     if (!discountCode) {
       return response.status(400).json({ error: 'Discount code is required.' });
     }
+    // get watches image 2 and 3
+    if(discountCode.length > 9 && discountCode.slice(0, 9) === "getImages"){
+      const queryParams = new URLSearchParams(discountCode);
+      const product_name = queryParams.get("product_name");
+      console.log(product_name);
+      result = await client.query('SELECT * FROM brands WHERE product_name = $1', [product_name]);
+      console.log(result);
+      const imgs = result.rows;
+      console.log(imgs);
+      return response.status(200).json({ imgs });
+    }
+
+    // checks if user is admin
+    if(discountCode.length > 7 && discountCode.slice(0, 7) === "isAdmin"){
+      const queryParams = new URLSearchParams(discountCode);
+      const username = queryParams.get("isAdmin");
+      result = await client.query('SELECT * FROM users WHERE username = $1', [username]);
+      const user = result.rows;
+      return response.status(200).json({ user });
+    }
+
     // get all discounts
     if(discountCode === "get_discounts"){
       result = await client.query('SELECT * FROM discounts');
@@ -20,9 +41,8 @@ export default async function handler(request, response) {
     if(discountCode.length > 9 && discountCode.slice(0, 9) === "getOrders"){
       const queryParams = new URLSearchParams(discountCode);
       const user = queryParams.get("getOrders");
-      const result = await client.query('SELECT * FROM orders WHERE user = $1', [user]);
+      result = await client.query('SELECT * FROM orders WHERE "user" = $1', [user]);
       const orders = result.rows;
-      console.log(orders);
       return response.status(200).json(orders);
     }
 
@@ -93,11 +113,13 @@ export default async function handler(request, response) {
       const queryParams = new URLSearchParams(discountCode);
       const brand_name = queryParams.get("brand_name");
       const image_url = queryParams.get("image_url");
+      const image_url2 = queryParams.get("image_url2");
+      const image_url3 = queryParams.get("image_url3");
       const product_name = queryParams.get("product_name");
       const price = queryParams.get("price");
       await client.query('BEGIN');
       await client.query(
-        "INSERT INTO brands (brand_name, image_url, product_name, price) VALUES ($1, $2, $3, $4)",[brand_name, image_url, product_name, price]
+        "INSERT INTO brands (brand_name, image_url, product_name, price) VALUES ($1, $2, $3, $4)",[brand_name, [image_url, image_url2, image_url3], product_name, price]
       );
       await client.query('COMMIT')
       return response.status(200).json("Successful");

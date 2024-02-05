@@ -3,8 +3,8 @@
 import 'styles/globals.css';
 import React, { useEffect, useState } from "react";
 import Navbar from "components/base.jsx";
-import viewWatchURL from "pages/watches.jsx";
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
@@ -40,6 +40,8 @@ function BasketPage() {
   const [discountAmount, setDiscountAmount] = useState(0);  
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const router = useRouter();
+
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedBasket = localStorage.getItem("Basket");
@@ -58,6 +60,21 @@ function BasketPage() {
       setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
     }
   }, []);
+
+  const viewWatchURL = (watch) => {
+    let dataToAdd = [];
+    dataToAdd.push(watch);
+    dataToAdd.push(watch[4]);
+  
+    // Construct the new query parameter with the updated variable
+    const newQueryParams = new URLSearchParams();
+    newQueryParams.set("watch", dataToAdd.join(","));
+  
+    router.push({
+      pathname: "/viewWatch",
+      query: { watch: dataToAdd.join(",") }
+    });
+  };
 
   const checkKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -129,7 +146,7 @@ function BasketPage() {
               src={watch[4]}
               alt={watch[2]}
               onClick={() => viewWatchURL(watch)}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", height: '100%', width: '100%'}}
             />
           </div>
           <div className="item2 items-center justify-between">

@@ -5,6 +5,8 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
 import { useRouter } from "next/navigation";
+import { useRef } from 'react';
+
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
@@ -18,21 +20,25 @@ function LoadPage() {
 
 /* TODO:
 
+fix error when clicking on watches page on navbar while viewing a product on view watch page - TypeError: destroy is not a function
+
+admin panel - change all 3 imgs in the table
+
 navbar layout - login icon on the far right or have all in the middle
 
-fix view order history not displaying certain users orders
-
-view products only shows product for that user
+liked watches reset to non when you refreah the page - this is due to setLikedWatches not being set correctly in the useEffect (Async State Update Issue) -- narrowed it to be on line 99 - 110
 
 work on checkout page
 
+work on view product page - add more options to choose from
+
 save payment method
 
-liked watches reset to non when you refreah the page -- narrowd it to be on line 333 - 339
-
-error happens when you click on watch image in basket
+make the trash can always on the right side of the watches name - basket
 
 quantity to basket - when you add the same item from view basket it adds one to quantity
+
+create account validation text updates as you type
 
 admin panel - ability to add sales (Maybe)
 
@@ -40,7 +46,6 @@ admin panel - view customer accounts (Maybe) - only the neccessary details - may
 
 when you login through checkout - make it take you back to checkout instead of home page
 
-purchasing items from basket should reset your basket
 
 admin can search for specific watch or discount instead of having to scroll down and find it in a table
 
@@ -55,16 +60,17 @@ website - https://watches-ruby.vercel.app
 e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
-Fixed the problem when you save changes in edit mode the text has a border and isn't center
-Fixed login and logout page styling
-Done more styling on checkout page
-Added validation on checkout page
-When user purchase an item it saves the data to the order table so i can use this detail for showing users purchase history
-You can now view your order history
-Made it so the products display in a list instead of displaying all on one line (Order History page)
-I spend most of my time making changes to css on pages, getting the products to save onto a table, also have input validations took a while to get working since i ran into many problems
-I have also spent alot of time researching about other shopping websites to see how I can improve on mine
-Tried to fix favourite watches - manage to narrow the problem down, refrshing the page resets all liked watches to unliked, but i found a way to make it so you can refresh the page without losing your liked watches but it displays the watches as null so I am trying to workout a solution for inbetween to make it work properly
+view order history now only shows the users orders and not everyones
+changed it so admin isn't saved in local storage, this is to add protection since you can change it from false to true so anyone can be admin but now theres no way to change it
+changed continue shoping to take to view all watches, and make go to basket button work
+You can now view a certain watch, when you click on the watch image in the basket
+I have tried to fix liked watches array, turns out its to do with setLikedWatches not being set correctly in the useEffect (Async State Update Issue) - i have tried to fix this by using useRef but that didn't work, i have also tried many other ways which i have found through researching but none of them worked
+I have spend alot of time researching, changing the code to get liked watches to save but no matter what I try the variable won't update due to the asynchronous nature of state update 
+After successfully purchasing your item(s), your basket gets emptied
+Redesigned add a new watch on admin panel page, which I added it so you can now add upto 3 images - this will be used on the view watch page.
+added 2 more images to each watch in the database
+Started Redesigning view watch page
+On view watch page you can change the main image to view the other image options
 */
 
 const WatchesPage = () => {
@@ -74,6 +80,7 @@ const WatchesPage = () => {
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
   const [likedWatches, setLikedWatches] = useState([]);
+  const likedWatches1 = useRef([]);
   const [filteredData, setFilteredData] = useState([]); // State variable for filtered options  
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
   const [brands, setBrands] = useState(null);
@@ -93,17 +100,30 @@ const WatchesPage = () => {
   // end of code to pass a varibale through links
 
   // Wrap code that relies on client-side features in a check for window
-  
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedIsRedArray = localStorage.getItem("isRedArray");
-      const storedLikedWatches = localStorage.getItem("likedWatches");
-
+      console.log("storedIsRedArray", storedIsRedArray);
       setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
-      setLikedWatches(storedLikedWatches ? JSON.parse(storedLikedWatches) : []);
+    }
+  }, []);  
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedLikedWatches = localStorage.getItem("likedWatches");
+      console.log("storedLikedWatches ", storedLikedWatches);
+  
+      setLikedWatches(() => {
+        const parsedLikedWatches = storedLikedWatches ? JSON.parse(storedLikedWatches) : [];
+        console.log("set ", parsedLikedWatches);
+        likedWatches1.current = parsedLikedWatches;
+        console.log("likedWatches1", likedWatches1);
+        return parsedLikedWatches;
+      });
     }
   }, []);
-
+  
   const fetchBrandsData = async () => {
     try {
       const response = await fetch('/api/data?discount_code=Brands');
@@ -185,7 +205,7 @@ const WatchesPage = () => {
   let data = [];
   let imagePositionMap = {};
   let watchListIndex = 0;
-
+  
   // used for dictionary already defined (brandsBackup) -- keep just incase database gets deleted
   if(brands === null){
     for (const brand in brandsBackup) {
@@ -215,9 +235,8 @@ const WatchesPage = () => {
       const { brand_name, image_url, product_name, price } = brandData;
       
       data.push(brand_name);
-      
-      // Assuming each brand has a single imageURL
       imgList.push(image_url);
+
       imagePositionMap[image_url] = [watchListIndex, brand_name, product_name, price];
       watchListIndex++;
     }
@@ -279,7 +298,7 @@ const WatchesPage = () => {
     let dataToAdd = [];
     dataToAdd.push(imagePositionMap[index]);
     dataToAdd.push(imgList[imagePositionMap[index][0]]);
-  
+    console.log(dataToAdd);
     // Construct the new query parameter with the updated variable
     const newQueryParams = new URLSearchParams();
     newQueryParams.set("watch", dataToAdd.join(","));

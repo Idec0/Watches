@@ -39,8 +39,7 @@ function IndexPage() {
         if(user !== "Unauthorized"){
           console.log("password correct");
           if (typeof window !== 'undefined') {
-            localStorage.setItem("loggedIn", user.user[0].username);    
-            localStorage.setItem("admin", user.user[0].admin);              
+            localStorage.setItem("loggedIn", user.user[0].username);        
           }
           window.location.href = "/";
         }

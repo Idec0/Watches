@@ -21,9 +21,27 @@ const Navbar = ({ appVisible, setAppVisible }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
-      setAdmin(localStorage.getItem("admin") ? localStorage.getItem("admin") : false);
+      
+      SetAdmin(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
     }
   }, []); 
+
+  const SetAdmin = async(username) => {
+    // check if admin
+    try {
+      var user = {isAdmin: username}
+      const queryParams = new URLSearchParams(user).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      setAdmin(result.user[0].admin);
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
 
   return (
     <>
@@ -62,7 +80,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
                 <div className="dropdown">
                   <p>👤</p>
                   <div className="dropdown-content">
-                  {admin !== "false" && (
+                  {admin !== false && (
                     <Link href={"/adminPanel"}>Admin Panel</Link>
                   )}
                     <a href={"/orderHistory"}><p style={{cursor: 'pointer'}}>History</p></a>
