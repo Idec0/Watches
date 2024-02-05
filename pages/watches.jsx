@@ -22,11 +22,11 @@ function LoadPage() {
 
 fix error when clicking on watches page on navbar while viewing a product on view watch page - TypeError: destroy is not a function
 
+liked watches reset to non when you refreah the page - this is due to setLikedWatches not being set correctly in the useEffect (Async State Update Issue) -- narrowed it to be on line 99 - 110
+
 admin panel - change all 3 imgs in the table
 
 navbar layout - login icon on the far right or have all in the middle
-
-liked watches reset to non when you refreah the page - this is due to setLikedWatches not being set correctly in the useEffect (Async State Update Issue) -- narrowed it to be on line 99 - 110
 
 work on checkout page
 
