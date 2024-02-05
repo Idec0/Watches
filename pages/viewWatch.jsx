@@ -33,22 +33,26 @@ function ViewWatchPage() {
       var imgs = variable.split(",");
       setImg(imgs);
 
-      // get img 2 & 3
-      try {
-        var watch = {getImages: "True", product_name: imgs[2]}
-        const queryParams = new URLSearchParams(watch).toString();
-        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const result = await response.json();
-        setImgs(result.imgs[0]);
-      }catch (error) {
-        console.error('Error fetching data:', error);
-      }
     }
+    GetImgs23();
     setGoToBasketElement("none");
   }, [variable]);
+
+  const GetImgs23 =  async () => {
+    // get img 2 & 3
+    try {
+      var watch = {getImages: "True", product_name: imgs[2]}
+      const queryParams = new URLSearchParams(watch).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      setImgs(result.imgs[0]);
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
   
   const AddToBasket = (watchPos) => {
     if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
