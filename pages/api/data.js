@@ -14,11 +14,8 @@ export default async function handler(request, response) {
     if(discountCode.length > 9 && discountCode.slice(0, 9) === "getImages"){
       const queryParams = new URLSearchParams(discountCode);
       const product_name = queryParams.get("product_name");
-      console.log(product_name);
       result = await client.query('SELECT * FROM brands WHERE product_name = $1', [product_name]);
-      console.log(result);
       const imgs = result.rows;
-      console.log(imgs);
       return response.status(200).json({ imgs });
     }
 
@@ -68,15 +65,28 @@ export default async function handler(request, response) {
       const discount_code = queryParams.get("discount_code");
       const discount_amount = queryParams.get("discount_amount");
       const end_date = queryParams.get("end_date");
-      console.log(discount_code);
-      console.log(discount_amount);
-      console.log(end_date);
 
       var date = new Date(end_date);
       var formattedDate = date.toDateString() + " " + date.toTimeString() + " GMT+0000 (Greenwich Mean Time)";
       await client.query('BEGIN');
       await client.query(
         "UPDATE discounts SET discount_amount = $2, end_date = $3 WHERE discount_code = $1", [discount_code, discount_amount, date]
+      );
+      await client.query('COMMIT')
+      return;
+    }
+    // save watches changes
+    if(discountCode.length > 18 && discountCode.slice(0, 18) === "save_watch_changes"){
+      const queryParams = new URLSearchParams(discountCode);
+      const product_name = queryParams.get("product_name");
+      const brand = queryParams.get("brand");
+      const image_url = queryParams.get("image_url");
+      const image_url_2 = queryParams.get("image_url_2");
+      const image_url_3 = queryParams.get("image_url_3");
+      const price = queryParams.get("price");
+      await client.query('BEGIN');
+      await client.query(
+        "UPDATE brands SET product_name = $1, brand_name = $2, image_url = $3, image_url_2 = $4, image_url_3 = $5, price = $6 WHERE product_name = $1", [product_name, brand, image_url, image_url_2, image_url_3, price]
       );
       await client.query('COMMIT')
       return;
@@ -132,13 +142,10 @@ export default async function handler(request, response) {
       result = await client.query('SELECT * FROM users WHERE username = $1', [username]);
 
       const user = result.rows;
-      console.log(user);
 
       if(user.length > 0){
-        console.log("true");
         return response.status(200).json('true');
       }
-      console.log("false");
       return response.status(200).json('false');
     }
 
@@ -149,13 +156,10 @@ export default async function handler(request, response) {
       result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
 
       const user = result.rows;
-      console.log(user);
 
       if(user.length > 0){
-        console.log("true");
         return response.status(200).json('true');
       }
-      console.log("false");
       return response.status(200).json('false');
     }
 
@@ -166,9 +170,7 @@ export default async function handler(request, response) {
       // Hash the password before storing it
       const saltRounds = 10;
       const hash = await bcrypt.hash(password, saltRounds);
-      console.log('Hashed Password:', hash);
       const passwordMatch = await bcrypt.compare(password, hash);
-      console.log(passwordMatch);
 
       await client.query('BEGIN');
       await client.query(

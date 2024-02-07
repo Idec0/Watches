@@ -18,27 +18,29 @@ function LoadPage() {
 function ViewWatchPage() {
   const [img, setImg] = useState([]);
   const [imgs, setImgs] = useState([]);
+  const [dropdown1, setDropdown1] = useState("V");
+  const [dropdown2, setDropdown2] = useState("V");
+  const [dropdown3, setDropdown3] = useState("V");
   const [goToBasketElement, setGoToBasketElement] = useState(null);
-
   let variable;
 
+  useEffect(() => {
 
-  if (typeof window !== "undefined") {
-    const search = window.location.search;
-    variable = new URLSearchParams(search).get("watch");
-  }
+    if (typeof window !== "undefined") {
+      const search = window.location.search;
+      variable = new URLSearchParams(search).get("watch");
+    }
 
-  useEffect( async () => {
     if (variable) {
       var imgs = variable.split(",");
       setImg(imgs);
 
     }
-    GetImgs23();
+    GetImgs23(imgs);
     setGoToBasketElement("none");
   }, [variable]);
 
-  const GetImgs23 =  async () => {
+  const GetImgs23 = async (imgs) => {
     // get img 2 & 3
     try {
       var watch = {getImages: "True", product_name: imgs[2]}
@@ -48,6 +50,8 @@ function ViewWatchPage() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
+      console.log(result.imgs[0]);
+      console.log(result);
       setImgs(result.imgs[0]);
     }catch (error) {
       console.error('Error fetching data:', error);
@@ -91,6 +95,18 @@ function ViewWatchPage() {
     var imgElement = document.getElementById(`mainImg`);
     imgElement.src = img;
   }
+
+  const generalDropDown = () => {
+    
+  }
+
+  const strapDropDown = () => {
+
+  }
+
+  const movementDropDown = () => {
+
+  }
   
   return (
     <main>
@@ -125,6 +141,19 @@ function ViewWatchPage() {
             <button style={{ color: "black" }} onClick={() => AddToBasket(img)}>
               Add To Basket
             </button>
+
+            <div className='dropDownStyle' onClick={() => generalDropDown()}>
+              <p className='dropDownStyleCat'>General</p>
+              <p>{dropdown1}</p>
+            </div>
+            <div className='dropDownStyle' onClick={() => strapDropDown()}>
+              <p className='dropDownStyleCat'>STRAP</p>
+              <p>{dropdown2}</p>
+            </div>
+            <div className='dropDownStyle' onClick={() => movementDropDown()}>
+              <p className='dropDownStyleCat'>MOVEMENT</p>
+              <p>{dropdown3}</p>              
+            </div>
           </div>
         </div>        
       )}

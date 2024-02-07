@@ -42,6 +42,12 @@ function IndexPage() {
       // console.log(email);
 
       try {
+        setUsernameText("");
+        setPasswordText("");
+        setConfirmPasswordText("");
+        setEmailText("");
+        setFirstnameText("");
+        setSurnameText("");
         // validation for inputs
         if(username != "" && username.length > 3 && username.length < 256 ){
           var user = {usernameCheck: username}
@@ -55,22 +61,23 @@ function IndexPage() {
             setUsernameText("Username Taken");
             return;
           }
-          setUsernameText("");
+          
         }
         else{
           setUsernameText("Username must be at least 4 characters long");
           return;
-        }
-        if(password.length < 8 || password.length > 256){
-          setPasswordText("Passwords must contain at least 8 characters");
+        }             
+        
+        if(firstname.length === 0 || firstname.length > 256){          
+          setFirstnameText("Can't be left blank!");
           return;
         }
-        setPasswordText("");
-        if(password !== confirmPassword){
-          setConfirmPasswordText("Passwords does not match");
+        
+        if(lastname.length === 0 || lastname.length > 256){
+          setSurnameText("Can't be left blank!");
           return;
-        }        
-        setConfirmPasswordText("");
+        }
+
         if(email !== "" && email.includes("@") && email.indexOf('@') !== email.length - 1 && email.includes(".") && email.indexOf('.') !== email.length - 1 && email.length < 256){
           var email = {emailCheck: email}
           const queryParams = new URLSearchParams(email).toString();
@@ -83,23 +90,22 @@ function IndexPage() {
             setEmailText("Email Already in use");
             return;
           }
-          setEmailText("");
+          
         }
         else{
           setEmailText("email must be valid");
           return;
         }
 
-        if(firstname.length === 0 || firstname.length > 256){          
-          setFirstnameText("Can't be left blank!");
+        if(password.length < 8 || password.length > 256){
+          setPasswordText("Passwords must contain at least 8 characters");
           return;
         }
-        setFirstnameText("");
-        if(lastname.length === 0 || lastname.length > 256){
-          setSurnameText("Can't be left blank!");
+        
+        if(password !== confirmPassword){
+          setConfirmPasswordText("Passwords does not match");
           return;
-        }
-        setSurnameText("");
+        }   
 
         // add new user to database
         var user = {username: username, password: password, firstname: firstname, lastname: lastname, email: email}
@@ -128,18 +134,18 @@ function IndexPage() {
           </div>
           <div className='input'>
             <div className='login-right-content signup-left-content'>              
-              <input style={{marginTop: '0px'}} placeholder='Username' id="username"/>
+              <input onChange={() => CreateAccountButtonClicked()} style={{marginTop: '0px'}} placeholder='Username' id="username"/>
               <p className = 'login-right-content-p'>{usernameText}</p>
-              <input placeholder='Password' type='password' id="password" />
-              <p className = 'login-right-content-p'>{passwordText}</p>
-              <input  placeholder='Confirm Password' type='password' id="confirmPassword" />
-              <p className = 'login-right-content-p'>{confirmPasswordText}</p>
-              <input placeholder='Email' id="email" type='email'/>
-              <p className = 'login-right-content-p'>{emailText}</p>
-              <input placeholder='First Name' id="firstname"/>
+              <input onChange={() => CreateAccountButtonClicked()} placeholder='First Name' id="firstname"/>
               <p className = 'login-right-content-p'>{firstnameText}</p>
-              <input placeholder='Surname' id="surname"/>
+              <input onChange={() => CreateAccountButtonClicked()} placeholder='Surname' id="surname"/>
               <p className = 'login-right-content-p'>{surnameText}</p>
+              <input onChange={() => CreateAccountButtonClicked()} placeholder='Email' id="email" type='email'/>
+              <p className = 'login-right-content-p'>{emailText}</p>
+              <input onChange={() => CreateAccountButtonClicked()} placeholder='Password' type='password' id="password" />
+              <p className = 'login-right-content-p'>{passwordText}</p>
+              <input onChange={() => CreateAccountButtonClicked()} placeholder='Confirm Password' type='password' id="confirmPassword" />
+              <p className = 'login-right-content-p'>{confirmPasswordText}</p>
               <button onClick={() => CreateAccountButtonClicked()}>Create Account</button>
               <p className = 'login-right-content-p'></p>
               <a href='/login'>

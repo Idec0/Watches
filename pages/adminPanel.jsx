@@ -171,14 +171,20 @@ function AdminPage() {
 
   const editWatch = async (watch) => {
     var discountElement = document.getElementById(watch.product_name);
+    var discountProductElement = document.getElementById(`${watch.product_name} product`);
     var discountBrandElement = document.getElementById(`${watch.product_name} brand`);
     var discountImgElement = document.getElementById(`${watch.product_name} image_url`);
+    var discountImg2Element = document.getElementById(`${watch.product_name} image_url2`);
+    var discountImg3Element = document.getElementById(`${watch.product_name} image_url3`);
     var discountPriceElement = document.getElementById(`${watch.product_name} price`);
     var discountDeleteElement = document.getElementById(`${watch.product_name} delete`);
 
     let elements = [];
+    elements.push(discountProductElement);
     elements.push(discountBrandElement);
     elements.push(discountImgElement);
+    elements.push(discountImg2Element);
+    elements.push(discountImg3Element);
     elements.push(discountPriceElement);
 
     let discountType = []
@@ -187,18 +193,29 @@ function AdminPage() {
       discountElement.innerHTML = "Edit";      
       discountDeleteElement.style.display = 'none';
 
+      discountType.push(discountProductElement.children[0].value);
       discountType.push(discountBrandElement.children[0].value);
       discountType.push("...");
+      discountType.push("...");
+      discountType.push("...");
       discountType.push(discountPriceElement.children[0].value);
+      discountType.push(discountImgElement.children[0].value);
+      discountType.push(discountImg2Element.children[0].value);
+      discountType.push(discountImg3Element.children[0].value);
 
 
       for (let i = 0; i < elements.length; i++) {
         elements[i].innerHTML = discountType[i];
       }
 
+      elements[2].title = discountType[6];
+      elements[3].title = discountType[7];
+      elements[4].title = discountType[8];
+
       // save changes
       try {
-        var discount = {save_watch_changes: "True", product_name: watch.product_name, brand: watch.brand, image_url: watch.image_url, price: watch.price}
+        console.log(watch.brand_name);
+        var discount = {save_watch_changes: "True", product_name: discountType[0], brand: discountType[1], image_url: discountType[6], image_url_2: discountType[7], image_url_3: discountType[8], price: discountType[5]}
         const queryParams = new URLSearchParams(discount).toString();
         const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
         if (!response.ok) {
@@ -213,8 +230,11 @@ function AdminPage() {
     }else{
       discountElement.innerHTML = "Save";
       discountDeleteElement.style.display = 'block';
+      discountType.push(watch.product_name);
       discountType.push(watch.brand_name);
       discountType.push(watch.image_url);
+      discountType.push(watch.image_url_2);
+      discountType.push(watch.image_url_3);
       discountType.push(watch.price);
 
       for (let i = 0; i < elements.length; i++) {
@@ -223,8 +243,8 @@ function AdminPage() {
         inputElement.type = "text";
         inputElement.value = discountType[i];
         inputElement.id = "yourInputId";
-        inputElement.style.width = '220px';
-    
+        inputElement.style.width = '150px';
+        console.log(elements[i]);
         elements[i].innerHTML = "";
         elements[i].appendChild(inputElement);
       }
@@ -250,14 +270,18 @@ function AdminPage() {
                 <tr>
                   <th>Product Name</th>
                   <th>Brand</th>
-                  <th>Image Url</th>
+                  <th>Main Image Url</th>
+                  <th>Image Url 2</th>
+                  <th>Image Url 3</th>
                   <th>Price (£)</th>
                 </tr>
                 {watches.map((watch) => (
                   <tr key={watch.product_name}>
-                    <td>{watch.product_name}</td>
+                    <td id={`${watch.product_name} product`}>{watch.product_name}</td>
                     <td id={`${watch.product_name} brand`}>{watch.brand_name}</td>
                     <td id={`${watch.product_name} image_url`} title={watch.image_url}>...</td>
+                    <td id={`${watch.product_name} image_url2`} title={watch.image_url_2}>...</td>
+                    <td id={`${watch.product_name} image_url3`} title={watch.image_url_3}>...</td>
                     <td id={`${watch.product_name} price`}>{watch.price}</td>
                     <button onClick={() => editWatch(watch)} style={{width: '150px', marginLeft: '10px'}} id={watch.product_name}>Edit</button>
                     <button onClick={() => deleteWatch(watch)} style={{width: '150px', color: 'red', display: 'none', marginLeft: '10px'}} id={`${watch.product_name} delete`}>Delete</button>

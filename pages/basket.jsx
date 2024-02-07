@@ -158,13 +158,13 @@ function BasketPage() {
                   </u>
                 </h1>
               </div>
-              <div>
-                <p onClick={() => Bin(watch)} style={{ cursor: "pointer" }}>
-                  🗑️
-                </p>
-              </div>
             </div>
             <p>£{watch[3]}</p>
+          </div>
+          <div className='bin'>
+              <p onClick={() => Bin(watch)} style={{ cursor: "pointer" }}>
+                🗑️
+              </p>
           </div>
           {index === 0 && (
             <div className="item3">

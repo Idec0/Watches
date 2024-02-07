@@ -168,6 +168,11 @@ input {
 
 /* unhide button and icon on hover */
 
+.overlay {
+  position: absolute;
+  z-index: 1;
+}
+
 .overlay .button {
   display: none;
   position: absolute;
@@ -180,10 +185,11 @@ input {
 }
 
 .overlay .favicon {
-  float: right;
   height: 30px;
   display: none;
   cursor: pointer;
+  right: 0;
+  z-index: 1;
 }
 .watches-background:hover .overlay .favicon {
   display: block;
@@ -196,6 +202,17 @@ input {
 }
 
 /* viewWatch code */
+
+.dropDownStyle {
+  display: flex;
+  width: 70%;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.dropDownStyleCat {
+  margin: auto;
+}
 
 .displayWatch {
   height: 40%;
@@ -276,6 +293,9 @@ input {
 .item2 {
   grid-area: text1;
 }
+.bin {
+  grid-area: bin;
+}
 
 .item3 {
   grid-area: footer;
@@ -288,11 +308,11 @@ input {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 25% 42% 33%;
+  grid-template-columns: 25% 38% 4% 33%;
   grid-template-areas:
-    "watches text1 footer"
-    "watches text1 ..."
-    "watches text1 ...";
+    "watches text1 bin footer"
+    "watches text1 bin ..."
+    "watches text1 bin ...";
   /* background-color: #2196f3; */
   padding: 20px 0;
   padding-left: 0;

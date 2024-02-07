@@ -5,7 +5,6 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
 import { useRouter } from "next/navigation";
-import { useRef } from 'react';
 
 
 function LoadPage() {
@@ -20,32 +19,20 @@ function LoadPage() {
 
 /* TODO:
 
-fix error when clicking on watches page on navbar while viewing a product on view watch page - TypeError: destroy is not a function
+if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
-liked watches reset to non when you refreah the page - this is due to setLikedWatches not being set correctly in the useEffect (Async State Update Issue) -- narrowed it to be on line 99 - 110
-
-admin panel - change all 3 imgs in the table
-
-navbar layout - login icon on the far right or have all in the middle
+get heart image to be on the right side in watches page
 
 work on checkout page
 
-work on view product page - add more options to choose from
+work on view product page - add more options to choose from;
+options / details to add to view watches page - best detail to add, which i found to be; brand, model number, strap type/ material, strap colour, watch face diameter, watch features (chronograph, alarm, tachymeter), case material, movement, warranty
 
 save payment method
 
-make the trash can always on the right side of the watches name - basket
-
 quantity to basket - when you add the same item from view basket it adds one to quantity
 
-create account validation text updates as you type
-
-admin panel - ability to add sales (Maybe)
-
-admin panel - view customer accounts (Maybe) - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
-
 when you login through checkout - make it take you back to checkout instead of home page
-
 
 admin can search for specific watch or discount instead of having to scroll down and find it in a table
 
@@ -54,23 +41,34 @@ css to make the website better on mobile
 test to see if the app can prevent SQL injections
 
 
+Maybe:
+
+navbar layout - login icon on the far right or have all in the middle (Maybe)
+
+admin panel - ability to add sales (Maybe)
+
+admin panel - view customer accounts (Maybe) - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
+
+
 stripe (Track Payments) - https://dashboard.stripe.com/test/products?active=true
 
 website - https://watches-ruby.vercel.app
 e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
-view order history now only shows the users orders and not everyones
-changed it so admin isn't saved in local storage, this is to add protection since you can change it from false to true so anyone can be admin but now theres no way to change it
-changed continue shoping to take to view all watches, and make go to basket button work
-You can now view a certain watch, when you click on the watch image in the basket
-I have tried to fix liked watches array, turns out its to do with setLikedWatches not being set correctly in the useEffect (Async State Update Issue) - i have tried to fix this by using useRef but that didn't work, i have also tried many other ways which i have found through researching but none of them worked
-I have spend alot of time researching, changing the code to get liked watches to save but no matter what I try the variable won't update due to the asynchronous nature of state update 
-After successfully purchasing your item(s), your basket gets emptied
-Redesigned add a new watch on admin panel page, which I added it so you can now add upto 3 images - this will be used on the view watch page.
-added 2 more images to each watch in the database
-Started Redesigning view watch page
-On view watch page you can change the main image to view the other image options
+fixed error when naviagting to another page while viewing a product on view watch page - TypeError: destroy is not a function
+I forgot to save changes made to edit watches, I have now added that.
+Fixed Problem when you save edit watches and hover over a url it shows ...
+you can now edit all 3 urls in the admin panel for edit watches
+I have done some more research on how to get states to properly get a value set in useEffect
+I have fixed the problem with likedWatches, so now when you refresh the likedWatches saves but if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
+made the trash can always on the right side of the watches name in the basket page
+fixed styling in edit watches, since when you start editing the table would be off the screen, but now it all fits
+worked on watches page - got heart image to overlap watch image, but the problem is that the heart is now on the left side which isn't great since users will expect it to be on the right side
+create account validation text updates as you type or when you click create account
+Changed layout on create account
+researching about what to add to view watches page - best detail to add, which i found to be; brand, model number, strap type/ material, strap colour, watch face diameter, watch features (chronograph, alarm, tachymeter), case material, movement, warranty
+Done some styling to view watch page
 */
 
 const WatchesPage = () => {
@@ -80,7 +78,6 @@ const WatchesPage = () => {
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
   const [likedWatches, setLikedWatches] = useState([]);
-  const likedWatches1 = useRef([]);
   const [filteredData, setFilteredData] = useState([]); // State variable for filtered options  
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
   const [brands, setBrands] = useState(null);
@@ -106,23 +103,19 @@ const WatchesPage = () => {
       const storedIsRedArray = localStorage.getItem("isRedArray");
       console.log("storedIsRedArray", storedIsRedArray);
       setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
+
+      SetLikedWatches();
     }
   }, []);  
-  
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedLikedWatches = localStorage.getItem("likedWatches");
-      console.log("storedLikedWatches ", storedLikedWatches);
-  
-      setLikedWatches(() => {
-        const parsedLikedWatches = storedLikedWatches ? JSON.parse(storedLikedWatches) : [];
-        console.log("set ", parsedLikedWatches);
-        likedWatches1.current = parsedLikedWatches;
-        console.log("likedWatches1", likedWatches1);
-        return parsedLikedWatches;
-      });
-    }
-  }, []);
+
+  const SetLikedWatches = async () => {
+    const storedLikedWatches = localStorage.getItem("likedWatches");
+    console.log("storedLikedWatches ", storedLikedWatches);
+    await new Promise(resolve => setTimeout(resolve, 10));
+    console.log("likedWatches 1", likedWatches);
+    setLikedWatches(JSON.parse(storedLikedWatches));
+    console.log("likedWatches 2", likedWatches);
+  }
   
   const fetchBrandsData = async () => {
     try {
@@ -247,13 +240,15 @@ const WatchesPage = () => {
     imgs = imgList.flat(); // Assuming imgList is defined somewhere in your component
   }
 
+  console.log("asd 2", imgs);
+
   const toggleColor = (index) => {
     if (typeof window !== 'undefined') {
       const updatedIsRedArray = [...isRedArray];
       updatedIsRedArray[index] = !updatedIsRedArray[index];
-  
+      
       let updatedLikedWatches;
-  
+
       if (updatedIsRedArray[index]) {
         updatedLikedWatches = [...likedWatches, index];
       } else {
@@ -268,6 +263,7 @@ const WatchesPage = () => {
   
 
   const filterImage = () => {
+    console.log("asd filter", imgs);
     imgs = filteredData
       .flatMap((brand) =>
         brands
@@ -360,9 +356,6 @@ const WatchesPage = () => {
       }
       return acc;
     }, []);
-
-    setLikedWatches(updatedLikedWatches);
-    localStorage.setItem("likedWatches", JSON.stringify(updatedLikedWatches));
     newURL();
   };
 
@@ -373,7 +366,7 @@ const WatchesPage = () => {
     localStorage.setItem("isRedArray", JSON.stringify(isRedArray));
   }, [isRedArray]);
 
-  useEffect(() => {  
+  useEffect(() => {      
     if (typeof window !== 'undefined') {
       if (imgs.length === 0) {
         localStorage.setItem("loadLikedWatches", "false");
@@ -418,7 +411,6 @@ const WatchesPage = () => {
       return {};
     }
   };
-  
 
   return (
     <main>
@@ -453,7 +445,7 @@ const WatchesPage = () => {
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_Kv4K4TnVfDuANmqwl2FM3NPs-vORr7aFMbhIfVA4gAFCkOY50ZCFb4ZyxRwzCE3KSTA&usqp=CAU"
                   onClick={() => toggleColor(index)}
                   style={getImgStyle(index)}
-                ></img>
+                />
               </div>
               <img src={img} alt={`Watch ${index}`} />
               <div className="center">        
