@@ -22,6 +22,7 @@ function ViewWatchPage() {
   const [dropdown2, setDropdown2] = useState("V");
   const [dropdown3, setDropdown3] = useState("V");
   const [goToBasketElement, setGoToBasketElement] = useState(null);
+  const [getwatchDetails, setGetWatchDetails] = useState([]);
   let variable;
 
   useEffect(() => {
@@ -38,7 +39,32 @@ function ViewWatchPage() {
     }
     GetImgs23(imgs);
     setGoToBasketElement("none");
+
+    getWatchDetails();
+
   }, [variable]);
+
+  const getWatchDetails = async() => {
+    // get watch details
+    try {
+      // add new user to database
+      var user = {email: email, password: password}
+      const queryParams = new URLSearchParams(user).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      console.log(result);
+
+      watchDetails = result;
+
+      setGetWatchDetails(watchDetails);
+      console.log(getWatchDetails);
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const GetImgs23 = async (imgs) => {
     // get img 2 & 3
@@ -97,15 +123,37 @@ function ViewWatchPage() {
   }
 
   const generalDropDown = () => {
+    var element = document.getElementsByClassName("generalDropdown");
+    if(dropdown1 === "V"){
+      setDropdown1("Λ");
+      element[0].style.display = 'flex';
+    }else{
+      setDropdown1("V");
+      element[0].style.display = 'none';
+    }
     
   }
 
   const strapDropDown = () => {
-
+    var element = document.getElementsByClassName("strapDropdown");
+    if(dropdown2 === "V"){
+      setDropdown2("Λ");
+      element[0].style.display = 'flex';
+    }else{
+      setDropdown2("V");
+      element[0].style.display = 'none';
+    }
   }
 
   const movementDropDown = () => {
-
+    var element = document.getElementsByClassName("movementDropdown");
+    if(dropdown3 === "V"){
+      setDropdown3("Λ");
+      element[0].style.display = 'flex';
+    }else{
+      setDropdown3("V");
+      element[0].style.display = 'none';
+    }
   }
   
   return (
@@ -146,14 +194,54 @@ function ViewWatchPage() {
               <p className='dropDownStyleCat'>General</p>
               <p>{dropdown1}</p>
             </div>
+            <div className='generalDropdown'>
+              <div style={{fontWeight: 'bold', padding: '10px 20px'}}>
+                <p>Watches Code</p>
+                <p>Brand</p>
+                <p>Watch Face Diameter</p>
+                <p>Chronograph</p>
+                <p>Alarm</p>
+                <p>Tachymeter</p>
+                <p>Case Material</p>
+                <p>Warranty</p>
+              </div>
+              <div style={{padding: '10px 20px'}}>
+              <p>Watches Code</p>
+                <p>Brand</p>
+                <p>Watch Face Diameter</p>
+                <p>Chronograph</p>
+                <p>Alarm</p>
+                <p>Tachymeter</p>
+                <p>Case Material</p>
+                <p>Warranty</p>
+              </div>              
+            </div>
             <div className='dropDownStyle' onClick={() => strapDropDown()}>
               <p className='dropDownStyleCat'>STRAP</p>
               <p>{dropdown2}</p>
             </div>
+            <div className='strapDropdown'>
+              <div style={{fontWeight: 'bold', padding: '10px 20px'}}>
+                <p>Strap Type</p>
+                <p>Strap Colour</p>
+              </div>
+              <div style={{padding: '10px 20px'}}>
+                <p>Strap Type</p>
+                <p>Strap Colour</p>
+              </div>
+            </div>
             <div className='dropDownStyle' onClick={() => movementDropDown()}>
               <p className='dropDownStyleCat'>MOVEMENT</p>
-              <p>{dropdown3}</p>              
+              <p>{dropdown3}</p>     
             </div>
+            <div className='movementDropdown'>
+              <div style={{fontWeight: 'bold', padding: '10px 20px'}}>
+                <p>Watch Movement</p>                
+              </div>
+              <div style={{padding: '10px 20px'}}>
+                <p>Watch Movement</p>                
+              </div>
+            </div>         
           </div>
         </div>        
       )}

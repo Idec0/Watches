@@ -19,6 +19,10 @@ function LoadPage() {
 
 /* TODO:
 
+use watch_details from table in database to display details in view watch page
+
+add details for each watch in the watch_deatils table in database
+
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 get heart image to be on the right side in watches page
@@ -67,8 +71,9 @@ fixed styling in edit watches, since when you start editing the table would be o
 worked on watches page - got heart image to overlap watch image, but the problem is that the heart is now on the left side which isn't great since users will expect it to be on the right side
 create account validation text updates as you type or when you click create account
 Changed layout on create account
-researching about what to add to view watches page - best detail to add, which i found to be; brand, model number, strap type/ material, strap colour, watch face diameter, watch features (chronograph, alarm, tachymeter), case material, movement, warranty
+researching about what to add to view watches page - best details to add, which i found to be was; brand, model number, strap type/ material, strap colour, watch face diameter, watch features (chronograph, alarm, tachymeter), case material, movement, warranty
 Done some styling to view watch page
+Made a new table in the database to store watch details for the view watch page
 */
 
 const WatchesPage = () => {

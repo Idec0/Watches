@@ -203,9 +203,22 @@ input {
 
 /* viewWatch code */
 
+.generalDropdown {
+  display: none;
+}
+
+.strapDropdown {
+  display: none;
+}
+
+.movementDropdown {
+  display: none;
+}
+
 .dropDownStyle {
+  cursor: pointer;
   display: flex;
-  width: 70%;
+  width: 100%;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 }
