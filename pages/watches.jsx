@@ -19,7 +19,7 @@ function LoadPage() {
 
 /* TODO:
 
-use watch_details from table in database to display details in view watch page
+use watch_details from table in database to display details in view watch page - finish of the code
 
 add details for each watch in the watch_deatils table in database
 

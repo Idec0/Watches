@@ -22,7 +22,7 @@ function ViewWatchPage() {
   const [dropdown2, setDropdown2] = useState("V");
   const [dropdown3, setDropdown3] = useState("V");
   const [goToBasketElement, setGoToBasketElement] = useState(null);
-  const [getwatchDetails, setGetWatchDetails] = useState([]);
+  const [watchDetails, setGetWatchDetails] = useState([]);
   let variable;
 
   useEffect(() => {
@@ -48,8 +48,8 @@ function ViewWatchPage() {
     // get watch details
     try {
       // add new user to database
-      var user = {email: email, password: password}
-      const queryParams = new URLSearchParams(user).toString();
+      var watch = {getWatchDetails: "True", product_name: img[2]} // Mens Admiral Watch 1513907
+      const queryParams = new URLSearchParams(watch).toString();
       const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -57,10 +57,8 @@ function ViewWatchPage() {
       const result = await response.json();
       console.log(result);
 
-      watchDetails = result;
-
-      setGetWatchDetails(watchDetails);
-      console.log(getWatchDetails);
+      setGetWatchDetails(result);
+      console.log(watchDetails);
     }catch (error) {
       console.error('Error fetching data:', error);
     }
