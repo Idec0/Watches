@@ -97,18 +97,16 @@ function CheckoutPage() {
                 <div className="watchName">
                   <h1>
                     <u>
-                      <b style={{fontSize: '24px'}}>{watch[2]}</b>
+                      <b style={{fontSize: '20px'}}>{watch[2]}</b>
                     </u>
                   </h1>
-                  <p>£{watch[3]}</p>
+                  <p style={{fontSize: '20px'}}>Qty: {watch[5]}</p>
+                  <p style={{fontSize: '20px'}}>£{watch[3]}</p>
                 </div>                
               </div>
             ))}
             <div className="price">
               <p>Total: £{price}</p>
-              <Link href={`/checkout?amount=${price}`}>
-                <button style={{ color: "black" }}>Place Order</button>
-              </Link>                    
             </div>
           <div className='paymentDetails'>
               <div className='payment-container-items'>

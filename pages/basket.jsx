@@ -50,7 +50,7 @@ function BasketPage() {
 
       let calculatedTotal = 0;
       parsedBasket.forEach((watch) => {
-        calculatedTotal += parseInt(watch[3]);
+        calculatedTotal += (parseInt(watch[3]) * watch[5]);
       });
 
       setTotal(calculatedTotal);
@@ -60,6 +60,12 @@ function BasketPage() {
       setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
     }
   }, []);
+
+  const qtyWasClicked = (index, num) => {
+    basketItems[index][5] = num;
+    localStorage.setItem("Basket", JSON.stringify(basketItems));
+    window.location.reload();
+  }
 
   const viewWatchURL = (watch) => {
     let dataToAdd = [];
@@ -160,6 +166,20 @@ function BasketPage() {
               </div>
             </div>
             <p>£{watch[3]}</p>
+            <div className="dropdown">
+              <p>Qty: {watch[5]}</p>
+              <div className="dropdown-content-basket-page">
+                <p onClick={() => qtyWasClicked(index, 1)}>1</p>
+                <p onClick={() => qtyWasClicked(index, 2)}>2</p>
+                <p onClick={() => qtyWasClicked(index, 3)}>3</p>
+                <p onClick={() => qtyWasClicked(index, 4)}>4</p>
+                <p onClick={() => qtyWasClicked(index, 5)}>5</p>
+                <p onClick={() => qtyWasClicked(index, 6)}>6</p>
+                <p onClick={() => qtyWasClicked(index, 7)}>7</p>
+                <p onClick={() => qtyWasClicked(index, 8)}>8</p>
+                <p onClick={() => qtyWasClicked(index, 9)}>9</p>
+              </div>
+            </div>
           </div>
           <div className='bin'>
               <p onClick={() => Bin(watch)} style={{ cursor: "pointer" }}>

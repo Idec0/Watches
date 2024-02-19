@@ -450,11 +450,28 @@ input {
   text-align: center;
 }
 
-.dropdown-content button {
+.dropdown-content-basket-page {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 60px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.dropdown-content button .dropdown-content-basket-page button{
   color: black;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:hover .dropdown-content  {
+  display: block;
+}
+
+.dropdown:hover .dropdown-content-basket-page  {
   display: block;
 }
 

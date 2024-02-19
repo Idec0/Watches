@@ -19,9 +19,7 @@ function LoadPage() {
 
 /* TODO:
 
-use watch_details from table in database to display details in view watch page - finish of the code
-
-add details for each watch in the watch_deatils table in database
+add the quantity amount on the order history - e.g., watch x5 
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
@@ -29,12 +27,11 @@ get heart image to be on the right side in watches page
 
 work on checkout page
 
-work on view product page - add more options to choose from;
-options / details to add to view watches page - best detail to add, which i found to be; brand, model number, strap type/ material, strap colour, watch face diameter, watch features (chronograph, alarm, tachymeter), case material, movement, warranty
+work on viewWatch page since when you expand general details it increases the table size
+
+redesign basket page
 
 save payment method
-
-quantity to basket - when you add the same item from view basket it adds one to quantity
 
 when you login through checkout - make it take you back to checkout instead of home page
 
@@ -60,20 +57,14 @@ website - https://watches-ruby.vercel.app
 e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
-fixed error when naviagting to another page while viewing a product on view watch page - TypeError: destroy is not a function
-I forgot to save changes made to edit watches, I have now added that.
-Fixed Problem when you save edit watches and hover over a url it shows ...
-you can now edit all 3 urls in the admin panel for edit watches
-I have done some more research on how to get states to properly get a value set in useEffect
-I have fixed the problem with likedWatches, so now when you refresh the likedWatches saves but if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
-made the trash can always on the right side of the watches name in the basket page
-fixed styling in edit watches, since when you start editing the table would be off the screen, but now it all fits
-worked on watches page - got heart image to overlap watch image, but the problem is that the heart is now on the left side which isn't great since users will expect it to be on the right side
-create account validation text updates as you type or when you click create account
-Changed layout on create account
-researching about what to add to view watches page - best details to add, which i found to be was; brand, model number, strap type/ material, strap colour, watch face diameter, watch features (chronograph, alarm, tachymeter), case material, movement, warranty
-Done some styling to view watch page
-Made a new table in the database to store watch details for the view watch page
+I have tried to display the watch details but i am having the same problem, which i had with favouriting watches, where the state doesn't update properly and it still doesn't work, when i try the same way as i did for favouriting watches
+I have solved the problem, so now all the details display
+I have added details for every watch in the details table, so now you can view details for each watch
+Added a clickable quanitity button on the basket page - I decided to add a drop down for it since thats what most websites use, like Amazon, Hsamuel, since Hsamuel limits the quantity to 9 thats what I decided to add since its extremely unlikely someone which want more than 9 of the same watch
+You can change the quantity amount for each watch
+When you change the quantity it also updates the price
+when you add the same watch to the basket add one to the qty but if it already says 9 then don't add one
+added quantity to checkout so you can see how many you ordered
 */
 
 const WatchesPage = () => {
