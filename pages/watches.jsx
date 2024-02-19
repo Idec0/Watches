@@ -19,8 +19,6 @@ function LoadPage() {
 
 /* TODO:
 
-add the quantity amount on the order history - e.g., watch x5 
-
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 get heart image to be on the right side in watches page
@@ -31,12 +29,6 @@ work on viewWatch page since when you expand general details it increases the ta
 
 redesign basket page
 
-save payment method
-
-when you login through checkout - make it take you back to checkout instead of home page
-
-admin can search for specific watch or discount instead of having to scroll down and find it in a table
-
 css to make the website better on mobile
 
 test to see if the app can prevent SQL injections
@@ -44,12 +36,19 @@ test to see if the app can prevent SQL injections
 
 Maybe:
 
+admin can search for specific watch or discount instead of having to scroll down and find it in a table
+
+when you login through checkout - make it take you back to checkout instead of home page
+
+save payment method
+
 navbar layout - login icon on the far right or have all in the middle (Maybe)
 
 admin panel - ability to add sales (Maybe)
 
 admin panel - view customer accounts (Maybe) - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
 
+Links:
 
 stripe (Track Payments) - https://dashboard.stripe.com/test/products?active=true
 
@@ -65,6 +64,7 @@ You can change the quantity amount for each watch
 When you change the quantity it also updates the price
 when you add the same watch to the basket add one to the qty but if it already says 9 then don't add one
 added quantity to checkout so you can see how many you ordered
+Order History now shows the quantity for each watch
 */
 
 const WatchesPage = () => {

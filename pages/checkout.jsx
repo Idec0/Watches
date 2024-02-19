@@ -55,7 +55,7 @@ function CheckoutPage() {
       var products = [];
 
       for (var i = 0; i < parsedBasket.length; i++) {              
-        products.push(parsedBasket[i][2]);
+        products.push(parsedBasket[i][2] + " x" +  parsedBasket[i][5]);
       }
       setProductItems(products);
     }
