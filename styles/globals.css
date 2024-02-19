@@ -47,8 +47,30 @@ body {
   color: black;
 }
 
+.navbar-size {
+  padding: 6rem;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0;
+  }
+}
+
 .navbar {
   z-index: 1;
+}
+
+.nav-text {
+  @media (max-width: 768px) {
+    display: flex;
+  }
+
+  @media (max-width: 480px) {
+    display: contents;
+  }
 }
 
 .App {
@@ -448,6 +470,10 @@ input {
   padding: 12px 16px;
   z-index: 1;
   text-align: center;
+  @media (max-width: 480px) {
+    right: 0; 
+  }
+
 }
 
 .dropdown-content-basket-page {

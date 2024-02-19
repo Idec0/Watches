@@ -44,11 +44,11 @@ const Navbar = ({ appVisible, setAppVisible }) => {
 
 
   return (
-    <>
+    <>    
       <div className="w-full h-20 bg-emerald-800 sticky top-0 navbar">
         <div className="container mx-auto px-4 h-full">
           <div className="flex justify-between items-center h-full">
-            <ul className="md:flex gap-x-6 text-white  items-center">
+            <ul className="md:flex gap-x-6 text-white items-center nav-text">
               <li>
                 <Link href={"/"}  style={{color:"white"}}>Home</Link>
               </li>

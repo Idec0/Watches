@@ -10,7 +10,7 @@ function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
 
   return (
-    <main className="flex min-h-screen flex-col p-24">
+    <main className="flex min-h-screen flex-col navbar-size">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
       <BasketPage />
 

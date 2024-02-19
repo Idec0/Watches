@@ -6,7 +6,7 @@ import Navbar from "components/base.jsx";
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false); 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex min-h-screen flex-col items-center navbar-size">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
       {<AdminPage />}
     </main>

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between navbar-size">
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
       <WatchesPage />
     </main>
@@ -18,6 +18,10 @@ function LoadPage() {
 }
 
 /* TODO:
+
+css to make the website better on mobile
+
+make calculator work on mobile and tables - calculator can't be dragged on mobile and tables
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
@@ -29,7 +33,8 @@ work on viewWatch page since when you expand general details it increases the ta
 
 redesign basket page
 
-css to make the website better on mobile
+work on watches page
+
 
 test to see if the app can prevent SQL injections
 
@@ -42,11 +47,12 @@ when you login through checkout - make it take you back to checkout instead of h
 
 save payment method
 
-navbar layout - login icon on the far right or have all in the middle (Maybe)
+navbar layout - login icon on the far right or have all in the middle
 
-admin panel - ability to add sales (Maybe)
+admin panel - ability to add sales
 
-admin panel - view customer accounts (Maybe) - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
+admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
+
 
 Links:
 
@@ -65,6 +71,9 @@ When you change the quantity it also updates the price
 when you add the same watch to the basket add one to the qty but if it already says 9 then don't add one
 added quantity to checkout so you can see how many you ordered
 Order History now shows the quantity for each watch
+I tried to fix liked watches not loading unless you click on liked watches while on the watches page - you can click on liked watch button twice to make it work
+I have stated making the website responsive for all devices, i have finished the navbar, and watches page
+
 */
 
 const WatchesPage = () => {
@@ -100,11 +109,11 @@ const WatchesPage = () => {
       console.log("storedIsRedArray", storedIsRedArray);
       setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
 
-      SetLikedWatches();
+      SetLikedWatches1();
     }
   }, []);  
 
-  const SetLikedWatches = async () => {
+  const SetLikedWatches1 = async () => {
     const storedLikedWatches = localStorage.getItem("likedWatches");
     console.log("storedLikedWatches ", storedLikedWatches);
     await new Promise(resolve => setTimeout(resolve, 10));
@@ -250,7 +259,7 @@ const WatchesPage = () => {
       } else {
         updatedLikedWatches = likedWatches.filter((watchIndex) => watchIndex !== index);
       }
-  
+      
       setLikedWatches(updatedLikedWatches);
       localStorage.setItem("likedWatches", JSON.stringify(updatedLikedWatches));
       setIsRedArray(updatedIsRedArray);
@@ -260,12 +269,19 @@ const WatchesPage = () => {
 
   const filterImage = () => {
     console.log("asd filter", imgs);
+    if(imgs[0] === "showFav"){
+      setLoadingFavorites(true);
+      localStorage.setItem("loadLikedWatches", "true");
+      showFav(true);
+      return;
+    }
     imgs = filteredData
       .flatMap((brand) =>
         brands
           .filter((b) => b.brand_name.toLowerCase() === brand.toLowerCase())
           .map((watch) => watch.image_url)
       );
+      console.log(imgs);
     newURL();
   };
 
@@ -314,7 +330,7 @@ const WatchesPage = () => {
     setReload(true);
   };
   
-
+  
   useEffect(() => {
     const handleReload = () => {
       setReload(false);
@@ -330,28 +346,37 @@ const WatchesPage = () => {
 
   const showFav = (loadFav = true) => {
     console.log("isRedArray:", isRedArray);
+    console.log(loadFav);
+
+    console.log(likedWatches.length);
     if (likedWatches.length > 0 && loadFav === true) {
       // If there are liked watches, update the imgs array and filteredData
+      
       const likedWatchImages = likedWatches.map(
         (index) => imgList.flat()[index]
       );
+      console.log(likedWatches);
+      console.log(imgList);
+      console.log(likedWatchImages);
+
       imgs = likedWatchImages;
       setFilteredData(
         [...new Set(data.filter((op) => likedWatchImages.includes(brands[op.toLowerCase()])))]
       );
     } else {
       // If there are no liked watches, reset to display all watches
+      console.log("default setting");
       imgs = imgList.flat(); // flatten the imgList array
       setFilteredData([...new Set(data)]);
     }
 
-    const updatedLikedWatches = imgs.reduce((acc, img, index) => {
-      const imgIndex = imgList.flat().indexOf(img);
-      if (likedWatches.includes(imgIndex)) {
-        acc.push(imgIndex);
-      }
-      return acc;
-    }, []);
+    // const updatedLikedWatches = imgs.reduce((acc, img, index) => {
+    //   const imgIndex = imgList.flat().indexOf(img);
+    //   if (likedWatches.includes(imgIndex)) {
+    //     acc.push(imgIndex);
+    //   }
+    //   return acc;
+    // }, []);
     newURL();
   };
 
@@ -360,15 +385,17 @@ const WatchesPage = () => {
     setFilteredData([...new Set(data)]);
     // Save to localStorage whenever isRedArray changes
     localStorage.setItem("isRedArray", JSON.stringify(isRedArray));
-  }, [isRedArray]);
+  }, [isRedArray]); 
 
-  useEffect(() => {      
+  useEffect(() => {   
     if (typeof window !== 'undefined') {
+      console.log("imgs", imgs);
       if (imgs.length === 0) {
         localStorage.setItem("loadLikedWatches", "false");
         showFav(false);
       } else if (imgs[0] === "showFav") {
         // Set the loadingFavorites state to true before calling showFav(true)
+        console.log("imgs[0] === showFav");
         setLoadingFavorites(true);
         localStorage.setItem("loadLikedWatches", "true");
         showFav(true);
@@ -380,7 +407,6 @@ const WatchesPage = () => {
       return;
     }
   }, [loadingFavorites, imgs, showFav]);
-
 
   if (brands === null) {
     // stop infinite loading when recieving data
