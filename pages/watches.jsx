@@ -10,25 +10,27 @@ import { useRouter } from "next/navigation";
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between navbar-size">
-      <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-      <WatchesPage />
-    </main>
+    <>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body>
+        <main className="flex min-h-screen flex-col items-center justify-between navbar-size">
+          <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
+          <WatchesPage />
+        </main>
+      </body>
+    </>
   );
 }
 
 /* TODO:
 
-css to make the website better on mobile
-
-make calculator work on mobile and tables - calculator can't be dragged on mobile and tables
-
-heart appears above the navbar
+css to make edit watches table work on different devices - Nest Hub Max, Nest Hub, iPad Mini, iPhone SE
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 get heart image to be on the right side in watches page
-
 
 work on checkout page
 
@@ -37,7 +39,6 @@ work on viewWatch page since when you expand general details it increases the ta
 redesign basket page
 
 work on watches page
-
 
 test to see if the app can prevent SQL injections
 
@@ -66,9 +67,12 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 
 Done Today:
-I have made the basket, view watch, login, sign up page work on different device by changing the text size, also if they are on mobile it will also change the layout, to make sure everything fits on the screen
+I have made the basket, view watch, login, sign up, successful payment page work on different device by changing the text size, also if they are on mobile it will also change the layout, to make sure everything fits on the screen
 I have got the mobile bits to work on the pc website, since i can set its size to represent any device but it turns out on an actual mobile it doesnt work.
 The calculator now shows on all devices and is now draggable for touch screen
+Since it was my first time using next.js i decided to work on getting use to it, so i started making the app just for pc, with no intention for making it work on mobile, so now I have to remake alot of the pages, to make it work on mobile, which is why its taking alot longer than it should
+I have got page to work on different devices except for admin edit watches, edit discounts table, since the table is so big that i cant make it smaller without making the text too small.
+Fixed so now the heart icon doensn't appear above the navbar
 */
 
 const WatchesPage = () => {

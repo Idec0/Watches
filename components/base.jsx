@@ -45,9 +45,6 @@ const Navbar = ({ appVisible, setAppVisible }) => {
 
   return (
     <>
-    {/* <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </head> */}
       <div
       className="w-full h-20 bg-emerald-800 sticky top-0 navbar">
         <div className="container mx-auto px-4 h-full">
@@ -109,8 +106,8 @@ function App() {
   const [result, setResult] = useState("");
 
   const [isDragging, setIsDragging] = useState(false);
-  const num = window.innerHeight * (parseInt('50vh') / 100);
-  const [position, setPosition] = useState({ x: num, y: 250 });
+  const middleX = Math.floor((window.innerWidth / 2) - 190); 
+  const [position, setPosition] = useState({ x: middleX, y: 250 });
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   const ops = ["/", "*", "+", "-", "."];

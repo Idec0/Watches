@@ -171,6 +171,7 @@ input {
 .column {
   float: left;
   padding: 40px;
+  z-index: 0;
 }
 
 .column-list {
@@ -220,7 +221,7 @@ input {
 /* favourite icon img size */
 
 .overlayImg {
-  z-index: 2;
+  z-index: 0;
 }
 
 /* viewWatch code */
@@ -818,6 +819,15 @@ tr {
   .admin-panel-grid-container > div {
     font-size: 20px;
   }
+  .admin-panel-details input {
+    width: 600px;
+    margin: 20px auto;
+  }
+  .admin-panel-details button {
+    width: 600px;
+    margin: 20px auto;
+  }
+
 }
 @media (max-width: 1024px) {
   .displayMainViewWatch {
@@ -851,6 +861,15 @@ tr {
   .admin-panel-grid-container > div {
     font-size: 13px;
   }
+  .admin-panel-details input {
+    width: 500px;
+    margin: 20px auto;
+  }
+  .admin-panel-details button {
+    width: 500px;
+    margin: 20px auto;
+  }
+  
 }
 
 @media (max-width: 768px) {
@@ -894,6 +913,14 @@ tr {
   }
   .payment-container {
     width: 80%;
+  }
+  .admin-panel-details input {
+    width: 500px;
+    margin: 30px auto;
+  }
+  .admin-panel-details button {
+    width: 500px;
+    margin: 30px auto;
   }
 }
 
@@ -964,5 +991,13 @@ tr {
   .successful-child-container button {
     margin-left: 90px;
     margin-top: 10px;
+  }
+  .admin-panel-details input {
+    width: 240px;
+    margin: 20px auto;
+  }
+  .admin-panel-details button {
+    width: 240px;
+    margin: 20px auto;
   }
 }
