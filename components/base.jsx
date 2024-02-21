@@ -45,9 +45,9 @@ const Navbar = ({ appVisible, setAppVisible }) => {
 
   return (
     <>
-    <head>
+    {/* <head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </head>
+    </head> */}
       <div
       className="w-full h-20 bg-emerald-800 sticky top-0 navbar">
         <div className="container mx-auto px-4 h-full">
