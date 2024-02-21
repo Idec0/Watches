@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {Head} from 'next/head';
 
 const Navbar = ({ appVisible, setAppVisible }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -46,9 +45,9 @@ const Navbar = ({ appVisible, setAppVisible }) => {
 
   return (
     <>
-      <Head>
+      <head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
+      </head>
       <body>
         <div
         className="w-full h-20 bg-emerald-800 sticky top-0 navbar">
