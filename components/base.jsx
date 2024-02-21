@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {Head} from 'next/document';
+import {Html, Head} from 'next/document';
 
 const Navbar = ({ appVisible, setAppVisible }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -45,7 +45,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
 
 
   return (
-    <>
+    <Html>
       <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
@@ -102,7 +102,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
           {appVisible && <App />}
         </div>
       </body>
-    </>
+    </Html>
   );
 };
 
