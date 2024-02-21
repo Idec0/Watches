@@ -11,15 +11,10 @@ function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
   return (
     <>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </head>
-      <body>
-        <main className="flex min-h-screen flex-col items-center justify-between navbar-size">
-          <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
-          <WatchesPage />
-        </main>
-      </body>
+      <main className="flex min-h-screen flex-col items-center justify-between navbar-size">
+        <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
+        <WatchesPage />
+      </main>
     </>
   );
 }
