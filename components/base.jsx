@@ -45,58 +45,60 @@ const Navbar = ({ appVisible, setAppVisible }) => {
 
   return (
     <>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>    
-      <div
-       className="w-full h-20 bg-emerald-800 sticky top-0 navbar">
-        <div className="container mx-auto px-4 h-full">
-          <div className="flex justify-between items-center h-full">
-            <ul className="md:flex gap-x-6 text-white items-center nav-text">
-              <li>
-                <Link href={"/"}  style={{color:"white"}}>Home</Link>
-              </li>
-              <li>
-                <Link href={"/watches"}  style={{color:"white"}}>Watches</Link>
-              </li>
-              <li>
-                <button type="button" onClick={() => showCalc()}>
-                  <p style={{color:"white"}}>Calculator</p>
-                </button>
-              </li>
-              <li>
-                <Link href={"/watches?imgs=showFav"}>❤️</Link>
-              </li>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-              <Link href={"/basket"}>🛒</Link>
-              {loggedIn === "false" && (
-              <li>
-                <div className="dropdown">
-                  <p>👤</p>
-                  <div className="dropdown-content">
-                    <Link href={"/login"}>Login</Link>
-                  </div>
-                </div>
-              </li>
-            )}
-              {loggedIn !== "false" && (
-              <li>
-                <div className="dropdown">
-                  <p>👤</p>
-                  <div className="dropdown-content">
-                  {admin !== false && (
-                    <Link href={"/adminPanel"}>Admin Panel</Link>
-                  )}
-                    <a href={"/orderHistory"}><p style={{cursor: 'pointer'}}>History</p></a>
-                    <p style={{cursor: 'pointer'}} type="button" onClick={() => logout()}>Logout</p>
-                  </div>
-                </div>
-              </li>
-            )}
+        <div
+        className="w-full h-20 bg-emerald-800 sticky top-0 navbar">
+          <div className="container mx-auto px-4 h-full">
+            <div className="flex justify-between items-center h-full">
+              <ul className="md:flex gap-x-6 text-white items-center nav-text">
+                <li>
+                  <Link href={"/"}  style={{color:"white"}}>Home</Link>
+                </li>
+                <li>
+                  <Link href={"/watches"}  style={{color:"white"}}>Watches</Link>
+                </li>
+                <li>
+                  <button type="button" onClick={() => showCalc()}>
+                    <p style={{color:"white"}}>Calculator</p>
+                  </button>
+                </li>
+                <li>
+                  <Link href={"/watches?imgs=showFav"}>❤️</Link>
+                </li>
 
-            </ul>
+                <Link href={"/basket"}>🛒</Link>
+                {loggedIn === "false" && (
+                <li>
+                  <div className="dropdown">
+                    <p>👤</p>
+                    <div className="dropdown-content">
+                      <Link href={"/login"}>Login</Link>
+                    </div>
+                  </div>
+                </li>
+              )}
+                {loggedIn !== "false" && (
+                <li>
+                  <div className="dropdown">
+                    <p>👤</p>
+                    <div className="dropdown-content">
+                    {admin !== false && (
+                      <Link href={"/adminPanel"}>Admin Panel</Link>
+                    )}
+                      <a href={"/orderHistory"}><p style={{cursor: 'pointer'}}>History</p></a>
+                      <p style={{cursor: 'pointer'}} type="button" onClick={() => logout()}>Logout</p>
+                    </div>
+                  </div>
+                </li>
+              )}
+
+              </ul>
+            </div>
           </div>
+          {appVisible && <App />}
         </div>
-        {appVisible && <App />}
-      </div>
+      </meta>    
     </>
   );
 };
