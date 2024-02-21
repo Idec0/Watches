@@ -23,9 +23,12 @@ css to make the website better on mobile
 
 make calculator work on mobile and tables - calculator can't be dragged on mobile and tables
 
+heart appears above the navbar
+
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 get heart image to be on the right side in watches page
+
 
 work on checkout page
 
@@ -61,18 +64,9 @@ stripe (Track Payments) - https://dashboard.stripe.com/test/products?active=true
 website - https://watches-ruby.vercel.app
 e-commerce website - https://e-commerce-bc.payloadcms.app
 
+
 Done Today:
-I have tried to display the watch details but i am having the same problem, which i had with favouriting watches, where the state doesn't update properly and it still doesn't work, when i try the same way as i did for favouriting watches
-I have solved the problem, so now all the details display
-I have added details for every watch in the details table, so now you can view details for each watch
-Added a clickable quanitity button on the basket page - I decided to add a drop down for it since thats what most websites use, like Amazon, Hsamuel, since Hsamuel limits the quantity to 9 thats what I decided to add since its extremely unlikely someone which want more than 9 of the same watch
-You can change the quantity amount for each watch
-When you change the quantity it also updates the price
-when you add the same watch to the basket add one to the qty but if it already says 9 then don't add one
-added quantity to checkout so you can see how many you ordered
-Order History now shows the quantity for each watch
-I tried to fix liked watches not loading unless you click on liked watches while on the watches page - you can click on liked watch button twice to make it work
-I have stated making the website responsive for all devices, i have finished the navbar, and watches page
+I have made the basket, view watch page work on different device by changing the text size, also if they are on mobile it will also change the layout, to make sure everything fits on the screen
 
 */
 

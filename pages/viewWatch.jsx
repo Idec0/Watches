@@ -157,33 +157,47 @@ function ViewWatchPage() {
   
   return (
     <main>
-      <div id="goTobasket-container" className='goTobasket-container'>
+      <div id="goTobasket-container" className='goTobasket-container watchInfo'>
         <div className='goTobasket'>
           <p>Item added to your basket</p>
           <button onClick={() => gotToBasket()}>Go To Basket</button>
           <p onClick={() => continueShopping()}><u onClick={() => viewWatches()} style={{cursor: 'pointer'}}>Continue Shopping</u></p>
         </div>
       </div>
+      {goToBasketElement === "none" && ( 
+        <div className="title" >
+          <h1>
+            <u>
+              <b style={{textTransform: 'capitalize'}}>
+                {img ? img[1] : "N/A"}{" "}
+              </b>
+            </u>
+          </h1>
+          <p>{img[2]}</p>
+        </div>
+      )}
       
       {goToBasketElement === "none" && (        
         <div className='imageSlideAndWatchContainer'>
-          <div className='imageSlide'>
-            <img className="displayWatch" onClick={() => changeImg(img[4])} src={img[4]} alt="Watch" style={{ width: '90%', height: '30%', cursor: 'pointer' }} />
-            <img className="displayWatch" onClick={() => changeImg(imgs.image_url_2)} src={imgs.image_url_2} alt="Watch" style={{ width: '90%', height: '30%', cursor: 'pointer' }} />
-            <img className="displayWatch" onClick={() => changeImg(imgs.image_url_3)} src={imgs.image_url_3} alt="Watch" style={{ width: '90%', height: '30%', cursor: 'pointer' }} />
+          <div className='imageSlide watchPic'>            
+            <img className="displayViewWatch" onClick={() => changeImg(img[4])} src={img[4]} alt="Watch" style={{ cursor: 'pointer' }} />
+            <img className="displayViewWatch" onClick={() => changeImg(imgs.image_url_2)} src={imgs.image_url_2} alt="Watch" style={{ cursor: 'pointer' }} />
+            <img className="displayViewWatch" onClick={() => changeImg(imgs.image_url_3)} src={imgs.image_url_3} alt="Watch" style={{ cursor: 'pointer' }} />
           </div>
 
-          <img className="displayWatch" src={img[4]} style={{height: '680px', width: '680px'}} alt="Watch" id="mainImg" />
+          <img className="displayMainViewWatch mainWatchPic" src={img[4]} alt="Watch" id="mainImg" />
 
-          <div className="displayWatchInfo" >
-            <h1>
-              <u>
-                <b style={{textTransform: 'capitalize'}}>
-                  {img ? img[1] : "N/A"}{" "}
-                </b>
-              </u>
-            </h1>
-            <p>{img[2]}</p>
+          <div className="displayWatchInfo watchInfo" >
+            <div className='viewWatchTitle'>
+              <h1>
+                <u>
+                  <b style={{textTransform: 'capitalize'}}>
+                    {img ? img[1] : "N/A"}{" "}
+                  </b>
+                </u>
+              </h1>
+              <p>{img[2]}</p>
+            </div>
             <p>£{img[3]}</p>
             <button style={{ color: "black" }} onClick={() => AddToBasket(img)}>
               Add To Basket
