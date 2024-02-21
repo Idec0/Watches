@@ -5,17 +5,18 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
 import { useRouter } from "next/navigation";
+import RootLayout from 'pages/layout.jsx';
 
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
   return (
-    <>
+    <RootLayout>
       <main className="flex min-h-screen flex-col items-center justify-between navbar-size">
         <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
         <WatchesPage />
       </main>
-    </>
+    </RootLayout>
   );
 }
 
