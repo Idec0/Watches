@@ -66,8 +66,9 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 
 Done Today:
-I have made the basket, view watch page work on different device by changing the text size, also if they are on mobile it will also change the layout, to make sure everything fits on the screen
+I have made the basket, view watch, login, sign up page work on different device by changing the text size, also if they are on mobile it will also change the layout, to make sure everything fits on the screen
 I have got the mobile bits to work on the pc website, since i can set its size to represent any device but it turns out on an actual mobile it doesnt work.
+The calculator now shows on all devices and is now draggable for touch screen
 */
 
 const WatchesPage = () => {

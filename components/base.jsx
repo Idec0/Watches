@@ -109,7 +109,8 @@ function App() {
   const [result, setResult] = useState("");
 
   const [isDragging, setIsDragging] = useState(false);
-  const [position, setPosition] = useState({ x: 600, y: 250 });
+  const num = window.innerHeight * (parseInt('50vh') / 100);
+  const [position, setPosition] = useState({ x: num, y: 250 });
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   const ops = ["/", "*", "+", "-", "."];
@@ -206,18 +207,21 @@ function App() {
   /* draggable */
   const handleMouseDown = (e) => {
     setIsDragging(true);
+    const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+     const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
     setOffset({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y,
+      x: clientX - position.x,
+      y: clientY - position.y,
     });
   };
 
   const handleMouseMove = (e) => {
     if (!isDragging) return;
-
+    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
     setPosition({
-      x: e.clientX - offset.x,
-      y: e.clientY - offset.y,
+      x: clientX - offset.x,
+      y: clientY - offset.y,
     });
   };
 

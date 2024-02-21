@@ -727,7 +727,7 @@ tr {
 }
 
 .checkout-grid-container > div {
-  background-color: rgba(255, 255, 255, 0.8);
+  /* background-color: rgba(255, 255, 255, 0.8); */
   text-align: center;
   font-size: 30px;
 }
@@ -892,6 +892,9 @@ tr {
   .admin-panel-grid-container > div {
     font-size: 11px;
   }
+  .payment-container {
+    width: 80%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -934,5 +937,32 @@ tr {
   }
   .admin-panel-grid-container > div {
     font-size: 11px;
+  }
+  .split-grid-container > div {
+    font-size: 20px;
+  }
+  .login-right-content input {
+    margin: 5px 0;
+  }
+  .login-right-content input, .login-right-content button {
+    margin: 5px 0;
+  }
+  .payment-container {
+    width: 80%;
+  }
+  .successful-child-container {
+    height: 400px;
+    width: 300px;
+    padding-top: 60px;
+  }
+  .successful-child-container h1 {
+    font-size: 25px;
+  }
+  .successful-child-container p, .successful-child-container h1, .successful-child-container u {
+    margin-top: 30px;
+  }
+  .successful-child-container button {
+    margin-left: 90px;
+    margin-top: 10px;
   }
 }
