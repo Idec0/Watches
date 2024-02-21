@@ -26,10 +26,6 @@ if you click likedWatches page while viewing watches page it works but any other
 
 work on checkout page
 
-redesign basket page
-
-work on watches page
-
 test to see if the app can prevent SQL injections
 
 
