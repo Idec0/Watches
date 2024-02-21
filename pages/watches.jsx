@@ -24,11 +24,7 @@ css to make edit watches table work on different devices - Nest Hub Max, Nest Hu
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
-get heart image to be on the right side in watches page
-
 work on checkout page
-
-work on viewWatch page since when you expand general details it increases the table size
 
 redesign basket page
 
@@ -65,8 +61,11 @@ I have made the basket, view watch, login, sign up, successful payment page work
 I have got the mobile bits to work on the pc website, since i can set its size to represent any device but it turns out on an actual mobile it doesnt work.
 The calculator now shows on all devices and is now draggable for touch screen
 Since it was my first time using next.js i decided to work on getting use to it, so i started making the app just for pc, with no intention for making it work on mobile, so now I have to remake alot of the pages, to make it work on mobile, which is why its taking alot longer than it should
-I have got page to work on different devices except for admin edit watches, edit discounts table, since the table is so big that i cant make it smaller without making the text too small.
+I have got most pages to work on different devices except for checkout page since I haven't finished designing it, admin edit watches, edit discounts table, since the table is so big that i cant make it smaller without making the text too small.
 Fixed so now the heart icon doensn't appear above the navbar
+I have done alot of researching on the mobile problem but i couldn't fix it
+I have moved the heart imageto the right side since thats the side which everybody expects it to be
+I have done some research for designing a checkout page
 */
 
 const WatchesPage = () => {

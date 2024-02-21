@@ -211,7 +211,8 @@ input {
   height: 30px;
   display: none;
   cursor: pointer;
-  right: 0;
+  left: 170px;
+  position: relative;
   z-index: 1;
 }
 .watches-background:hover .overlay .favicon {
@@ -691,7 +692,7 @@ tr {
   padding: 10px;
   width: 60%;
   background-color: lightblue;
-  margin: 50px auto;
+  margin: 170px auto;
 }
 
 .payment-container-input {
