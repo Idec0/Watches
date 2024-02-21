@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import RootLayout from 'pages/layout.jsx';
 
 const Navbar = ({ appVisible, setAppVisible }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -44,7 +45,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
 
 
   return (
-    <>
+    <RootLayout>
       <div
       className="w-full h-20 bg-emerald-800 sticky top-0 navbar">
         <div className="container mx-auto px-4 h-full">
@@ -97,7 +98,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
         {appVisible && <App />}
       </div>
 
-    </>
+    </RootLayout>
   );
 };
 
