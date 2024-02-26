@@ -44,8 +44,9 @@ Done Today:
 I have finished the changing every page to work on different devices, apart from one which is edit watches on a mobile since iam not sure the best way to do it due to me not being able to test it on my mobile due to an issue which im not sure about
 Changed the price layout on the basket page
 added it so when the prices are the same only one shows
+Fixed a problem with one of the watches not working as intended it kept causing an error when you tried to view it.
 I have completed the website, I could make it look better or even add more functions like admins can search for specific watch or discount instead of having to scroll down and find it in a table, ability to add sales, admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend, etc... , but theres no need for it
-
+I have tested the functionality of the website and everything works as intended
 */
 
 const WatchesPage = () => {

@@ -666,6 +666,10 @@ input {
   display: block;
 }
 
+.admin-panel-details button {
+  border-radius: 4px;
+}
+
 .admin-panel-details-text-input {
   width: 700px;
 }

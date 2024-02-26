@@ -216,7 +216,6 @@ function AdminPage() {
 
       // save changes
       try {
-        console.log(watch.brand_name);
         var discount = {save_watch_changes: "True", product_name: discountType[0], brand: discountType[1], image_url: discountType[6], image_url_2: discountType[7], image_url_3: discountType[8], price: discountType[5]}
         const queryParams = new URLSearchParams(discount).toString();
         const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
