@@ -20,8 +20,6 @@ function LoadPage() {
 
 /* TODO:
 
-css to make edit watches table work on different devices - mobile
-
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 
