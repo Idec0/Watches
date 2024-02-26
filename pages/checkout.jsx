@@ -241,7 +241,6 @@ const CheckoutForm = ({ amount, setAddressLine1Text, setAddressLine2Text, setCit
       console.error(result.error.message);
     } else {
       if (result.paymentIntent.status === "succeeded") {
-        console.log("Payment succeeded!");
         // reset basket
         localStorage.setItem("Basket", "[]");
         // Redirect or show success message

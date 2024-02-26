@@ -34,11 +34,9 @@ function IndexPage() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result = await response.json();
-        console.log(result);
 
         user = result;
         if(user !== "Unauthorized"){
-          console.log("password correct");
           setPasswordText("");
           if (typeof window !== 'undefined') {
             localStorage.setItem("loggedIn", user.user[0].username);        
@@ -46,7 +44,6 @@ function IndexPage() {
           window.location.href = "/";
         }
         else{
-          console.log("Password was incorrect");
           setPasswordText("Username or Password was Incorrect");
         }
 

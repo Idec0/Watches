@@ -5,6 +5,8 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "components/base.jsx";
 import { useRouter } from "next/navigation";
+import Image from 'next/image'
+import heartImage from "public/heart.png";
 
 function LoadPage() {
   const [appVisible, setAppVisible] = useState(false);
@@ -41,10 +43,13 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 
 Done Today:
-I have finished the changing every page to work on different devices, apart from one which is edit watches on a mobile since iam not sure the best way to do it due to me not being able to test it on my mobile due to an issue which im not sure about
+I have finished the changing every page to work on different devices, apart from one when you're editing watches on a mobile since iam not sure the best way to do it due to me not being able to test it on my mobile due to an issue which im not sure about
 Changed the price layout on the basket page
-added it so when the prices are the same only one shows
-Fixed a problem with one of the watches not working as intended it kept causing an error when you tried to view it.
+added it so when the prices are the same only show one 
+Fixed a problem with one of the watches not working as intended, it kept causing an error when you tried to view it.
+Changed the heart image so its now transparent
+I have looked at other watch websites to compare mine to theirs.
+Tried to fix favouriting page since if you're on watches page and click on favourites it works but if you're not viewing watches then you must click the button twice - this problem is mainly causes due to the way i made the page, since i make the pages wrong at the start since i didn't know you have to make a directory called pages, due to this the favourites page doesnt work as well but it still works
 I have completed the website, I could make it look better or even add more functions like admins can search for specific watch or discount instead of having to scroll down and find it in a table, ability to add sales, admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend, etc... , but theres no need for it
 I have tested the functionality of the website and everything works as intended
 */
@@ -416,9 +421,11 @@ const WatchesPage = () => {
           <div className="column" key={index}>
             <div className="watches-background">
               <div className="overlay">
-                <img
+                <Image
                   className="favicon"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_Kv4K4TnVfDuANmqwl2FM3NPs-vORr7aFMbhIfVA4gAFCkOY50ZCFb4ZyxRwzCE3KSTA&usqp=CAU"
+                  width={30}
+                  src={heartImage}
+                  //src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_Kv4K4TnVfDuANmqwl2FM3NPs-vORr7aFMbhIfVA4gAFCkOY50ZCFb4ZyxRwzCE3KSTA&usqp=CAU"
                   onClick={() => toggleColor(index)}
                   style={getImgStyle(index)}
                 />

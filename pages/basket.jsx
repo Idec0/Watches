@@ -114,7 +114,6 @@ function BasketPage() {
         // check if code is valide / indate
         const currentDate = new Date();
         const targetDate = new Date(result.discounts[0].end_date);
-        console.log(result.discounts[0].discount_amount)
         if(currentDate < targetDate){
           const newDiscountAmount = result.discounts[0].discount_amount;
           setDiscountAmount(newDiscountAmount);

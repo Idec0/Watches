@@ -8,12 +8,7 @@ export default async function handler(req, res) {
 
   const { amount } = req.body;
 
-  if (isNaN(amount)) {
-    console.log("Invalid amount", amount);
-  }
-
   try {
-    console.log(amount);
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,  // Amount in cents
       currency: 'GBP',

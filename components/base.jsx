@@ -123,7 +123,6 @@ function App() {
       clear();
     } else if (event.key === "(" || event.key === ")") {
       updateCalc(event.key);
-      console.log("()");
     }
   };
 
@@ -172,12 +171,9 @@ function App() {
       }
     } catch (error) {
       setResult("Error");
-      console.log(calc);
       // if user inputs 2(2+2) then auto input *
       if (calc.includes("(")) {
-        console.log("error caused by (");
         let index = calc.indexOf("(");
-        console.log(index);
 
         if (!ops.includes(calc[index - 1])) {
           setCalc(calc.slice(0, index) + "*" + calc.slice(index));
