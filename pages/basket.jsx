@@ -188,9 +188,9 @@ function BasketPage() {
           </div>
           {index === 0 && (
             <div className="item3">
-              <p>Total: £{total.toFixed(2)}</p>
+              <p>Total: <span style={{textDecoration: 'line-through'}}>£{total.toFixed(2)}</span> £{(total - (total * (discountAmount / 100))).toFixed(2)}</p>
               <p>Discount: {discountAmount}%</p>
-              <p>New Total: £{(total - (total * (discountAmount / 100))).toFixed(2)}</p>
+              {/* <p>New Total: £{(total - (total * (discountAmount / 100))).toFixed(2)}</p> */}
               <input type="text" id="discountInput" placeholder="Apply Discount Code" onKeyDown={checkKeyDown} style={{ textAlign: "center", color: "black" }} />
               {loggedIn === "false" && (
               <Link href={"/login"}>

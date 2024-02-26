@@ -46,7 +46,7 @@ function OrderHistoryPage() {
     return (
       <main style={{width: '100%'}}>
          <div className='admin-panel-details' style={{margin: '10px 0', paddingTop: '10px'}}>
-            <table style={{width: '80%'}}>
+            <table style={{width: '80%', margin: 'auto'}}>
               <tbody>
                 <tr>
                   <th>Date Of Purchase</th>
@@ -57,7 +57,7 @@ function OrderHistoryPage() {
                 {orders.map((order) => (
                 <tr key={order.id}>                  
                   <td>{new Date(order.orderdate).toISOString().split('T')[0]}</td>
-                  <td dangerouslySetInnerHTML={{ __html: order.products.replace(/,/g, "<br>") }} /> {/* dangerouslySetInnerHTML turns data raw */}
+                  <td dangerouslySetInnerHTML={{ __html: order.products.replace(/,/g, "<br>") }} /> {/* dangerouslySetInnerHTML - turns data raw */}
                   <td>£ {order.price}</td>
                   <td>{new Date(order.deliverydate).toISOString().split('T')[0]}</td>
                 </tr>

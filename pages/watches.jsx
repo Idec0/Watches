@@ -20,13 +20,9 @@ function LoadPage() {
 
 /* TODO:
 
-css to make edit watches table work on different devices - Nest Hub Max, Nest Hub, iPad Mini, iPhone SE
+css to make edit watches table work on different devices - mobile
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
-
-work on checkout page
-
-test to see if the app can prevent SQL injections
 
 
 Maybe:
@@ -34,10 +30,6 @@ Maybe:
 admin can search for specific watch or discount instead of having to scroll down and find it in a table
 
 when you login through checkout - make it take you back to checkout instead of home page
-
-save payment method
-
-navbar layout - login icon on the far right or have all in the middle
 
 admin panel - ability to add sales
 
@@ -53,15 +45,8 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 
 Done Today:
-I have made the basket, view watch, login, sign up, successful payment page work on different device by changing the text size, also if they are on mobile it will also change the layout, to make sure everything fits on the screen
-I have got the mobile bits to work on the pc website, since i can set its size to represent any device but it turns out on an actual mobile it doesnt work.
-The calculator now shows on all devices and is now draggable for touch screen
-Since it was my first time using next.js i decided to work on getting use to it, so i started making the app just for pc, with no intention for making it work on mobile, so now I have to remake alot of the pages, to make it work on mobile, which is why its taking alot longer than it should
-I have got most pages to work on different devices except for checkout page since I haven't finished designing it, admin edit watches, edit discounts table, since the table is so big that i cant make it smaller without making the text too small.
-Fixed so now the heart icon doensn't appear above the navbar
-I have done alot of researching on the mobile problem but i couldn't fix it
-I have moved the heart imageto the right side since thats the side which everybody expects it to be
-I have done some research for designing a checkout page
+I have finished the changing every page to work on different devices, apart from one which is edit watches on a mobile since iam not sure the best way to do it due to me not being able to test it on my mobile due to an issue which im not sure about
+Changed the price layout on the basket page
 */
 
 const WatchesPage = () => {
@@ -94,7 +79,6 @@ const WatchesPage = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedIsRedArray = localStorage.getItem("isRedArray");
-      console.log("storedIsRedArray", storedIsRedArray);
       setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
 
       SetLikedWatches1();
@@ -103,11 +87,8 @@ const WatchesPage = () => {
 
   const SetLikedWatches1 = async () => {
     const storedLikedWatches = localStorage.getItem("likedWatches");
-    console.log("storedLikedWatches ", storedLikedWatches);
     await new Promise(resolve => setTimeout(resolve, 10));
-    console.log("likedWatches 1", likedWatches);
     setLikedWatches(JSON.parse(storedLikedWatches));
-    console.log("likedWatches 2", likedWatches);
   }
   
   const fetchBrandsData = async () => {
@@ -233,8 +214,6 @@ const WatchesPage = () => {
     imgs = imgList.flat(); // Assuming imgList is defined somewhere in your component
   }
 
-  console.log("asd 2", imgs);
-
   const toggleColor = (index) => {
     if (typeof window !== 'undefined') {
       const updatedIsRedArray = [...isRedArray];
@@ -256,7 +235,6 @@ const WatchesPage = () => {
   
 
   const filterImage = () => {
-    console.log("asd filter", imgs);
     if(imgs[0] === "showFav"){
       setLoadingFavorites(true);
       localStorage.setItem("loadLikedWatches", "true");
@@ -269,7 +247,6 @@ const WatchesPage = () => {
           .filter((b) => b.brand_name.toLowerCase() === brand.toLowerCase())
           .map((watch) => watch.image_url)
       );
-      console.log(imgs);
     newURL();
   };
 
@@ -294,7 +271,6 @@ const WatchesPage = () => {
     let dataToAdd = [];
     dataToAdd.push(imagePositionMap[index]);
     dataToAdd.push(imgList[imagePositionMap[index][0]]);
-    console.log(dataToAdd);
     // Construct the new query parameter with the updated variable
     const newQueryParams = new URLSearchParams();
     newQueryParams.set("watch", dataToAdd.join(","));
@@ -333,19 +309,12 @@ const WatchesPage = () => {
   
 
   const showFav = (loadFav = true) => {
-    console.log("isRedArray:", isRedArray);
-    console.log(loadFav);
-
-    console.log(likedWatches.length);
     if (likedWatches.length > 0 && loadFav === true) {
       // If there are liked watches, update the imgs array and filteredData
       
       const likedWatchImages = likedWatches.map(
         (index) => imgList.flat()[index]
       );
-      console.log(likedWatches);
-      console.log(imgList);
-      console.log(likedWatchImages);
 
       imgs = likedWatchImages;
       setFilteredData(
@@ -353,7 +322,6 @@ const WatchesPage = () => {
       );
     } else {
       // If there are no liked watches, reset to display all watches
-      console.log("default setting");
       imgs = imgList.flat(); // flatten the imgList array
       setFilteredData([...new Set(data)]);
     }
@@ -377,13 +345,11 @@ const WatchesPage = () => {
 
   useEffect(() => {   
     if (typeof window !== 'undefined') {
-      console.log("imgs", imgs);
       if (imgs.length === 0) {
         localStorage.setItem("loadLikedWatches", "false");
         showFav(false);
       } else if (imgs[0] === "showFav") {
         // Set the loadingFavorites state to true before calling showFav(true)
-        console.log("imgs[0] === showFav");
         setLoadingFavorites(true);
         localStorage.setItem("loadLikedWatches", "true");
         showFav(true);

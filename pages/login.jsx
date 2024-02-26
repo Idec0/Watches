@@ -18,6 +18,7 @@ function LoadPage() {
 }
 
 function IndexPage() {
+  const [passwordText, setPasswordText] = useState("");
   {
     const LoginButtonClicked = async () => {
       var email = document.getElementById("email").value
@@ -38,6 +39,7 @@ function IndexPage() {
         user = result;
         if(user !== "Unauthorized"){
           console.log("password correct");
+          setPasswordText("");
           if (typeof window !== 'undefined') {
             localStorage.setItem("loggedIn", user.user[0].username);        
           }
@@ -45,6 +47,7 @@ function IndexPage() {
         }
         else{
           console.log("Password was incorrect");
+          setPasswordText("Username or Password was Incorrect");
         }
 
       }catch (error) {
@@ -66,6 +69,7 @@ function IndexPage() {
             <div className='login-right-content'>              
               <input placeholder='Email' type="email" id="email" />
               <input placeholder='Password' type='password' id="password" />
+              <p className = 'login-text'>{passwordText}</p>
               <button onClick={() => LoginButtonClicked()}>Login</button>
               <a href='/createAccount'>
                 <button>Create Account</button>

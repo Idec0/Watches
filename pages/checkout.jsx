@@ -122,6 +122,9 @@ function CheckoutPage() {
                 </Elements>
               </div>
             </div>
+            <a href="/basket"><button>
+              Cancel
+            </button></a>
           </div>
         </div>
       </div>      
@@ -252,7 +255,7 @@ const CheckoutForm = ({ amount, setAddressLine1Text, setAddressLine2Text, setCit
       <CardElement options={cardElementOptions} />
       <button type="submit" onClick={() => handlePayment()} disabled={!stripe}>
         Pay
-      </button>
+      </button>      
     </>
   );
 };

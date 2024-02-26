@@ -14,7 +14,6 @@ export default async function handler(request, response) {
     if(discountCode.length > 15 && discountCode.slice(0, 15) === "getWatchDetails"){
       const queryParams = new URLSearchParams(discountCode);
       const product_name = queryParams.get("product_name");
-      console.log(product_name);
       result = await client.query('SELECT * FROM watch_details WHERE product_name = $1', [product_name]);
       const details = result.rows;
       return response.status(200).json({ details });

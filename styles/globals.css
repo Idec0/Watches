@@ -492,6 +492,11 @@ input {
   height: 21px;
 }
 
+.login-text {
+  font-size: 16px;
+  color: red;
+}
+
 .signup-left-content p {
   font-size: 15px;
   color: red;
@@ -639,19 +644,30 @@ input {
 .admin-panel-details input {
   margin: 50px auto;
   text-align: center;
-  width: 700px;
   padding: 10px;
   display: block;
 }
 
-.admin-panel-details button {
+.admin-panel-details-table-input{
+  width: 180px;
+}
+
+.admin-panel-details-table-watches-input{
+  width: 150px;
+}
+
+.admin-panel-details-button {
   margin: 50px auto;
   text-align: center;
-  width: 700px;
+  width: 150px;
   padding: 10px;
   background-color: #13204b;
   border-radius: 4px;
   display: block;
+}
+
+.admin-panel-details-text-input {
+  width: 700px;
 }
 
 .discount-container {
@@ -659,10 +675,6 @@ input {
   margin: 0;
   margin: 10px;
   justify-content: space-evenly;  
-}
-
-table {
-  margin: auto;
 }
 
 td, th{
@@ -820,14 +832,20 @@ tr {
   .admin-panel-grid-container > div {
     font-size: 20px;
   }
-  .admin-panel-details input {
-    width: 600px;
+  .admin-panel-details-table-input {
+    width: 150px;
     margin: 20px auto;
   }
-  .admin-panel-details button {
-    width: 600px;
+  .admin-panel-details-table-watches-input {
+    width: 70px;
+  }
+  .admin-panel-details-button {
+    width: 150px;
     margin: 20px auto;
   }
+  .admin-panel-details-text-input {
+    width: 700px;
+  } 
 
 }
 @media (max-width: 1024px) {
@@ -862,14 +880,20 @@ tr {
   .admin-panel-grid-container > div {
     font-size: 13px;
   }
-  .admin-panel-details input {
-    width: 500px;
+  .admin-panel-details-table-input {
+    width: 150px;
     margin: 20px auto;
   }
-  .admin-panel-details button {
-    width: 500px;
+  .admin-panel-details-table-watches-input {
+    width: 70px;
+  }
+  .admin-panel-details-button {
+    width: 60px;
     margin: 20px auto;
   }
+  .admin-panel-details-text-input {
+    width: 700px;
+  } 
   
 }
 
@@ -910,18 +934,21 @@ tr {
     height: 55%;
   }
   .admin-panel-grid-container > div {
-    font-size: 11px;
+    font-size: 8px;
   }
   .payment-container {
     width: 80%;
   }
-  .admin-panel-details input {
-    width: 500px;
+  .admin-panel-details-table-input {
+    width: 100px;
     margin: 30px auto;
   }
-  .admin-panel-details button {
-    width: 500px;
+  .admin-panel-details-button {
+    width: 60px;
     margin: 30px auto;
+  }
+  .admin-panel-details-text-input {
+    width: 380px;
   }
 }
 
@@ -993,12 +1020,15 @@ tr {
     margin-left: 90px;
     margin-top: 10px;
   }
-  .admin-panel-details input {
-    width: 240px;
+  .admin-panel-details-table-input {
+    width: 40px;
     margin: 20px auto;
   }
-  .admin-panel-details button {
-    width: 240px;
+  .admin-panel-details-button {
+    width: 60px;
     margin: 20px auto;
+  }
+  .admin-panel-details-text-input {
+    width: 180px;
   }
 }

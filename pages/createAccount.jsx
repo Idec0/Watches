@@ -34,12 +34,6 @@ function IndexPage() {
       var firstname = document.getElementById("firstname").value
       var lastname = document.getElementById("surname").value
       var email = document.getElementById("email").value
-      // console.log(username);
-      // console.log(password);
-      // console.log(confirmPassword);
-      // console.log(firstname);
-      // console.log(lastname);
-      // console.log(email);
 
       try {
         setUsernameText("");
@@ -115,7 +109,6 @@ function IndexPage() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result = await response.json();
-        console.log(result);
       }catch (error) {
         console.error('Error fetching data:', error);
       }

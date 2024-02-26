@@ -125,7 +125,9 @@ function AdminPage() {
         inputElement.type = "text";
         inputElement.value = discountType[i];
         inputElement.id = "yourInputId";
-        inputElement.style.width = '220px';
+        //inputElement.style.width = '40px';
+        inputElement.classList.add('admin-panel-details-table-input');
+        
     
         elements[i].innerHTML = "";
         elements[i].appendChild(inputElement);
@@ -243,8 +245,8 @@ function AdminPage() {
         inputElement.type = "text";
         inputElement.value = discountType[i];
         inputElement.id = "yourInputId";
-        inputElement.style.width = '150px';
-        console.log(elements[i]);
+        //inputElement.style.width = '150px';
+        inputElement.classList.add('admin-panel-details-table-watches-input');
         elements[i].innerHTML = "";
         elements[i].appendChild(inputElement);
       }
@@ -266,7 +268,7 @@ function AdminPage() {
           <div className='admin-panel-details'>
             <h1><u>{ title }</u></h1>
             {title === "Edit Watches" && (
-              <table style={{margin: 'auto 50px'}}>
+              <table style={{margin: 'auto 20px'}}>
                 <tr>
                   <th>Product Name</th>
                   <th>Brand</th>
@@ -283,25 +285,25 @@ function AdminPage() {
                     <td id={`${watch.product_name} image_url2`} title={watch.image_url_2}>...</td>
                     <td id={`${watch.product_name} image_url3`} title={watch.image_url_3}>...</td>
                     <td id={`${watch.product_name} price`}>{watch.price}</td>
-                    <button onClick={() => editWatch(watch)} style={{width: '150px', marginLeft: '10px'}} id={watch.product_name}>Edit</button>
-                    <button onClick={() => deleteWatch(watch)} style={{width: '150px', color: 'red', display: 'none', marginLeft: '10px'}} id={`${watch.product_name} delete`}>Delete</button>
+                    <button className='admin-panel-details-button' onClick={() => editWatch(watch)} style={{ marginLeft: '10px'}} id={watch.product_name}>Edit</button>
+                    <button className='admin-panel-details-button' onClick={() => deleteWatch(watch)} style={{ color: 'red', display: 'none', marginLeft: '10px'}} id={`${watch.product_name} delete`}>Delete</button>
                   </tr>
                 ))}
               </table>
             )}
             {title === "Add a New Watch" && (
               <>
-                <input placeholder='Brand' id="brand_name" />
-                <input placeholder='Product Name' id="product_name" />
-                <input placeholder='Main Image Url'id="image_url" />
-                <input placeholder='Image Url 2'id="image_url2" />
-                <input placeholder='Image Url 3'id="image_url3" />
-                <input placeholder='Price' id="price" />
-                <button onClick={() => addNewWatch()}>Add New Watch</button>
+                <input className='admin-panel-details-text-input' placeholder='Brand' id="brand_name" />
+                <input className='admin-panel-details-text-input' placeholder='Product Name' id="product_name" />
+                <input className='admin-panel-details-text-input' placeholder='Main Image Url'id="image_url" />
+                <input className='admin-panel-details-text-input' placeholder='Image Url 2'id="image_url2" />
+                <input className='admin-panel-details-text-input' placeholder='Image Url 3'id="image_url3" />
+                <input className='admin-panel-details-text-input' placeholder='Price' id="price" />
+                <button className='admin-panel-details-text-input' onClick={() => addNewWatch()} style={{backgroundColor: '#13204b'}}>Add New Watch</button>
               </>
             )}
             {title === "Edit Discounts" && (
-              <table>
+              <table style={{margin: 'auto'}}>
                 <tr>
                   <th>Discount Code</th>
                   <th>Discount Amount</th>
@@ -312,18 +314,18 @@ function AdminPage() {
                     <td>{discount.discount_code}</td>
                     <td id={`${discount.discount_code} amount`}>{discount.discount_amount}</td>
                     <td id={`${discount.discount_code} date`}>{new Date(discount.end_date).toISOString().split('T')[0]}</td>
-                    <button onClick={() => editDiscount(discount)} style={{width: '150px', marginLeft: '10px'}} id={discount.discount_code}>Edit</button>
-                    <button onClick={() => deleteDiscount(discount)} style={{width: '150px', color: 'red', display: 'none', marginLeft: '10px'}} id={`${discount.discount_code} delete`}>Delete</button>
+                    <button className='admin-panel-details-button' onClick={() => editDiscount(discount)} style={{ marginLeft: '10px'}} id={discount.discount_code}>Edit</button>
+                    <button className='admin-panel-details-button' onClick={() => deleteDiscount(discount)} style={{ color: 'red', display: 'none', marginLeft: '10px'}} id={`${discount.discount_code} delete`}>Delete</button>
                   </tr>
                 ))}
               </table>
             )}
             {title === "Add a New Discounts" && (
               <>
-                <input placeholder='Discount Code' id="new_discount_code" />
-                <input placeholder='Discount Percentage Amount'id="new_discount_amount" />
-                <input placeholder='End Date (YYYY-MM-DD)' id="new_discount_end_date" />
-                <button onClick={() => addNewDiscount()}>Add New Discount</button>
+                <input className='admin-panel-details-text-input' placeholder='Discount Code' id="new_discount_code" />
+                <input className='admin-panel-details-text-input' placeholder='Discount Percentage Amount'id="new_discount_amount" />
+                <input className='admin-panel-details-text-input' placeholder='End Date (YYYY-MM-DD)' id="new_discount_end_date" />
+                <button className='admin-panel-details-text-input' onClick={() => addNewDiscount()} style={{backgroundColor: '#13204b'}}>Add New Discount</button>
               </>
             )}
           </div>
