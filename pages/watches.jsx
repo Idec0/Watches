@@ -29,8 +29,6 @@ Maybe:
 
 admin can search for specific watch or discount instead of having to scroll down and find it in a table
 
-when you login through checkout - make it take you back to checkout instead of home page
-
 admin panel - ability to add sales
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
