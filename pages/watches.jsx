@@ -22,6 +22,8 @@ function LoadPage() {
 
 /* TODO:
 
+can't unheart watches when viewing favourites
+
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 
@@ -50,6 +52,12 @@ Fixed a problem with one of the watches not working as intended, it kept causing
 Changed the heart image so its now transparent
 I have looked at other watch websites to compare mine to theirs.
 Tried to fix favouriting page since if you're on watches page and click on favourites it works but if you're not viewing watches then you must click the button twice - this problem is mainly causes due to the way i made the page, since i make the pages wrong at the start since i didn't know you have to make a directory called pages, due to this the favourites page doesnt work as well but it still works
+LoadLikedWatches localStorage variable was messing with the heart colour so I decided to remove it all together
+Fixed problem when the first watch would be hearted after coming off heart watches page and onto watches but that has caused heart watches to not show as hearted
+I have fully fixed the heart problem, so now on both watches and favourite watches page it will show the right coloured heart but you now can't unheart watches when viewing favourites
+I have fixed the problem with not being able to unheart on favourites page
+
+
 I have completed the website, I could make it look better or even add more functions like admins can search for specific watch or discount instead of having to scroll down and find it in a table, ability to add sales, admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend, etc... , but theres no need for it
 I have tested the functionality of the website and everything works as intended
 */
@@ -219,7 +227,8 @@ const WatchesPage = () => {
     imgs = imgList.flat(); // Assuming imgList is defined somewhere in your component
   }
 
-  const toggleColor = (index) => {
+  const toggleColor = (img) => {
+    const index = imagePositionMap[img][0];
     if (typeof window !== 'undefined') {
       const updatedIsRedArray = [...isRedArray];
       updatedIsRedArray[index] = !updatedIsRedArray[index];
@@ -242,7 +251,6 @@ const WatchesPage = () => {
   const filterImage = () => {
     if(imgs[0] === "showFav"){
       setLoadingFavorites(true);
-      localStorage.setItem("loadLikedWatches", "true");
       showFav(true);
       return;
     }
@@ -350,13 +358,11 @@ const WatchesPage = () => {
 
   useEffect(() => {   
     if (typeof window !== 'undefined') {
-      if (imgs.length === 0) {
-        localStorage.setItem("loadLikedWatches", "false");
+      if (imgs.length === 0) {          
         showFav(false);
       } else if (imgs[0] === "showFav") {
         // Set the loadingFavorites state to true before calling showFav(true)
         setLoadingFavorites(true);
-        localStorage.setItem("loadLikedWatches", "true");
         showFav(true);
       }
     }
@@ -376,21 +382,54 @@ const WatchesPage = () => {
     return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: "5vh" }}>Loading...</div>;
   }
 
-  const getImgStyle = (index) => {
-    if (typeof window !== 'undefined' && localStorage) {
-      if (localStorage.getItem("loadLikedWatches") === "true") {
-        return isRedArray[likedWatches[index]]
+  const getImgStyle = (imgIndex, img) => {
+    if(img === 'showFav'){
+      return isRedArray[imgIndex]
           ? {}
           : { filter: "saturate(0%) hue-rotate(0deg)" };
-      } else {
+    }
+    const index = imagePositionMap[img][0];
+    if (typeof window !== 'undefined' && localStorage) {
+
+      const list =  localStorage.getItem("likedWatches").slice(1, localStorage.getItem("likedWatches").length - 1).split(",");
+      const isRedArrayList =  localStorage.getItem("isRedArray").slice(1, localStorage.getItem("isRedArray").length - 1).split(",");
+      if(index.toString() in list){
+        const num = list.indexOf(index);
+        if(num === -1){
+          return isRedArray[index]
+          ? {}
+          : { filter: "saturate(0%) hue-rotate(0deg)" };
+        }
+        if(isRedArrayList[num] === "true"){
+          if (localStorage.getItem("isRedArray")[num] === "true") {
+            return isRedArray[likedWatches[index]]
+              ? {}
+              : { filter: "saturate(0%) hue-rotate(0deg)" };
+          }
+        }
+      } else{
         return isRedArray[index]
           ? {}
           : { filter: "saturate(0%) hue-rotate(0deg)" };
       }
+      // }
+      // else{
+      //   if (localStorage.getItem("isRedArray")[index] === "true") {
+      //     return isRedArray[likedWatches[index]]
+      //       ? {}
+      //       : { filter: "saturate(0%) hue-rotate(0deg)" };
+      //   } else {
+      //     return isRedArray[index]
+      //       ? {}
+      //       : { filter: "saturate(0%) hue-rotate(0deg)" };
+      //   }
+      // }
+        
     } else {
       // Handles the case where localStorage is not available
       return {};
     }
+      
   };
 
   return (
@@ -426,8 +465,8 @@ const WatchesPage = () => {
                   width={30}
                   src={heartImage}
                   //src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_Kv4K4TnVfDuANmqwl2FM3NPs-vORr7aFMbhIfVA4gAFCkOY50ZCFb4ZyxRwzCE3KSTA&usqp=CAU"
-                  onClick={() => toggleColor(index)}
-                  style={getImgStyle(index)}
+                  onClick={() => toggleColor(img)}
+                  style={getImgStyle(index, img)}
                 />
               </div>
               <img src={img} alt={`Watch ${index}`} />
