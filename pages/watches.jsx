@@ -43,6 +43,7 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 Done Today:
 I have finished the changing every page to work on different devices, apart from one which is edit watches on a mobile since iam not sure the best way to do it due to me not being able to test it on my mobile due to an issue which im not sure about
 Changed the price layout on the basket page
+added it so when the prices are the same only one shows
 */
 
 const WatchesPage = () => {
