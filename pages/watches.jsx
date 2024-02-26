@@ -22,8 +22,6 @@ function LoadPage() {
 
 /* TODO:
 
-can't unheart watches when viewing favourites
-
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 
@@ -56,10 +54,9 @@ LoadLikedWatches localStorage variable was messing with the heart colour so I de
 Fixed problem when the first watch would be hearted after coming off heart watches page and onto watches but that has caused heart watches to not show as hearted
 I have fully fixed the heart problem, so now on both watches and favourite watches page it will show the right coloured heart but you now can't unheart watches when viewing favourites
 I have fixed the problem with not being able to unheart on favourites page
-
+I have tried again to fix the loading favourites requiring you to be on watches page to load, I have spent alot of time trying different solutions but I am not getting any closer so I might just leave it since I made it very complex at the start of the project so next time this won't ever happen since I know how to layout the directories properly
 
 I have completed the website, I could make it look better or even add more functions like admins can search for specific watch or discount instead of having to scroll down and find it in a table, ability to add sales, admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend, etc... , but theres no need for it
-I have tested the functionality of the website and everything works as intended
 */
 
 const WatchesPage = () => {
@@ -85,6 +82,7 @@ const WatchesPage = () => {
 
    // Parse the variable back into an array
    let imgs = variable ? variable.split(',') : [];
+    
   // end of code to pass a varibale through links
 
   // Wrap code that relies on client-side features in a check for window
