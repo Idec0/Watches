@@ -55,7 +55,6 @@ Fixed problem when the first watch would be hearted after coming off heart watch
 I have fully fixed the heart problem, so now on both watches and favourite watches page it will show the right coloured heart but you now can't unheart watches when viewing favourites
 I have fixed the problem with not being able to unheart on favourites page
 I have tried again to fix the loading favourites requiring you to be on watches page to load, I have spent alot of time trying different solutions but I am not getting any closer so I might just leave it since I made it very complex at the start of the project so next time this won't ever happen since I know how to layout the directories properly
-
 I have completed the website, I could make it look better or even add more functions like admins can search for specific watch or discount instead of having to scroll down and find it in a table, ability to add sales, admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend, etc... , but theres no need for it
 */
 
@@ -66,7 +65,7 @@ const WatchesPage = () => {
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
   const [likedWatches, setLikedWatches] = useState([]);
-  const [filteredData, setFilteredData] = useState([]); // State variable for filtered options  
+  const [filteredData, setFilteredData] = useState([]);
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
   const [brands, setBrands] = useState(null);
 
@@ -222,7 +221,7 @@ const WatchesPage = () => {
 
   // If imgs is empty, set it to the default list
   if (imgs.length === 0) {
-    imgs = imgList.flat(); // Assuming imgList is defined somewhere in your component
+    imgs = imgList.flat();
   }
 
   const toggleColor = (img) => {
@@ -333,17 +332,9 @@ const WatchesPage = () => {
       );
     } else {
       // If there are no liked watches, reset to display all watches
-      imgs = imgList.flat(); // flatten the imgList array
+      imgs = imgList.flat();
       setFilteredData([...new Set(data)]);
     }
-
-    // const updatedLikedWatches = imgs.reduce((acc, img, index) => {
-    //   const imgIndex = imgList.flat().indexOf(img);
-    //   if (likedWatches.includes(imgIndex)) {
-    //     acc.push(imgIndex);
-    //   }
-    //   return acc;
-    // }, []);
     newURL();
   };
 
@@ -410,18 +401,6 @@ const WatchesPage = () => {
           ? {}
           : { filter: "saturate(0%) hue-rotate(0deg)" };
       }
-      // }
-      // else{
-      //   if (localStorage.getItem("isRedArray")[index] === "true") {
-      //     return isRedArray[likedWatches[index]]
-      //       ? {}
-      //       : { filter: "saturate(0%) hue-rotate(0deg)" };
-      //   } else {
-      //     return isRedArray[index]
-      //       ? {}
-      //       : { filter: "saturate(0%) hue-rotate(0deg)" };
-      //   }
-      // }
         
     } else {
       // Handles the case where localStorage is not available
