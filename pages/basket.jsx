@@ -155,7 +155,7 @@ function BasketPage() {
             />
           </div>
           <div className="item2 items-center justify-between">
-            <div>
+            <div style={{justifyContent: 'center', display: 'flex'}}>
               <div style={{ float: "left" }}>
                 <h1>
                   <u>

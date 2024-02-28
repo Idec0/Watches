@@ -87,7 +87,7 @@ function IndexPage() {
           
         }
         else{
-          setEmailText("email must be valid");
+          setEmailText("Email must be valid");
           return;
         }
 
@@ -108,7 +108,7 @@ function IndexPage() {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const result = await response.json();
+        //const result = await response.json();
       }catch (error) {
         console.error('Error fetching data:', error);
       }

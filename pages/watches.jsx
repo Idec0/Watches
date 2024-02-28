@@ -24,6 +24,9 @@ function LoadPage() {
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
+Make selectAddress page work on mobile
+
+You can't order the fossil watch on its own or else it crashes 
 
 Maybe:
 
@@ -43,19 +46,19 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 
 Done Today:
-I have finished the changing every page to work on different devices, apart from one when you're editing watches on a mobile since iam not sure the best way to do it due to me not being able to test it on my mobile due to an issue which im not sure about
-Changed the price layout on the basket page
-added it so when the prices are the same only show one 
-Fixed a problem with one of the watches not working as intended, it kept causing an error when you tried to view it.
-Changed the heart image so its now transparent
-I have looked at other watch websites to compare mine to theirs.
-Tried to fix favouriting page since if you're on watches page and click on favourites it works but if you're not viewing watches then you must click the button twice - this problem is mainly causes due to the way i made the page, since i make the pages wrong at the start since i didn't know you have to make a directory called pages, due to this the favourites page doesnt work as well but it still works
-LoadLikedWatches localStorage variable was messing with the heart colour so I decided to remove it all together
-Fixed problem when the first watch would be hearted after coming off heart watches page and onto watches but that has caused heart watches to not show as hearted
-I have fully fixed the heart problem, so now on both watches and favourite watches page it will show the right coloured heart but you now can't unheart watches when viewing favourites
-I have fixed the problem with not being able to unheart on favourites page
-I have tried again to fix the loading favourites requiring you to be on watches page to load, I have spent alot of time trying different solutions but I am not getting any closer so I might just leave it since I made it very complex at the start of the project so next time this won't ever happen since I know how to layout the directories properly
-I have completed the website, I could make it look better or even add more functions like admins can search for specific watch or discount instead of having to scroll down and find it in a table, ability to add sales, admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend, etc... , but theres no need for it
+Fixed problem with first watch having the title and price on the same line on the basket page
+I have made a address table in the database to store users saved address so they don't have to retype it every time
+You can now select to save your shipping address - which gets saved in a table in the database
+You can now view all your saved addresses and you can select one - but it doesn't auto fill the text fields yet
+The checkout page now auto fills the address when you select one
+The selectAddress now works with most devices, the only ones it doesn't is mobile
+The checkout page works on every device
+Fixed problem whith users not being able to edit a input field when they select a saved address
+Added the ability to delete saved addresses
+I have decided that the checkout page isn't good enough so I have done some research to find the best way to improve it
+
+
+I have completed the website, I could make it look better or even add more functions like admins can search for specific watch or discount instead of having to scroll down and find it in the table, ability to add sales, admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend, etc... , but theres no need for it
 */
 
 const WatchesPage = () => {
@@ -76,12 +79,11 @@ const WatchesPage = () => {
   // Access the search part of the URL, e.g., '?param1,param2,param3'
   const search = isClient ? window.location.search : '';
 
-   // Extract the variable from the search
-   const variable = isClient ? new URLSearchParams(search).get('imgs') : '';
+  // Extract the variable from the search
+  const variable = isClient ? new URLSearchParams(search).get('imgs') : '';
 
-   // Parse the variable back into an array
-   let imgs = variable ? variable.split(',') : [];
-    
+  // Parse the variable back into an array
+  let imgs = variable ? variable.split(',') : [];
   // end of code to pass a varibale through links
 
   // Wrap code that relies on client-side features in a check for window
@@ -318,8 +320,8 @@ const WatchesPage = () => {
   }, [reload, filterImage, newURL]);
   
 
-  const showFav = (loadFav = true) => {
-    if (likedWatches.length > 0 && loadFav === true) {
+  const showFav = () => {
+    if (likedWatches.length > 0 ) {
       // If there are liked watches, update the imgs array and filteredData
       
       const likedWatchImages = likedWatches.map(

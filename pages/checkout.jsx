@@ -5,11 +5,10 @@ import { useState } from "react";
 //import Navbar from "components/base.jsx";
 
 import { loadStripe } from '@stripe/stripe-js';
-import { useRouter } from 'next/router';
 
 import { useStripe, useElements, CardElement, Elements } from "@stripe/react-stripe-js";
-import Link from 'next/link';
 
+import Link from 'next/link';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
@@ -27,12 +26,26 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 function CheckoutPage() {
   const [basketItems, setBasketItems] = useState([]);
   const [productItems, setProductItems] = useState([]);
+  const [firstnameText, setFirstnameText] = useState('');
+  const [lastnameText, setLastnameText] = useState('');
   const [addressLine1Text, setAddressLine1Text] = useState('');
   const [addressLine2Text, setAddressLine2Text] = useState('');
   const [cityText, setCityText] = useState('');
   const [postcodeText, setPostcodeText] = useState('');
+  const [phoneNumberText, setPhoneNumberText] = useState('');
+  const [emailText, setEmailText] = useState('');
   const [price, setPrice] = useState(0);
 
+  const [inputValueFirstname, setInputValueFirstname] = useState('');
+  const [inputValueLastname, setInputValueLastname] = useState('');
+  const [inputValueAddressLine1, setInputValueAddressLine1] = useState('');
+  const [inputValueAddressLine2, setInputValueAddressLine2] = useState('');
+  const [inputValueCity, setInputValueCity] = useState('');
+  const [inputValuePostcode, setInputValuePostcode] = useState('');
+  const [inputValuePhoneNumber, setInputValuePhoneNumber] = useState('');
+  const [inputValueEmail, setInputValueEmail] = useState('');
+
+  const [isSelected, setIsSelected] = useState(false);
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
@@ -42,7 +55,30 @@ function CheckoutPage() {
   const search = isClient ? window.location.search : '';
 
   // Extract the variable from the search
-  const amount = isClient ? new URLSearchParams(search).get('amount') : '';
+  let amount = isClient ? new URLSearchParams(search).get('amount') : '';
+  let address_id = isClient ? new URLSearchParams(search).get('address') : '';
+
+  const getAddress = async (address_id) => {
+    try {
+      var user = {getSelectedAddress: address_id}
+      const queryParams = new URLSearchParams(user).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      setInputValueFirstname(result.details[0].firstname);
+      setInputValueLastname(result.details[0].lastname);
+      setInputValueAddressLine1(result.details[0].addressline1);
+      setInputValueAddressLine2(result.details[0].addressline2);
+      setInputValueCity(result.details[0].city);
+      setInputValuePostcode(result.details[0].postcode);
+      setInputValuePhoneNumber(result.details[0].phonenumber);
+      setInputValueEmail(result.details[0].email);
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   // end of code to pass a varibale through links
   useEffect(() => {
@@ -60,7 +96,42 @@ function CheckoutPage() {
       setProductItems(products);
     }
     setPrice(amount?amount:0);
+    if(address_id !== ''){
+      getAddress(address_id);
+    }
   }, []);
+
+  const handleCheckboxChange = (e) => {
+    setIsSelected(e.target.checked);
+  };
+
+  const handleChange = (section, event) => {
+    console.log(section);
+    if(section === "firstname"){
+      setInputValueFirstname(event.target.value);
+    }
+    if(section === "lastname"){
+      setInputValueLastname(event.target.value);
+    }
+    if(section === "addressLine1"){
+      setInputValueAddressLine1(event.target.value);
+    }    
+    if(section === "addressLine2"){
+      setInputValueAddressLine2(event.target.value);
+    }
+    if(section === "city"){
+      setInputValueCity(event.target.value);
+    }
+    if(section === "postcode"){
+      setInputValuePostcode(event.target.value);
+    }
+    if(section === "phoneNumber"){
+      setInputValuePhoneNumber(event.target.value);
+    }
+    if(section === "email"){
+      setInputValueEmail(event.target.value);
+    }
+  };
 
   return (
     <main>
@@ -68,15 +139,46 @@ function CheckoutPage() {
       <div className='checkout-grid-container'>
         <div className='payment'>
           <div className='order-summary-container'>
+            <Link
+              href={{
+                pathname: '/selectAddress',
+                query: {
+                  amount: price
+                }
+              }}
+            >
+              <p style={{cursor: 'pointer'}}>Load a Saved Address</p>
+            </Link>
+            <label style={{cursor: 'pointer'}}>
+              <input
+                type="checkbox"
+                checked={isSelected}
+                onChange={handleCheckboxChange}
+                style={{height: '20px', width: '20px', cursor: 'pointer'}}    
+              />{" "}
+              Save Address?
+            </label>
             <div className='order-summary-container-input'>
-              <input placeholder='Address Line 1' id="addressLine1"></input>
+              <div style={{display: 'flex'}}>
+                <input className = 'flex-input' placeholder='First Name' id="firstname" onChange={() => handleChange("firstname", event)} value={inputValueFirstname}></input>
+                <input className = 'flex-input' placeholder='Last Name' id="lastname" onChange={() => handleChange("lastname", event)} value={inputValueLastname}></input>
+              </div>
+              <div style={{display: 'flex'}}>
+                <p className = 'login-right-content-p flex-input'>{firstnameText}</p>
+                <p className = 'login-right-content-p flex-input'>{lastnameText}</p>
+              </div>
+              <input placeholder='Address Line 1' id="addressLine1" onChange={() => handleChange("addressLine1", event)} value={inputValueAddressLine1}></input>
               <p className = 'login-right-content-p'>{addressLine1Text}</p>
-              <input placeholder='Address Line 2' id="addressLine2"></input>
+              <input placeholder='Address Line 2' id="addressLine2" onChange={() => handleChange("addressLine2", event)} value={inputValueAddressLine2}></input>
               <p className = 'login-right-content-p'>{addressLine2Text}</p>
-              <input placeholder='Town/City' id="city"></input>
+              <input placeholder='Town/City' id="city" onChange={() => handleChange("city", event)} value={inputValueCity}></input>
               <p className = 'login-right-content-p'>{cityText}</p>
-              <input placeholder='Postcode' id="postcode"></input>
+              <input placeholder='Postcode' id="postcode" onChange={() => handleChange("postcode", event)} value={inputValuePostcode}></input>
               <p className = 'login-right-content-p'>{postcodeText}</p>
+              <input placeholder='Phone Number' id="phoneNumber" onChange={() => handleChange("phoneNumber", event)} value={inputValuePhoneNumber}></input>
+              <p className = 'login-right-content-p'>{phoneNumberText}</p>
+              <input placeholder='Email Address' id="email" onChange={() => handleChange("email", event)} value={inputValueEmail}></input>
+              <p className = 'login-right-content-p'>{emailText}</p>
             </div>
           </div>
         </div>
@@ -89,9 +191,8 @@ function CheckoutPage() {
                   <img
                     className="watch"
                     src={watch[4]}
-                    alt={watch[2]}
-                    onClick={() => viewWatchURL(watch)}
-                    style={{ cursor: "pointer", height: "150px", width: "150px" }}
+                    alt={watch[2]}                    
+                    style={{ height: "150px", width: "150px" }}
                   />
                 </div>
                 <div className="watchName">
@@ -113,11 +214,16 @@ function CheckoutPage() {
                 <Elements stripe={stripePromise}>
                   <CheckoutForm 
                     amount={amount}
+                    setFirstnameText={setFirstnameText}
+                    setLastnameText={setLastnameText}
                     setAddressLine1Text={setAddressLine1Text}
                     setAddressLine2Text={setAddressLine2Text}
                     setCityText={setCityText}
                     setPostcodeText={setPostcodeText} 
+                    setPhoneNumberText={setPhoneNumberText} 
+                    setEmailText={setEmailText} 
                     basketItems={productItems}
+                    isSelected={isSelected}
                   />
                 </Elements>
               </div>
@@ -133,7 +239,7 @@ function CheckoutPage() {
 }
 
 // credit card layout
-const CheckoutForm = ({ amount, setAddressLine1Text, setAddressLine2Text, setCityText, setPostcodeText, basketItems }) => {
+const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLine1Text, setAddressLine2Text, setCityText, setPostcodeText, setPhoneNumberText, setEmailText, basketItems, isSelected }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -173,15 +279,30 @@ const CheckoutForm = ({ amount, setAddressLine1Text, setAddressLine2Text, setCit
   };
 
   const handlePayment = async (event) => {
-    // address validation
+    var firstname = document.getElementById("firstname");
+    var lastname = document.getElementById("lastname");
     var addressLine1 = document.getElementById("addressLine1");
     var addressLine2 = document.getElementById("addressLine2");
     var city = document.getElementById("city");
     var postcode = document.getElementById("postcode");
+    var phoneNumber = document.getElementById("phoneNumber");
+    var email = document.getElementById("email");
+    setFirstnameText("");
+    setLastnameText("");
     setAddressLine1Text("");
     setAddressLine2Text("");
     setCityText("");
     setPostcodeText("");
+    setPhoneNumberText("");
+    setEmailText("");
+    if(firstname.value === ""){
+      setFirstnameText("Can't be left blank!");
+      return;
+    }
+    if(lastname.value === ""){
+      setLastnameText("Can't be left blank!");
+      return;
+    }
     if(addressLine1.value === ""){
       setAddressLine1Text("Can't be left blank!");
       return;
@@ -200,6 +321,26 @@ const CheckoutForm = ({ amount, setAddressLine1Text, setAddressLine2Text, setCit
     }
     if(postcode.value.length < 7 || postcode.value.length > 9){
       setPostcodeText("Postcode must be valid");
+      return;
+    }
+    
+    if(phoneNumber.value === ""){
+      setPhoneNumberText("Can't be left blank!");
+      return;
+    }
+
+    var containLetters = /[a-zA-Z]/;
+    if(phoneNumber.value.replace(/\s/g, '').length !== 11 || containLetters.test(phoneNumber.value) === true || phoneNumber.value.slice(0, 2) !== '07') {
+      setPhoneNumberText("Phone number must be valid");
+      return;
+    }
+    if(email.value === ""){
+      setEmailText("Can't be left blank!");
+      return;
+    }
+    email = email.value.toString();
+    if(email.includes("@") === false || email.indexOf('@') === email.length - 1 || email.includes(".") === false || email.indexOf('.') === email.length - 1){
+      setEmailText("Email must be valid");
       return;
     }
     // event.preventDefault();
@@ -243,6 +384,20 @@ const CheckoutForm = ({ amount, setAddressLine1Text, setAddressLine2Text, setCit
       if (result.paymentIntent.status === "succeeded") {
         // reset basket
         localStorage.setItem("Basket", "[]");
+
+        // save data if selected
+        if(isSelected){
+          // add new address
+          var username = localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false;
+
+          var info = {firstname: firstname.value, lastname: lastname.value, addressLine1: addressLine1.value, addressLine2: addressLine2.value, city: city.value, postcode: postcode.value, phoneNumber: phoneNumber.value, email: email, username: username}
+          const queryParams = new URLSearchParams(info).toString();
+          const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }          
+        }
+
         // Redirect or show success message
         window.location.href ="/successful";
       }
@@ -253,7 +408,7 @@ const CheckoutForm = ({ amount, setAddressLine1Text, setAddressLine2Text, setCit
     <>
       <CardElement options={cardElementOptions} />
       <button type="submit" onClick={() => handlePayment()} disabled={!stripe}>
-        Pay
+        Place Order
       </button>      
     </>
   );

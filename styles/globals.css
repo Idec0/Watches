@@ -492,6 +492,11 @@ input {
   height: 21px;
 }
 
+.flex-input {
+  margin-right: auto;
+  width: 180px;
+}
+
 .login-text {
   font-size: 16px;
   color: red;
@@ -700,7 +705,7 @@ tr {
 .payment {
   grid-area: payment;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .payment-container {
@@ -718,13 +723,6 @@ tr {
 .payment-container-input input {
   margin: 10px 0;
   text-align: center;
-}
-
-.order-summary-container {
-  height: auto;
-  width: 80%;
-  background-color: lightblue;
-  margin: 50px auto; 
 }
 
 .payment-container-items {
@@ -790,13 +788,12 @@ tr {
 
 /* order summary */
 
-
 .order-summary-container {
-  height: auto;
+  height: fit-content;
   padding: 20px;
   width: auto;
   background-color: lightblue;
-  margin: 50px auto;
+  margin: 170px auto;
 }
 
 .order-summary-container-input {
@@ -810,6 +807,10 @@ tr {
 .order-summary-container-input p {
   font-size: 16px;
   color: red;
+}
+
+.selectAddressButton {
+  margin-top: 10%;
 }
 
 @media (max-width: 1280px) {
@@ -898,6 +899,9 @@ tr {
   .admin-panel-details-text-input {
     width: 700px;
   } 
+  .selectAddressButton {
+    margin-top: 50%;
+  }
   
 }
 
@@ -954,6 +958,19 @@ tr {
   .admin-panel-details-text-input {
     width: 380px;
   }
+  .selectAddressButton {
+    margin-top: 50%;
+  }
+
+  .checkout-grid-container {
+    display: grid;
+    height: 80vh;
+    grid-template-columns: 50% 50%;
+    grid-template-areas:
+      "items items"
+      "payment payment";
+  }
+  
 }
 
 @media (max-width: 480px) {
@@ -1035,4 +1052,15 @@ tr {
   .admin-panel-details-text-input {
     width: 180px;
   }
+  .selectAddressButton {
+    margin-top: 50%;
+  } 
+  .checkout-grid-container {
+    display: grid;
+    height: 80vh;
+    grid-template-columns: 50% 50%;
+    grid-template-areas:
+      "items items"
+      "payment payment";
+  } 
 }

@@ -18,6 +18,44 @@ export default async function handler(request, response) {
       const details = result.rows;
       return response.status(200).json({ details });
     }
+    
+    // get selected address
+    if(discountCode.length > 18 && discountCode.slice(0, 18) === "getSelectedAddress"){
+      const queryParams = new URLSearchParams(discountCode);
+      const address_id = queryParams.get("getSelectedAddress");
+      result = await client.query('SELECT * FROM addresses WHERE id = $1', [address_id]);
+      const details = result.rows;
+      return response.status(200).json({ details });
+    }
+    
+    // delete selected address
+    if(discountCode.length > 15 && discountCode.slice(0, 15) === "addressToDelete"){
+      const queryParams = new URLSearchParams(discountCode);
+      const address_id = queryParams.get("addressToDelete");
+      result = await client.query('DELETE FROM addresses WHERE id = $1', [address_id]);
+      const details = result.rows;
+      return response.status(200).json({ details });
+    }
+
+    // save address
+    if(discountCode.length > 9 && discountCode.slice(0, 9) === "firstname"){
+      const queryParams = new URLSearchParams(discountCode);
+      const firstname = queryParams.get("firstname");
+      const lastname = queryParams.get("lastname");      
+      const addressLine1 = queryParams.get("addressLine1");
+      const addressLine2 = queryParams.get("addressLine2");
+      const city = queryParams.get("city");
+      const postcode = queryParams.get("postcode");
+      const phoneNumber = queryParams.get("phoneNumber");
+      const email = queryParams.get("email");
+      const username = queryParams.get("username");
+      await client.query('BEGIN');
+      await client.query(
+        'INSERT INTO addresses (firstname, lastname, addressLine1, addressLine2, city, postcode, phoneNumber, email, username) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',[firstname, lastname, addressLine1, addressLine2, city, postcode, phoneNumber, email, username]
+      );
+      await client.query('COMMIT')
+      return response.status(200).json("Successful");
+    } 
 
     // get watches image 2 and 3
     if(discountCode.length > 9 && discountCode.slice(0, 9) === "getImages"){
@@ -48,6 +86,14 @@ export default async function handler(request, response) {
       const queryParams = new URLSearchParams(discountCode);
       const user = queryParams.get("getOrders");
       result = await client.query('SELECT * FROM orders WHERE "user" = $1', [user]);
+      const orders = result.rows;
+      return response.status(200).json(orders);
+    }
+    // get all addresses
+    if(discountCode.length > 12 && discountCode.slice(0, 12) === "getAddresses"){
+      const queryParams = new URLSearchParams(discountCode);
+      const user = queryParams.get("getAddresses");
+      result = await client.query('SELECT * FROM addresses WHERE "username" = $1', [user]);
       const orders = result.rows;
       return response.status(200).json(orders);
     }
@@ -179,7 +225,7 @@ export default async function handler(request, response) {
       // Hash the password before storing it
       const saltRounds = 10;
       const hash = await bcrypt.hash(password, saltRounds);
-      const passwordMatch = await bcrypt.compare(password, hash);
+      //const passwordMatch = await bcrypt.compare(password, hash);
 
       await client.query('BEGIN');
       await client.query(
