@@ -28,6 +28,8 @@ You can't order the fossil watch on its own or else it crashes
 
 Maybe:
 
+If you use the search bar in favourite watches it only filters them not all watches
+
 Get edit watches, and savedAddress page to work on mobile
 
 admin can search for specific watch or discount instead of having to scroll down and find it in a table
