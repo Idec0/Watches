@@ -51,15 +51,15 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 
 Done Today:
-I have decided to carry on working on my website since i wasn't happy with some on the designs, also I found some bugs which needed fixing
+I have decided to carry on working on my website since i wasn't happy with some of the designs, also I found some bugs which needed fixing
 Fixed problem with first watch having the title and price on the same line on the basket page
-I have made a address table in the database to store users saved address so they don't have to retype it every time
+I have made a address table in the database to store users saved addresses so they don't have to retype it every time
 You can now select to save your shipping address - which gets saved in a table in the database
 You can now view all your saved addresses and you can select one - but it doesn't auto fill the text fields yet
 The checkout page now auto fills the address when you select one
-The selectAddress now works with most devices, the only ones it doesn't is mobile
+The selectAddress page now works with most devices, the only ones it doesn't is mobile
 The checkout page works on every device
-Fixed problem whith users not being able to edit a input field when they select a saved address
+Fixed problem with users not being able to edit a input field when they select a saved address
 Added the ability to delete saved addresses
 I have done some research to find the best way to improve the checkout page but iam still not sure how to adapt mine to look alot better without ruining the simple look
 
