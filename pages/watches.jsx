@@ -24,10 +24,9 @@ function LoadPage() {
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
-when you enter in the discount inputfield it goes light blue for some reason
-
 You can't order the fossil watch on its own or else it crashes 
 
+problems with wathc details - text is too big
 
 Maybe:
 
