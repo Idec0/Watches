@@ -26,6 +26,7 @@ if you click likedWatches page while viewing watches page it works but any other
 
 You can't order the fossil watch on its own or else it crashes 
 
+
 Maybe:
 
 If you use the search bar in favourite watches it only filters them not all watches
