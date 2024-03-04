@@ -17,6 +17,7 @@ function AdminPage() {
   const [title, setTitle] = useState("Admin Panel");
   const [discounts, setDiscounts] = useState([]);
   const [watches, setWatches] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const setDisplayTitle = async (text) => {
     setTitle(text);
@@ -250,7 +251,55 @@ function AdminPage() {
         elements[i].appendChild(inputElement);
       }
     }
+
   }
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.ctrlKey && event.key === 'f') {
+        event.preventDefault();
+        document.getElementById('searchInput').focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
+  const handleFind = () => {
+    const searchText = searchQuery.trim();
+    if (searchText) {
+      const result = window.find(searchText, false, false, true, false, false, false);
+      if (result) {
+        const table = document.querySelector('.scrollable-table');
+        if (table) {
+          const rows = table.querySelectorAll('tr');
+          let found = false;
+          rows.forEach((row) => {
+            const cells = row.querySelectorAll('td');
+            cells.forEach((cell) => {
+              const text = cell.textContent;
+              if (text.includes(searchText)) {
+                found = true;
+                row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const startIndex = text.indexOf(searchText);
+                const endIndex = startIndex + searchText.length;
+                const highlightedText = `<mark>${text.substring(startIndex, endIndex)}</mark>`;
+                const newText = text.substring(0, startIndex) + highlightedText + text.substring(endIndex);
+                cell.innerHTML = newText;
+              }
+            });
+          });
+          if (!found) {
+            alert('Text not found');
+          }
+        }
+      }
+    }
+  };    
 
   return (
     <main style={{width: '100%'}}>
@@ -265,9 +314,21 @@ function AdminPage() {
         </div>
         <div className='item1'>
           <div className='admin-panel-details'>
-            <h1><u>{ title }</u></h1>
+            <h1><u>{ title }</u></h1>            
             {title === "Edit Watches" && (
               <div className="scrollable-table">
+                <input
+                  id="searchInput"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Find"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleFind();
+                    }
+                  }}
+                />
                 <table style={{margin: 'auto 20px'}}>
                   <tr>
                     <th>Product Name</th>
@@ -305,6 +366,18 @@ function AdminPage() {
             )}
             {title === "Edit Discounts" && (
               <div className="scrollable-table-2">
+                <input
+                  id="searchInput"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Find"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleFind();
+                    }
+                  }}
+                />
                 <table style={{margin: 'auto'}}>
                   <tr>
                     <th>Discount Code</th>
