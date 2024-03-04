@@ -901,8 +901,7 @@ tr {
   } 
   .selectAddressButton {
     margin-top: 50%;
-  }
-  
+  }  
 }
 
 @media (max-width: 768px) {
@@ -970,6 +969,16 @@ tr {
       "items items"
       "payment payment";
   }
+  .split-grid-container {
+    grid-template-columns: auto;
+    grid-template-areas: none;
+  }  
+  .login-right-content input, .login-right-content button{
+    width: 60%;
+  }
+  .watchPic {
+    margin: auto;
+  }
   
 }
 
@@ -1020,9 +1029,6 @@ tr {
   .login-right-content input {
     margin: 5px 0;
   }
-  .login-right-content input, .login-right-content button {
-    margin: 5px 0;
-  }
   .payment-container {
     width: 80%;
   }
@@ -1063,4 +1069,15 @@ tr {
       "items items"
       "payment payment";
   } 
+  .split-grid-container {
+    grid-template-columns: auto;
+    grid-template-areas: none;
+  }  
+  .login-right-content input, .login-right-content button{
+    width: 60%;
+    margin: 5px 0;
+  }
+  .watchPic {
+    margin: auto;
+  }
 }
