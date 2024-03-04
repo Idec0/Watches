@@ -22,12 +22,15 @@ function LoadPage() {
 
 /* TODO:
 
+change mobile layout on sign-up and login page
+
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 You can't order the fossil watch on its own or else it crashes 
 
 problems with wathc details - text is too big
 
+testing on mobile
 
 Maybe:
 
@@ -51,21 +54,6 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 
 Done Today:
-I have decided to carry on working on my website since i wasn't happy with some of the designs, also I found some bugs which needed fixing
-Fixed problem with first watch having the title and price on the same line on the basket page
-I have made a address table in the database to store users saved addresses so they don't have to retype it every time
-You can now select to save your shipping address - which gets saved in a table in the database
-You can now view all your saved addresses and you can select one - but it doesn't auto fill the text fields yet
-The checkout page now auto fills the address when you select one
-The selectAddress page now works with most devices, the only ones it doesn't is mobile
-The checkout page works on every device
-Fixed problem with users not being able to edit a input field when they select a saved address
-Added the ability to delete saved addresses
-I have done some research to find the best way to improve the checkout page but iam still not sure how to adapt mine to look alot better without ruining the simple look
-
-
-
-I have completed the website, I could make it look better or even add more functions like admins can search for specific watch or discount instead of having to scroll down and find it in the table, ability to add sales, admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend, etc... , but theres no need for it
 */
 
 const WatchesPage = () => {
