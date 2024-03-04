@@ -24,6 +24,8 @@ function LoadPage() {
 
 Fix watches page not working on mobile - 'application error: a client-side exception has occurred (see the browser console for more information)'
 
+Get savedAddress page to work on mobile
+
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 You can't order the fossil watch on its own or else it crashes 
@@ -34,9 +36,6 @@ Maybe:
 
 If you use the search bar in favourite watches it only filters them not all watches
 
-Get edit watches, and savedAddress page to work on mobile
-
-admin can search for specific watch or discount instead of having to scroll down and find it in a table
 
 admin panel - ability to add sales
 
@@ -56,6 +55,7 @@ Done Today:
 changed the mobile layout on login, sign-up page
 I have tested the app on an iPhone 11 and everything works apart from the watches page due to 'application error: a client-side exception has occurred (see the browser console for more information)' - this worked fine on the iPhone 6 but on the iPhone 11 it doesn't work
 Redesign edit watches on adminPanel page, now it works on every device, I made the table scrollable
+added it so you can search for specific words in the edit watches, edit discount instead of having to scroll down and find it in a table, this makes it alot nicer if there are hundreds of products and instead of spending alot of time searching for it you can now search of a word in it and it will highlight, and also scroll down to it automatically
 */
 
 const WatchesPage = () => {
