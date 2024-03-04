@@ -30,7 +30,7 @@ You can't order the fossil watch on its own or else it crashes
 
 problems with wathc details - text is too big
 
-testing on mobile
+testing on mobile - iPhone XR is the same as the iPhone 11
 
 Maybe:
 

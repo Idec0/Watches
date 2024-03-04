@@ -7,9 +7,6 @@ function LoadPage() {
   const [appVisible, setAppVisible] = useState(false); 
   return (
     <main className="flex min-h-screen flex-col items-center navbar-size">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </head>
       <Navbar appVisible={appVisible} setAppVisible={setAppVisible} />
       {<AdminPage />}
     </main>
@@ -257,9 +254,6 @@ function AdminPage() {
 
   return (
     <main style={{width: '100%'}}>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </head>
       <div className='admin-panel-grid-container'>
         <div className='sidebar'>
           <div className='admin-panel-container'>
