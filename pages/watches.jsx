@@ -497,7 +497,7 @@ const WatchesPage = () => {
                 {saleAmount !== 0 && (
                 <p>
                   <span style={{textDecoration: 'line-through'}}>£{imagePositionMap[img] ? imagePositionMap[img][3] : "N/A"}{" "}</span>
-                  £{(imagePositionMap[img][3] - (imagePositionMap[img][3] * (saleAmount / 100))).toFixed(2)}
+                  £{((imagePositionMap[img] ? imagePositionMap[img][3] : 0) - ((imagePositionMap[img] ? imagePositionMap[img][3] : 0) * (saleAmount / 100))).toFixed(2)}
                 </p>
                 )}
                 {saleAmount === 0 && (
