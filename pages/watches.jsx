@@ -24,24 +24,24 @@ function LoadPage() {
 
 Fix watches page not working on mobile - 'application error: a client-side exception has occurred (see the browser console for more information)'
 
-Get savedAddress page to work on mobile
-
-if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
-
-You can't order the fossil watch on its own or else it crashes 
+You can't order the fossil watch on its own with a discount or else it crashes - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string.
 
 testing on mobile - iPhone XR is the same as the iPhone 11
+
+sale gets applied to every watches on view watches, basket and checkout page
+
+
 
 Maybe:
 
 If you use the search bar in favourite watches it only filters them not all watches
 
-
-admin panel - ability to add sales
+if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
 
 Option to cancel your order through order history page
+
 
 Links:
 
@@ -54,8 +54,15 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 Done Today:
 changed the mobile layout on login, sign-up page
 I have tested the app on an iPhone 11 and everything works apart from the watches page due to 'application error: a client-side exception has occurred (see the browser console for more information)' - this worked fine on the iPhone 6 but on the iPhone 11 it doesn't work
-Redesign edit watches on adminPanel page, now it works on every device, I made the table scrollable
-added it so you can search for specific words in the edit watches, edit discount instead of having to scroll down and find it in a table, this makes it alot nicer if there are hundreds of products and instead of spending alot of time searching for it you can now search of a word in it and it will highlight, and also scroll down to it automatically
+Redesign edit watches on adminPanel page, selectAddress, so now it works on every device, I made the tables scrollable
+added it so you can search for specific words in the edit watches, edit discount instead of having to scroll down and find it in a table, this makes it alot nicer if there are hundreds of products and instead of spending alot of time searching for it you can now search for a word in it and it will highlight, and also scroll down to it automatically
+added a new table in the database called sales - this will be used to add sales on all watches
+Added the ability to add a new sale in the admin panel
+added the ability to edit and delete sales in the admin panel
+sale changes the banner on the main menu, so each sale has its own banner
+The sales will auto repeat every year
+I have made it so you don't need to add the year since it will repeat every year
+sale gets applied to every watch on the watches page
 */
 
 const WatchesPage = () => {
@@ -68,6 +75,7 @@ const WatchesPage = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
   const [brands, setBrands] = useState(null);
+  const [saleAmount, setSaleAmount] = useState(0);
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
@@ -91,8 +99,39 @@ const WatchesPage = () => {
       setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
 
       SetLikedWatches1();
+
+      GetBannerUrl();
     }
   }, []);  
+
+  const GetBannerUrl = async () => {
+    try {      
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_sales")}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+      
+      // get valid banner
+      for (const sale in result){
+        const start_date = new Date(result[sale].sale_start_date);
+        const end_date = new Date(result[sale].sale_end_date);
+        start_date.setFullYear(currentDate.getFullYear());
+        end_date.setFullYear(currentDate.getFullYear());
+        if (currentDate >= start_date && currentDate <= end_date) {
+          setSaleAmount(result[sale].sale_amount);
+          return; 
+        } else {
+          setSaleAmount(0);
+        }        
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const SetLikedWatches1 = async () => {
     const storedLikedWatches = localStorage.getItem("likedWatches");
@@ -455,9 +494,17 @@ const WatchesPage = () => {
                 <p>
                   {imagePositionMap[img] ? imagePositionMap[img][2] : "N/A"}{" "}
                 </p>
+                {saleAmount !== 0 && (
                 <p>
-                  £{imagePositionMap[img] ? imagePositionMap[img][3] : "N/A"}{" "}
+                  <span style={{textDecoration: 'line-through'}}>£{imagePositionMap[img] ? imagePositionMap[img][3] : "N/A"}{" "}</span>
+                  £{(imagePositionMap[img][3] - (imagePositionMap[img][3] * (saleAmount / 100))).toFixed(2)}
                 </p>
+                )}
+                {saleAmount === 0 && (
+                <p>
+                  £{imagePositionMap[img] ? imagePositionMap[img][3] : "N/A"}{" "}                  
+                </p>
+                )}
               </div>
               <div className="overlay">
                 <button className="button" onClick={() => viewWatchURL(img)}>

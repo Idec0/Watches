@@ -65,44 +65,46 @@ function SaveAddressPage() {
     return (
       <main style={{width: '100%'}}>
          <div className='admin-panel-details' style={{margin: '10px 0', paddingTop: '10px'}}>
-            <table style={{width: '80%', margin: 'auto', fontSize: '80%'}}>
-              <tbody>
-                <tr>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
-                  <th>Address Line 1</th>
-                  <th>Address Line 2</th>
-                  <th>City</th>
-                  <th>Postcode</th>
-                  <th>Phone Numeber</th>
-                  <th>Email</th>
-                </tr>
-                {addresses.map((address) => (
-                <tr key={address.id}>                  
-                  <td>{address.firstname}</td>
-                  <td>{address.lastname}</td>
-                  <td>{address.addressline1}</td>
-                  <td>{address.addressline2}</td>
-                  <td>{address.city}</td>
-                  <td>{address.postcode}</td>
-                  <td>{address.phonenumber}</td>
-                  <td>{address.email}</td>
-                  <Link
-                    href={{
-                      pathname: '/checkout',
-                      query: {
-                        address: address.id,
-                        amount: amount
-                      }
-                    }}
-                  >
-                    <p className='selectAddressButton' style={{ color: 'white', marginLeft: '10px'}}>Select</p>
-                  </Link>
-                  <p className='selectAddressButton' style={{ color: 'white', marginLeft: '10px', cursor: 'pointer'}} onClick={() => deleteAddress(address.id)}>Delete</p>
-                </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="scrollable-table">
+              <table style={{width: '80%', margin: 'auto', fontSize: '80%'}}>
+                <tbody>
+                  <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Address Line 1</th>
+                    <th>Address Line 2</th>
+                    <th>City</th>
+                    <th>Postcode</th>
+                    <th>Phone Numeber</th>
+                    <th>Email</th>
+                  </tr>
+                  {addresses.map((address) => (
+                  <tr key={address.id}>                  
+                    <td>{address.firstname}</td>
+                    <td>{address.lastname}</td>
+                    <td>{address.addressline1}</td>
+                    <td>{address.addressline2}</td>
+                    <td>{address.city}</td>
+                    <td>{address.postcode}</td>
+                    <td>{address.phonenumber}</td>
+                    <td>{address.email}</td>
+                    <Link
+                      href={{
+                        pathname: '/checkout',
+                        query: {
+                          address: address.id,
+                          amount: amount
+                        }
+                      }}
+                    >
+                      <p className='selectAddressButton' style={{ color: 'white', marginLeft: '10px'}}>Select</p>
+                    </Link>
+                    <p className='selectAddressButton' style={{ color: 'white', marginLeft: '10px', cursor: 'pointer'}} onClick={() => deleteAddress(address.id)}>Delete</p>
+                  </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
       </main>
     );

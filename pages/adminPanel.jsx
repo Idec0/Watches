@@ -16,6 +16,7 @@ function LoadPage() {
 function AdminPage() {
   const [title, setTitle] = useState("Admin Panel");
   const [discounts, setDiscounts] = useState([]);
+  const [sales, setSales] = useState([]);
   const [watches, setWatches] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -45,6 +46,19 @@ function AdminPage() {
         var brands = result.discounts;
         setWatches(brands);
 
+      }catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    if(text === "Edit Sales"){
+      try {
+        // get sales
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_sales")}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        setSales(result);
       }catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -125,7 +139,6 @@ function AdminPage() {
     
         inputElement.type = "text";
         inputElement.value = discountType[i];
-        inputElement.id = "yourInputId";
         //inputElement.style.width = '40px';
         inputElement.classList.add('admin-panel-details-table-input');
         
@@ -244,7 +257,6 @@ function AdminPage() {
     
         inputElement.type = "text";
         inputElement.value = discountType[i];
-        inputElement.id = "yourInputId";
         //inputElement.style.width = '150px';
         inputElement.classList.add('admin-panel-details-table-watches-input');
         elements[i].innerHTML = "";
@@ -252,6 +264,113 @@ function AdminPage() {
       }
     }
 
+  }
+
+  const addNewSale = async () => {
+    var banner_url = document.getElementById("new_sale_banner_url").value
+    var sale_amount = document.getElementById("new_sale_amount").value
+    var sale_start_date = document.getElementById("new_sale_start_date").value
+    var sale_end_date = document.getElementById("new_sale_end_date").value
+
+    sale_start_date = "2024-" + sale_start_date;
+    sale_end_date = "2024-" + sale_end_date;
+
+    try {
+      var sale = {add_sale: "True", banner_url: banner_url, sale_amount: sale_amount, start_date: sale_start_date, end_date: sale_end_date}
+      const queryParams = new URLSearchParams(sale).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      window.location.reload();
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }    
+  }
+
+  const editSale = async (sale) => {
+    var saleElement = document.getElementById(sale.id);
+    var saleImgElement = document.getElementById(`${sale.id} banner url`);
+    var saleAmountElement = document.getElementById(`${sale.id} amount`);
+    var saleStartDateElement = document.getElementById(`${sale.id} start date`);
+    var saleEndDateElement = document.getElementById(`${sale.id} end date`);
+    var saleDeleteElement = document.getElementById(`${sale.id} delete`);
+
+    let elements = [];
+    elements.push(saleImgElement);
+    elements.push(saleAmountElement);
+    elements.push(saleStartDateElement);
+    elements.push(saleEndDateElement);
+
+    let discountType = []
+
+    if (saleElement.innerHTML === "Save") {
+      saleElement.innerHTML = "Edit";      
+      saleDeleteElement.style.display = 'none';
+
+      discountType.push("...");
+      discountType.push(saleAmountElement.children[0].value);
+      discountType.push(saleStartDateElement.children[0].value);
+      discountType.push(saleEndDateElement.children[0].value);
+      discountType.push(saleImgElement.children[0].value);
+
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].innerHTML = discountType[i];
+      }
+
+      elements[0].title = discountType[4];
+
+      // save changes
+      try {
+        var sale = {save_sale_changes: "True", sale_id: sale.id, banner_url: discountType[4], sale_amount: discountType[1], start_date: discountType[2], end_date: discountType[3]}
+        const queryParams = new URLSearchParams(sale).toString();
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+      }catch (error) {
+        console.error('Error fetching data:', error);
+      }
+
+      setDisplayTitle("Edit Sales");
+
+    }else{
+      saleElement.innerHTML = "Save";
+      saleDeleteElement.style.display = 'block';
+      discountType.push(sale.sale_banner_url);
+      discountType.push(sale.sale_amount);
+      discountType.push(new Date(sale.sale_start_date).toISOString().split('T')[0]);
+      discountType.push(new Date(sale.sale_end_date).toISOString().split('T')[0]);
+
+      for (let i = 0; i < elements.length; i++) {
+        var inputElement = document.createElement("input");
+    
+        inputElement.type = "text";
+        inputElement.value = discountType[i];
+        //inputElement.style.width = '150px';
+        inputElement.classList.add('admin-panel-details-table-watches-input');
+        elements[i].innerHTML = "";
+        elements[i].appendChild(inputElement);
+      }
+    }
+
+  }
+
+  const deleteSale = async (sale) => {
+    try {
+      // add new user to database
+      const sale_to_delete = { delete_sale: sale.id };
+      const queryParams = new URLSearchParams(sale_to_delete).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    setDisplayTitle("Edit Sales");
   }
 
   useEffect(() => {
@@ -309,7 +428,9 @@ function AdminPage() {
             <button onClick={() => setDisplayTitle("Edit Watches")}>Edit Watches</button>
             <button onClick={() => setDisplayTitle("Add a New Watch")}>Add a New Watch</button>
             <button onClick={() => setDisplayTitle("Edit Discounts")}>Edit Discounts</button>
-            <button onClick={() => setDisplayTitle("Add a New Discounts")}>Add a New Discounts</button>
+            <button onClick={() => setDisplayTitle("Add a New Discounts")}>Add a New Discount</button>
+            <button onClick={() => setDisplayTitle("Edit Sales")}>Edit Sales</button>
+            <button onClick={() => setDisplayTitle("Add a New Sale")}>Add a New Sale</button>
           </div>
         </div>
         <div className='item1'>
@@ -381,7 +502,7 @@ function AdminPage() {
                 <table style={{margin: 'auto'}}>
                   <tr>
                     <th>Discount Code</th>
-                    <th>Discount Amount</th>
+                    <th>Discount Amount (%)</th>
                     <th>End Date</th>
                   </tr>
                   {discounts.map((discount) => (
@@ -402,6 +523,49 @@ function AdminPage() {
                 <input className='admin-panel-details-text-input' placeholder='Discount Percentage Amount'id="new_discount_amount" />
                 <input className='admin-panel-details-text-input' placeholder='End Date (YYYY-MM-DD)' id="new_discount_end_date" />
                 <button className='admin-panel-details-text-input' onClick={() => addNewDiscount()} style={{backgroundColor: '#13204b'}}>Add New Discount</button>
+              </>
+            )}
+            {title === "Edit Sales" && (
+              <div className="scrollable-table-2">
+                <input
+                  id="searchInput"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Find"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleFind();
+                    }
+                  }}
+                />
+                <table style={{margin: 'auto'}}>
+                  <tr>
+                    <th>Sale Banner URL</th>
+                    <th>Discount Amount (%)</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                  </tr>
+                  {sales.map((sale) => (
+                    <tr key={sale.id}>
+                      <td id={`${sale.id} banner url`} title={sale.sale_banner_url}>...</td>
+                      <td id={`${sale.id} amount`}>{sale.sale_amount}</td>                      
+                      <td id={`${sale.id} start date`}>{new Date(sale.sale_start_date).toISOString().split('T')[0]}</td>
+                      <td id={`${sale.id} end date`}>{new Date(sale.sale_end_date).toISOString().split('T')[0]}</td>
+                      <button className='admin-panel-details-button' onClick={() => editSale(sale)} style={{ marginLeft: '10px'}} id={sale.id}>Edit</button>
+                      <button className='admin-panel-details-button' onClick={() => deleteSale(sale)} style={{ color: 'red', display: 'none', marginLeft: '10px'}} id={`${sale.id} delete`}>Delete</button>
+                    </tr>
+                  ))}
+                </table>
+              </div>
+            )}
+            {title === "Add a New Sale" && (
+              <>
+                <input className='admin-panel-details-text-input' placeholder='Banner URL' id="new_sale_banner_url" />
+                <input className='admin-panel-details-text-input' placeholder='Discount Percentage Amount'id="new_sale_amount" />
+                <input className='admin-panel-details-text-input' placeholder='Start Date (MM-DD)' id="new_sale_start_date" />
+                <input className='admin-panel-details-text-input' placeholder='End Date (MM-DD)' id="new_sale_end_date" />
+                <button className='admin-panel-details-text-input' onClick={() => addNewSale()} style={{backgroundColor: '#13204b'}}>Add New Sale</button>
               </>
             )}
           </div>

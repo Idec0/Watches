@@ -81,6 +81,12 @@ export default async function handler(request, response) {
       const discounts = result.rows;
       return response.status(200).json(discounts);
     }
+    // get all sales
+    if(discountCode === "get_sales"){
+      result = await client.query('SELECT * FROM sales');
+      const sales = result.rows;
+      return response.status(200).json(sales);
+    }
     // get all orders
     if(discountCode.length > 9 && discountCode.slice(0, 9) === "getOrders"){
       const queryParams = new URLSearchParams(discountCode);
@@ -146,6 +152,24 @@ export default async function handler(request, response) {
       await client.query('COMMIT')
       return;
     }
+    // save sale changes
+    if(discountCode.length > 17 && discountCode.slice(0, 17) === "save_sale_changes"){
+      const queryParams = new URLSearchParams(discountCode);
+      const sale_id = queryParams.get("sale_id");
+      const banner_url = queryParams.get("banner_url");
+      const sale_amount = queryParams.get("sale_amount");
+      const start_date = queryParams.get("start_date");
+      const end_date = queryParams.get("end_date");
+
+      var date1 = new Date(start_date);
+      var date2 = new Date(end_date);
+      await client.query('BEGIN');
+      await client.query(
+        "UPDATE sales SET sale_banner_url = $2, sale_amount = $3, sale_start_date = $4, sale_end_date = $5 WHERE id = $1", [sale_id, banner_url, sale_amount, date1, date2]
+      );
+      await client.query('COMMIT')
+      return;
+    }
 
     // delete discount
     if(discountCode.length > 15 && discountCode.slice(0, 15) === "delete_discount"){
@@ -154,6 +178,17 @@ export default async function handler(request, response) {
       await client.query('BEGIN');
       await client.query(
         'DELETE FROM discounts WHERE discount_code = $1',[discount_code]
+      );
+      await client.query('COMMIT')
+      return response.status(200).json("Successful");
+    }
+    // delete sale
+    if(discountCode.length > 11 && discountCode.slice(0, 11) === "delete_sale"){
+      const queryParams = new URLSearchParams(discountCode);
+      const sale_id = queryParams.get("delete_sale");
+      await client.query('BEGIN');
+      await client.query(
+        'DELETE FROM sales WHERE id = $1',[sale_id]
       );
       await client.query('COMMIT')
       return response.status(200).json("Successful");
@@ -168,6 +203,21 @@ export default async function handler(request, response) {
       await client.query('BEGIN');
       await client.query(
         "INSERT INTO discounts (discount_code, discount_amount, end_date) VALUES ($1, $2, $3)",[discount_code, discount_amount, end_date]
+      );
+      await client.query('COMMIT')
+      return response.status(200).json("Successful");
+    }
+
+    // add new sale
+    if(discountCode.length > 8 && discountCode.slice(0, 8) === "add_sale"){
+      const queryParams = new URLSearchParams(discountCode);
+      const sale_banner_url = queryParams.get("banner_url");
+      const sale_amount = queryParams.get("sale_amount");
+      const start_date = queryParams.get("start_date");
+      const end_date = queryParams.get("end_date");
+      await client.query('BEGIN');
+      await client.query(
+        "INSERT INTO sales (sale_banner_url, sale_amount, sale_start_date, sale_end_date) VALUES ($1, $2, $3, $4)",[sale_banner_url, sale_amount, start_date, end_date]
       );
       await client.query('COMMIT')
       return response.status(200).json("Successful");

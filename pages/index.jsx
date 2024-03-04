@@ -18,11 +18,46 @@ function LoadPage() {
 }
 
 function IndexPage() {
+  const [bannerUrl, setBannerUrl] = useState("https://www.houseofwatches.co.uk/media/wysiwyg/HoW-CM-2023-v2_01__1920x554.jpg");
+
+  useEffect(() => {
+    GetBannerUrl();
+  }, []); 
+
+  const GetBannerUrl = async () => {
+    try {      
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_sales")}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+
+      // get valid banner
+      for (const sale in result){
+        const start_date = new Date(result[sale].sale_start_date);
+        const end_date = new Date(result[sale].sale_end_date);
+        start_date.setFullYear(currentDate.getFullYear());
+        end_date.setFullYear(currentDate.getFullYear());
+        if (currentDate >= start_date && currentDate <= end_date) {
+          setBannerUrl(result[sale].sale_banner_url);
+          return;
+        } else {
+          setBannerUrl("https://www.houseofwatches.co.uk/media/wysiwyg/HoW-CM-2023-v2_01__1920x554.jpg");
+        }        
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
   {
     return (
       <main>
-        <Image
-          src={salesImage}
+        <img
+          src={bannerUrl}
           alt="Picture of Watch banner"
         />
       </main>
