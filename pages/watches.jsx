@@ -20,6 +20,7 @@ function LoadPage() {
   );
 }
 
+
 /* TODO:
 
 Fix watches page not working on mobile - 'application error: a client-side exception has occurred (see the browser console for more information)'
@@ -34,7 +35,6 @@ Main menu banner slide show
 
 
 Maybe:
-
 
 If you use the search bar in favourite watches it only filters them not all watches
 
@@ -54,6 +54,7 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 
 Done Today:
+
 changed the mobile layout on login, sign-up page
 I have tested the app on an iPhone 11 and everything works apart from the watches page due to 'application error: a client-side exception has occurred (see the browser console for more information)' - this worked fine on the iPhone 6 but on the iPhone 11 it doesn't work
 Redesign edit watches on adminPanel page, selectAddress, so now it works on every device, I made the tables scrollable
