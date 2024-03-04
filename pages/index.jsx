@@ -18,7 +18,7 @@ function LoadPage() {
 }
 
 function IndexPage() {
-  const [bannerUrl, setBannerUrl] = useState("https://www.houseofwatches.co.uk/media/wysiwyg/HoW-CM-2023-v2_01__1920x554.jpg");
+  const [bannerUrl, setBannerUrl] = useState("https://www.houseofwatches.co.uk/media/wysiwyg/1920x554_THB_Prospex_SPB381J1.jpg");
 
   useEffect(() => {
     GetBannerUrl();
@@ -44,7 +44,7 @@ function IndexPage() {
           setBannerUrl(result[sale].sale_banner_url);
           return;
         } else {
-          setBannerUrl("https://www.houseofwatches.co.uk/media/wysiwyg/HoW-CM-2023-v2_01__1920x554.jpg");
+          setBannerUrl("https://www.houseofwatches.co.uk/media/wysiwyg/1920x554_THB_Prospex_SPB381J1.jpg");
         }        
       }
 
