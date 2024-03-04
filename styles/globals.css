@@ -1073,12 +1073,15 @@ tr {
   .split-grid-container {
     grid-template-columns: auto;
     grid-template-areas: none;
-  }  
+  } 
   .login-right-content input, .login-right-content button{
     width: 60%;
     margin: 5px 0;
   }
   .watchPic {
     margin: auto;
+  }
+  .watchPic img {
+    height: 500px;
   }
 }
