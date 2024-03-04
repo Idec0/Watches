@@ -257,6 +257,9 @@ function AdminPage() {
 
   return (
     <main style={{width: '100%'}}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
       <div className='admin-panel-grid-container'>
         <div className='sidebar'>
           <div className='admin-panel-container'>
