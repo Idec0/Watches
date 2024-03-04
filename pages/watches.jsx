@@ -30,11 +30,11 @@ testing on mobile - iPhone XR is the same as the iPhone 11
 
 sale gets applied to every watches on view watches, basket and checkout page
 
+Main menu banner slide show
 
 
 Maybe:
 
-Main menu banner slide show
 
 If you use the search bar in favourite watches it only filters them not all watches
 
