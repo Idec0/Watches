@@ -22,15 +22,11 @@ function LoadPage() {
 
 /* TODO:
 
-change the mobile layout on sign-up page
-
 Fix watches page not working on mobile - 'application error: a client-side exception has occurred (see the browser console for more information)'
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 You can't order the fossil watch on its own or else it crashes 
-
-problems with watch details - text is too big
 
 testing on mobile - iPhone XR is the same as the iPhone 11
 
@@ -57,8 +53,9 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 
 Done Today:
-changed the mobile layout on login page
+changed the mobile layout on login, sign-up page
 I have tested the app on an iPhone 11 and everything works apart from the watches page due to 'application error: a client-side exception has occurred (see the browser console for more information)' - this worked fine on the iPhone 6 but on the iPhone 11 it doesn't work
+Redesign edit watches on adminPanel page, now it works on every device, I made the table scrollable
 */
 
 const WatchesPage = () => {

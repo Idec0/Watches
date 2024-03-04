@@ -814,6 +814,40 @@ tr {
   margin-top: 10%;
 }
 
+/* scrollable table */
+
+.scrollable-table {
+  overflow-x: auto;
+  max-width: 100%;
+  height: 80vh;
+}
+
+.scrollable-table table {
+  width: 97%;
+  border-collapse: collapse;
+}
+
+.scrollable-table th, .scrollable-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.scrollable-table-2 {
+  overflow-x: auto;
+  max-width: 100%;
+  height: 80vh;
+}
+
+.scrollable-table-2 table {
+  width: 70%;
+  border-collapse: collapse;
+}
+
+.scrollable-table-2 th, .scrollable-table-2 td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+
 @media (max-width: 1280px) {
   .displayMainViewWatch {
     height: 500px;

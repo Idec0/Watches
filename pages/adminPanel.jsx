@@ -267,28 +267,30 @@ function AdminPage() {
           <div className='admin-panel-details'>
             <h1><u>{ title }</u></h1>
             {title === "Edit Watches" && (
-              <table style={{margin: 'auto 20px'}}>
-                <tr>
-                  <th>Product Name</th>
-                  <th>Brand</th>
-                  <th>Main Image Url</th>
-                  <th>Image Url 2</th>
-                  <th>Image Url 3</th>
-                  <th>Price (£)</th>
-                </tr>
-                {watches.map((watch) => (
-                  <tr key={watch.product_name}>
-                    <td id={`${watch.product_name} product`}>{watch.product_name}</td>
-                    <td id={`${watch.product_name} brand`}>{watch.brand_name}</td>
-                    <td id={`${watch.product_name} image_url`} title={watch.image_url}>...</td>
-                    <td id={`${watch.product_name} image_url2`} title={watch.image_url_2}>...</td>
-                    <td id={`${watch.product_name} image_url3`} title={watch.image_url_3}>...</td>
-                    <td id={`${watch.product_name} price`}>{watch.price}</td>
-                    <button className='admin-panel-details-button' onClick={() => editWatch(watch)} style={{ marginLeft: '10px'}} id={watch.product_name}>Edit</button>
-                    <button className='admin-panel-details-button' onClick={() => deleteWatch(watch)} style={{ color: 'red', display: 'none', marginLeft: '10px'}} id={`${watch.product_name} delete`}>Delete</button>
+              <div className="scrollable-table">
+                <table style={{margin: 'auto 20px'}}>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Brand</th>
+                    <th>Main Image Url</th>
+                    <th>Image Url 2</th>
+                    <th>Image Url 3</th>
+                    <th>Price (£)</th>
                   </tr>
-                ))}
-              </table>
+                  {watches.map((watch) => (
+                    <tr key={watch.product_name}>
+                      <td id={`${watch.product_name} product`}>{watch.product_name}</td>
+                      <td id={`${watch.product_name} brand`}>{watch.brand_name}</td>
+                      <td id={`${watch.product_name} image_url`} title={watch.image_url}>...</td>
+                      <td id={`${watch.product_name} image_url2`} title={watch.image_url_2}>...</td>
+                      <td id={`${watch.product_name} image_url3`} title={watch.image_url_3}>...</td>
+                      <td id={`${watch.product_name} price`}>{watch.price}</td>
+                      <button className='admin-panel-details-button' onClick={() => editWatch(watch)} style={{ marginLeft: '10px'}} id={watch.product_name}>Edit</button>
+                      <button className='admin-panel-details-button' onClick={() => deleteWatch(watch)} style={{ color: 'red', display: 'none', marginLeft: '10px'}} id={`${watch.product_name} delete`}>Delete</button>
+                    </tr>
+                  ))}
+                </table>
+              </div>
             )}
             {title === "Add a New Watch" && (
               <>
@@ -302,22 +304,24 @@ function AdminPage() {
               </>
             )}
             {title === "Edit Discounts" && (
-              <table style={{margin: 'auto'}}>
-                <tr>
-                  <th>Discount Code</th>
-                  <th>Discount Amount</th>
-                  <th>End Date</th>
-                </tr>
-                {discounts.map((discount) => (
-                  <tr key={discount.discount_code}>
-                    <td>{discount.discount_code}</td>
-                    <td id={`${discount.discount_code} amount`}>{discount.discount_amount}</td>
-                    <td id={`${discount.discount_code} date`}>{new Date(discount.end_date).toISOString().split('T')[0]}</td>
-                    <button className='admin-panel-details-button' onClick={() => editDiscount(discount)} style={{ marginLeft: '10px'}} id={discount.discount_code}>Edit</button>
-                    <button className='admin-panel-details-button' onClick={() => deleteDiscount(discount)} style={{ color: 'red', display: 'none', marginLeft: '10px'}} id={`${discount.discount_code} delete`}>Delete</button>
+              <div className="scrollable-table-2">
+                <table style={{margin: 'auto'}}>
+                  <tr>
+                    <th>Discount Code</th>
+                    <th>Discount Amount</th>
+                    <th>End Date</th>
                   </tr>
-                ))}
-              </table>
+                  {discounts.map((discount) => (
+                    <tr key={discount.discount_code}>
+                      <td>{discount.discount_code}</td>
+                      <td id={`${discount.discount_code} amount`}>{discount.discount_amount}</td>
+                      <td id={`${discount.discount_code} date`}>{new Date(discount.end_date).toISOString().split('T')[0]}</td>
+                      <button className='admin-panel-details-button' onClick={() => editDiscount(discount)} style={{ marginLeft: '10px'}} id={discount.discount_code}>Edit</button>
+                      <button className='admin-panel-details-button' onClick={() => deleteDiscount(discount)} style={{ color: 'red', display: 'none', marginLeft: '10px'}} id={`${discount.discount_code} delete`}>Delete</button>
+                    </tr>
+                  ))}
+                </table>
+              </div>
             )}
             {title === "Add a New Discounts" && (
               <>
