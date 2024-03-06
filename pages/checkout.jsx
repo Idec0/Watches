@@ -294,34 +294,16 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
   const [loggedIn, setLoggedIn] = useState(false);
   const [price, setPrice] = useState(0);
   const [saleAmount, setSaleAmount] = useState(0);
-  const [chargeId, setChargeId] = useState("");
 
   useEffect(() => {
     // Fetch client secret from your server
     const amount_num = Number(amount);
     setPrice(amount_num);
-    const fetchClientSecret = async () => {
-      const response = await fetch("/api/paymentIntent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: amount_num * 100,
-        }),
-        
-      });
-      const data = await response.json();
-      setClientSecret(data.clientSecret);
-      console.log(data.chargeId);
-      setChargeId(data.chargeId);
-    };
 
     if (typeof window !== 'undefined') {
       setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
     }
 
-    fetchClientSecret();
     GetBannerUrl();
   }, []);
 
@@ -429,43 +411,69 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
       return;
-    }
-    // add new order 
-    try {
-      var date = new Date();
-      var orderDate = date.toJSON().slice(0, 10);
-
-      date.setDate(date.getDate() + 14);
-      var deliveryDate = date.toJSON().slice(0, 10);
-      var finalAmount = price;
-      if(saleAmount !== 0){
-        finalAmount = (price - (price * (saleAmount / 100))).toFixed(2);
-      }
-      // add new user to database
-      var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: finalAmount, deliveryDate: deliveryDate, charge_id: chargeId}
-      const queryParams = new URLSearchParams(order).toString();
-      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-    }catch (error) {
-      console.error('Error fetching data:', error);
-    }
+    }   
     
     // send card details
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          // Add any billing details you need
-        },
-      },
+    // const result = await stripe.confirmCardPayment(clientSecret, {
+    //   payment_method: {
+    //     card: elements.getElement(CardElement),
+    //     billing_details: {
+    //       // Add any billing details you need
+    //     },
+    //   },
       
-    });
-    if (result.error) {
-      console.error(result.error.message);
+    // });
+
+    const fetchClientSecret = async () => {
+      const response = await fetch("/api/paymentIntent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: price * 100,
+        }),
+        
+      });
+      const data = await response.json();
+      setClientSecret(data.clientSecret);
+      return data.paymentIntent;
+    };
+
+    const results = await fetchClientSecret();
+    let chargeId = "null";
+    if (results.error) {
+      console.error(results.error.message);
     } else {      
-      if (result.paymentIntent.status === "succeeded") {
+      if (results.status === "succeeded") {
+        if (results && results.latest_charge) {
+          chargeId = results.latest_charge;
+        } else {
+          console.error('Error getting charge ID: No charges found');
+        }
+
+        // add new order 
+        try {
+          var date = new Date();
+          var orderDate = date.toJSON().slice(0, 10);
+
+          date.setDate(date.getDate() + 14);
+          var deliveryDate = date.toJSON().slice(0, 10);
+          var finalAmount = price;
+          if(saleAmount !== 0){
+            finalAmount = (price - (price * (saleAmount / 100))).toFixed(2);
+          }
+          // add new user to database
+          var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: finalAmount, deliveryDate: deliveryDate, charge_id: chargeId}
+          const queryParams = new URLSearchParams(order).toString();
+          const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+        }catch (error) {
+          console.error('Error fetching data:', error);
+        }
+
         // reset basket
         localStorage.setItem("Basket", "[]");
 
@@ -483,7 +491,7 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
         }
 
         // Redirect or show success message
-        //window.location.href ="/successful";
+        window.location.href ="/successful";
       }
     }
   };

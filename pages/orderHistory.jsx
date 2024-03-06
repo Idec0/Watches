@@ -42,16 +42,33 @@ function OrderHistoryPage() {
     }
   }
 
-  const cancelOrder = (order_id) => {
-    console.log(order_id);
-    
+  const cancelOrder = (order) => {
+    // execute refund
+    const executeRefund = async (charge_id, price) => {
+      console.log(charge_id);
+      const response = await fetch("/api/refund", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chargeId: charge_id,
+          amount: price,
+        }),
+        
+      });
+      const data = await response.json();
+      console.log(data);
+    };
+    executeRefund(order.charge_id, order.price);
   }
 
-  const canCancel = (orderDate, deliveryDate) => {
+  const canCancel = (order_date) => {
     const currentDate = new Date();
-    const startDate = new Date(orderDate);
-    const endDate = new Date(deliveryDate);
-    return currentDate >= startDate && currentDate <= endDate;
+    const orderDate = new Date(order_date);
+    let nextDay = orderDate;
+    nextDay.setDate(nextDay.getDate() + 1)
+    return currentDate > nextDay;
   };
 
   {
@@ -72,7 +89,7 @@ function OrderHistoryPage() {
                   <td dangerouslySetInnerHTML={{ __html: order.products.replace(/,/g, "<br>") }} /> {/* dangerouslySetInnerHTML - turns data raw */}
                   <td>£{order.price}</td>
                   <td>{new Date(order.deliverydate).toISOString().split('T')[0]}</td>
-                  <td style={{borderStyle: 'hidden', borderLeftStyle: 'solid'}}><button style={{color: 'red', display: canCancel(order.orderdate, order.deliverydate) ? 'none' : ''}} onLoad={() => canCancel(order.orderdate, order.deliverydate, this)} onClick={() => cancelOrder(order.id)}>Cancel</button></td>
+                  <td style={{borderStyle: 'hidden', borderLeftStyle: 'solid'}}><button style={{color: 'red', display: canCancel(order.orderdate) ? 'none' : ''}} onClick={() => cancelOrder(order)}>Cancel</button></td>
                 </tr>
                 ))}
               </tbody>
