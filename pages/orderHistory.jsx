@@ -42,6 +42,18 @@ function OrderHistoryPage() {
     }
   }
 
+  const cancelOrder = (order_id) => {
+    console.log(order_id);
+    
+  }
+
+  const canCancel = (orderDate, deliveryDate) => {
+    const currentDate = new Date();
+    const startDate = new Date(orderDate);
+    const endDate = new Date(deliveryDate);
+    return currentDate >= startDate && currentDate <= endDate;
+  };
+
   {
     return (
       <main style={{width: '100%'}}>
@@ -58,8 +70,9 @@ function OrderHistoryPage() {
                 <tr key={order.id}>                  
                   <td>{new Date(order.orderdate).toISOString().split('T')[0]}</td>
                   <td dangerouslySetInnerHTML={{ __html: order.products.replace(/,/g, "<br>") }} /> {/* dangerouslySetInnerHTML - turns data raw */}
-                  <td>£ {order.price}</td>
+                  <td>£{order.price}</td>
                   <td>{new Date(order.deliverydate).toISOString().split('T')[0]}</td>
+                  <td style={{borderStyle: 'hidden', borderLeftStyle: 'solid'}}><button style={{color: 'red', display: canCancel(order.orderdate, order.deliverydate) ? 'none' : ''}} onLoad={() => canCancel(order.orderdate, order.deliverydate, this)} onClick={() => cancelOrder(order.id)}>Cancel</button></td>
                 </tr>
                 ))}
               </tbody>

@@ -294,6 +294,7 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
   const [loggedIn, setLoggedIn] = useState(false);
   const [price, setPrice] = useState(0);
   const [saleAmount, setSaleAmount] = useState(0);
+  const [chargeId, setChargeId] = useState("");
 
   useEffect(() => {
     // Fetch client secret from your server
@@ -312,6 +313,8 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
       });
       const data = await response.json();
       setClientSecret(data.clientSecret);
+      console.log(data.chargeId);
+      setChargeId(data.chargeId);
     };
 
     if (typeof window !== 'undefined') {
@@ -439,7 +442,7 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
         finalAmount = (price - (price * (saleAmount / 100))).toFixed(2);
       }
       // add new user to database
-      var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: finalAmount, deliveryDate: deliveryDate}
+      var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: finalAmount, deliveryDate: deliveryDate, charge_id: chargeId}
       const queryParams = new URLSearchParams(order).toString();
       const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
       if (!response.ok) {
@@ -457,10 +460,11 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
           // Add any billing details you need
         },
       },
+      
     });
     if (result.error) {
       console.error(result.error.message);
-    } else {
+    } else {      
       if (result.paymentIntent.status === "succeeded") {
         // reset basket
         localStorage.setItem("Basket", "[]");
@@ -479,7 +483,7 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
         }
 
         // Redirect or show success message
-        window.location.href ="/successful";
+        //window.location.href ="/successful";
       }
     }
   };

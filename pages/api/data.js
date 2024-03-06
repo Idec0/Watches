@@ -112,9 +112,10 @@ export default async function handler(request, response) {
       const products = queryParams.get("products");
       const price = queryParams.get("price");
       const deliveryDate = queryParams.get("deliveryDate");
+      const chargeId = queryParams.get("charge_id");
       await client.query('BEGIN');
       await client.query(
-        'INSERT INTO orders ("user", orderDate, products, price, deliveryDate) VALUES ($1, $2, $3, $4, $5)',[user, orderDate, products, price, deliveryDate]
+        'INSERT INTO orders ("user", orderDate, products, price, deliveryDate, charge_id) VALUES ($1, $2, $3, $4, $5, $6)',[user, orderDate, products, price, deliveryDate, chargeId]
       );
       await client.query('COMMIT')
       return response.status(200).json("Successful");

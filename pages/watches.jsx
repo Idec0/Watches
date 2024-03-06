@@ -23,14 +23,12 @@ function LoadPage() {
 
 /* TODO:
 
-Fix watches page not working on mobile - 'application error: a client-side exception has occurred (see the browser console for more information)'
-
 You can't order the fossil watch on its own with a discount or else it crashes - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string.
+
+Option to cancel your order through order history page - also include refund from stripe
 
 
 Maybe:
-
-add animation to banner slider
 
 If you use the search bar in favourite watches it only filters them not all watches
 
@@ -38,7 +36,6 @@ if you click likedWatches page while viewing watches page it works but any other
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
 
-Option to cancel your order through order history page - also include refund from stripe
 
 
 Links:
