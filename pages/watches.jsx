@@ -55,6 +55,8 @@ sale gets applied to every watch on view watches
 The basket and checkout page also displays the right amount if you apply the sale discount with a discount, and if you order a watch with both discounts active it charges you the right price
 You now can't access the adminPanel unless you are admin even if you type in the link
 Made a banner slider on the main menu which also includes a sale banner if a sale is on
+Fixed watches page not working on mobile
+
 */
 
 const WatchesPage = () => {
