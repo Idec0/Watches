@@ -63,7 +63,7 @@ const WatchesPage = () => {
   const [val, setVal] = useState("");
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
-  const [likedWatches, setLikedWatches] = useState([]);
+  const [likedWatches, setLikedWatches] = useState([""]);
   const [filteredData, setFilteredData] = useState([]);
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
   const [brands, setBrands] = useState(null);
