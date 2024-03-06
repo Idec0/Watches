@@ -23,13 +23,9 @@ function LoadPage() {
 
 /* TODO:
 
-fix view watch dropdown text being to big
-
 Fix watches page not working on mobile - 'application error: a client-side exception has occurred (see the browser console for more information)'
 
 You can't order the fossil watch on its own with a discount or else it crashes - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string.
-
-testing on mobile - iPhone XR is the same as the iPhone 11
 
 
 Maybe:
@@ -42,7 +38,7 @@ if you click likedWatches page while viewing watches page it works but any other
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
 
-Option to cancel your order through order history page - also include refunds from stripe
+Option to cancel your order through order history page - also include refund from stripe
 
 
 Links:
@@ -59,8 +55,10 @@ sale gets applied to every watch on view watches
 The basket and checkout page also displays the right amount if you apply the sale discount with a discount, and if you order a watch with both discounts active it charges you the right price
 You now can't access the adminPanel unless you are admin even if you type in the link
 Made a banner slider on the main menu which also includes a sale banner if a sale is on
-Fixed watches page not working on mobile
-
+I have found some banners to add to the banner slider
+fixed watches page not working on mobile
+fixed view watch dropdown text being to big
+I have tested the website on my iPhone 11 and it works very well, everything works as expected
 */
 
 const WatchesPage = () => {
