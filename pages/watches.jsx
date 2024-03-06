@@ -409,8 +409,10 @@ const WatchesPage = () => {
     }
     const index = imagePositionMap[img][0];
     if (typeof window !== 'undefined' && localStorage) {
-
-      const list =  localStorage.getItem("likedWatches").slice(1, localStorage.getItem("likedWatches").length - 1).split(",");
+      let list = [];
+      if(localStorage.getItem("likedWatches").length > 0){
+        list =  localStorage.getItem("likedWatches").slice(1, localStorage.getItem("likedWatches").length - 1).split(",");
+      }
       const isRedArrayList =  localStorage.getItem("isRedArray").slice(1, localStorage.getItem("isRedArray").length - 1).split(",");
       if(index.toString() in list){
         const num = list.indexOf(index);
