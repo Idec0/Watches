@@ -29,10 +29,6 @@ You can't order the fossil watch on its own with a discount or else it crashes -
 
 testing on mobile - iPhone XR is the same as the iPhone 11
 
-Main menu banner slide show
-
-when admin page is loaded make it check if user is admin and if they aren't then take them back to index - you can access it by changing the url
-
 
 Maybe:
 
@@ -42,7 +38,7 @@ if you click likedWatches page while viewing watches page it works but any other
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
 
-Option to cancel your order through order history page
+Option to cancel your order through order history page - also include refunds from stripe
 
 
 Links:
@@ -57,7 +53,8 @@ Done Today:
 
 sale gets applied to every watch on view watches
 The basket and checkout page also displays the right amount if you apply the sale discount with a discount, and if you order a watch with both discounts active it charges you the right price
-
+You now can't access the adminPanel unless you are admin even if you type in the link
+Made a banner slider on the main menu which also includes a sale banner if a sale is on
 */
 
 const WatchesPage = () => {

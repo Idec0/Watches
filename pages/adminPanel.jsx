@@ -20,6 +20,30 @@ function AdminPage() {
   const [watches, setWatches] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {      
+      SetAdmin(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
+    }
+  }, []); 
+
+  const SetAdmin = async(username) => {
+    // check if admin
+    try {
+      var user = {isAdmin: username}
+      const queryParams = new URLSearchParams(user).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      if(!result.user[0].admin){
+        window.location.href="/";
+      }
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
   const setDisplayTitle = async (text) => {
     setTitle(text);
     if(text === "Edit Discounts"){
@@ -263,7 +287,6 @@ function AdminPage() {
         elements[i].appendChild(inputElement);
       }
     }
-
   }
 
   const addNewSale = async () => {

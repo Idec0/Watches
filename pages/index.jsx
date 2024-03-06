@@ -18,7 +18,21 @@ function LoadPage() {
 }
 
 function IndexPage() {
-  const [bannerUrl, setBannerUrl] = useState("https://www.houseofwatches.co.uk/media/wysiwyg/1920x554_THB_Prospex_SPB381J1.jpg");
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [bannerUrl, setBannerUrl] = useState(["https://www.houseofwatches.co.uk/media/wysiwyg/1920x554_THB_Prospex_SPB381J1.jpg"]);
+  var watchBannerList = [
+    "https://www.houseofwatches.co.uk/media/wysiwyg/1920x554_THB_Prospex_SPB381J1.jpg",
+    "https://www.tagheuer.com/on/demandware.static/-/Library-Sites-TagHeuer-Shared/default/dw34fc3737/images/PLP/carrera/TH_TOP_Banner_Carrera_Chrono_CBS2211.FC6445.jpg"
+  ];
+
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % bannerUrl.length);
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [bannerUrl.length]);
 
   useEffect(() => {
     GetBannerUrl();
@@ -40,12 +54,11 @@ function IndexPage() {
         const end_date = new Date(result[sale].sale_end_date);
         start_date.setFullYear(currentDate.getFullYear());
         end_date.setFullYear(currentDate.getFullYear());
+        setBannerUrl(watchBannerList);
         if (currentDate >= start_date && currentDate <= end_date) {
-          setBannerUrl(result[sale].sale_banner_url);
+          watchBannerList.unshift(result[sale].sale_banner_url);
           return;
-        } else {
-          setBannerUrl("https://www.houseofwatches.co.uk/media/wysiwyg/1920x554_THB_Prospex_SPB381J1.jpg");
-        }        
+        }      
       }
 
     }catch (error) {
@@ -53,11 +66,17 @@ function IndexPage() {
     }
   }
 
+  const changeBannerSlider = () => {
+    if(bannerUrl.length > 0){
+
+    }
+  }
+
   {
     return (
       <main>
         <img
-          src={bannerUrl}
+          src={bannerUrl[currentImageIndex]}
           alt="Picture of Watch banner"
         />
       </main>
