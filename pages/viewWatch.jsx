@@ -251,7 +251,7 @@ function ViewWatchPage() {
             </div>
             <div className='generalDropdown'>
               <div style={{fontWeight: 'bold', padding: '10px 20px'}}>
-                <p>Watches Code</p>
+                {/* <p>Watches Code</p> */}
                 <p>Brand</p>
                 <p>Watch Face Diameter</p>
                 <p>Chronograph</p>
@@ -261,7 +261,7 @@ function ViewWatchPage() {
                 <p>Warranty</p>
               </div>
               <div style={{padding: '10px 20px'}}>
-                <p>{watchDetails.product_name}</p>
+                {/* <p>{watchDetails.product_name}</p> */}
                 <p>{watchDetails.brand}</p>
                 <p>{watchDetails.watch_face_diameter}</p>
                 <p>{watchDetails.chronograph}</p>
