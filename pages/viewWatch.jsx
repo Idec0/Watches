@@ -24,6 +24,8 @@ function ViewWatchPage() {
   const [goToBasketElement, setGoToBasketElement] = useState(null);
   const [watchDetails, setGetWatchDetails] = useState([]);
 
+  const [saleAmount, setSaleAmount] = useState(0);
+
   useEffect(() => {
 
     if (typeof window !== "undefined") {
@@ -36,9 +38,39 @@ function ViewWatchPage() {
     
         getWatchDetails(variable);
       }
+      GetBannerUrl();
     }
 
   }, []);
+
+  const GetBannerUrl = async () => {
+    try {      
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_sales")}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+      
+      // get valid banner
+      for (const sale in result){
+        const start_date = new Date(result[sale].sale_start_date);
+        const end_date = new Date(result[sale].sale_end_date);
+        start_date.setFullYear(currentDate.getFullYear());
+        end_date.setFullYear(currentDate.getFullYear());
+        if (currentDate >= start_date && currentDate <= end_date) {
+          setSaleAmount(result[sale].sale_amount);
+          return; 
+        } else {
+          setSaleAmount(0);
+        }        
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const getWatchDetails = async (variable) => {
     // get watch details
@@ -198,7 +230,17 @@ function ViewWatchPage() {
               </h1>
               <p>{img[2]}</p>
             </div>
-            <p>£{img[3]}</p>
+            {saleAmount !== 0 && (
+              <p>
+                <span style={{textDecoration: 'line-through'}}>£{ img[3] }</span>
+                &nbsp;&nbsp;£{(img[3] - (img[3] * (saleAmount / 100))).toFixed(2)}
+              </p>
+            )}
+            {saleAmount === 0 && (
+              <p>
+                £{ img[3] }                  
+              </p>
+            )}
             <button style={{ color: "black" }} onClick={() => AddToBasket(img)}>
               Add To Basket
             </button>

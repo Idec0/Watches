@@ -29,9 +29,9 @@ You can't order the fossil watch on its own with a discount or else it crashes -
 
 testing on mobile - iPhone XR is the same as the iPhone 11
 
-sale gets applied to every watches on view watches, basket and checkout page
-
 Main menu banner slide show
+
+when admin page is loaded make it check if user is admin and if they aren't then take them back to index - you can access it by changing the url
 
 
 Maybe:
@@ -55,17 +55,9 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
 
-changed the mobile layout on login, sign-up page
-I have tested the app on an iPhone 11 and everything works apart from the watches page due to 'application error: a client-side exception has occurred (see the browser console for more information)' - this worked fine on the iPhone 6 but on the iPhone 11 it doesn't work
-Redesign edit watches on adminPanel page, selectAddress, so now it works on every device, I made the tables scrollable
-added it so you can search for specific words in the edit watches, edit discount instead of having to scroll down and find it in a table, this makes it alot nicer if there are hundreds of products and instead of spending alot of time searching for it you can now search for a word in it and it will highlight, and also scroll down to it automatically
-added a new table in the database called sales - this will be used to add sales on all watches
-Added the ability to add a new sale in the admin panel
-added the ability to edit and delete sales in the admin panel
-sale changes the banner on the main menu, so each sale has its own banner
-The sales will auto repeat every year
-I have made it so you don't need to add the year since it will repeat every year
-sale gets applied to every watch on the watches page
+sale gets applied to every watch on view watches
+The basket and checkout page also displays the right amount if you apply the sale discount with a discount, and if you order a watch with both discounts active it charges you the right price
+
 */
 
 const WatchesPage = () => {
@@ -500,7 +492,7 @@ const WatchesPage = () => {
                 {saleAmount !== 0 && (
                 <p>
                   <span style={{textDecoration: 'line-through'}}>£{imagePositionMap[img] ? imagePositionMap[img][3] : "N/A"}{" "}</span>
-                  £{((imagePositionMap[img] ? imagePositionMap[img][3] : 0) - ((imagePositionMap[img] ? imagePositionMap[img][3] : 0) * (saleAmount / 100))).toFixed(2)}
+                  &nbsp;&nbsp;£{((imagePositionMap[img] ? imagePositionMap[img][3] : 0) - ((imagePositionMap[img] ? imagePositionMap[img][3] : 0) * (saleAmount / 100))).toFixed(2)}
                 </p>
                 )}
                 {saleAmount === 0 && (

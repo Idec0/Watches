@@ -39,6 +39,7 @@ function BasketPage() {
   const [basketItems, setBasketItems] = useState([]);
   const [discountAmount, setDiscountAmount] = useState(0);  
   const [loggedIn, setLoggedIn] = useState(false);
+  const [saleAmount, setSaleAmount] = useState(0);
 
   const router = useRouter();
 
@@ -58,8 +59,38 @@ function BasketPage() {
 
     if (typeof window !== 'undefined') {
       setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
+      GetBannerUrl();
     }
   }, []);
+
+  const GetBannerUrl = async () => {
+    try {      
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_sales")}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+      
+      // get valid banner
+      for (const sale in result){
+        const start_date = new Date(result[sale].sale_start_date);
+        const end_date = new Date(result[sale].sale_end_date);
+        start_date.setFullYear(currentDate.getFullYear());
+        end_date.setFullYear(currentDate.getFullYear());
+        if (currentDate >= start_date && currentDate <= end_date) {
+          setSaleAmount(result[sale].sale_amount);
+          return; 
+        } else {
+          setSaleAmount(0);
+        }        
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const qtyWasClicked = (index, num) => {
     basketItems[index][5] = num;
@@ -164,7 +195,17 @@ function BasketPage() {
                 </h1>
               </div>
             </div>
-            <p>£{watch[3]}</p>
+            {saleAmount !== 0 && (
+              <p>
+                <span style={{textDecoration: 'line-through'}}>£{ watch[3] }</span>
+                &nbsp;&nbsp;£{(watch[3] - (watch[3] * (saleAmount / 100))).toFixed(2)}
+              </p>
+            )}
+            {saleAmount === 0 && (
+              <p>
+                £{ watch[3] }                  
+              </p>
+            )}
             <div className="dropdown">
               <p>Qty: {watch[5]}</p>
               <div className="dropdown-content-basket-page">
@@ -187,14 +228,19 @@ function BasketPage() {
           </div>
           {index === 0 && (
             <div className="item3">
-              {discountAmount === 0 && (
+              {discountAmount === 0 && saleAmount === 0 && (
                 <p>Total: <span>£{total.toFixed(2)}</span></p>
               )}
-              {discountAmount !== 0 && (
+              {discountAmount === 0 && saleAmount !== 0 && (
+                <p>Total: <span style={{textDecoration: 'line-through'}}>£{total.toFixed(2)}</span> £{(total - (total * (saleAmount / 100))).toFixed(2)}</p>
+              )}
+              {discountAmount !== 0 && saleAmount === 0 && (
                 <p>Total: <span style={{textDecoration: 'line-through'}}>£{total.toFixed(2)}</span> £{(total - (total * (discountAmount / 100))).toFixed(2)}</p>
               )}
+              {discountAmount !== 0 && saleAmount !== 0 && (
+                <p>Total: <span style={{textDecoration: 'line-through'}}>£{total.toFixed(2)}</span> £{((total - (total * (saleAmount / 100))) - ((total - (total * (saleAmount / 100))) * (discountAmount / 100))).toFixed(2)}</p>
+              )}
               <p>Discount: {discountAmount}%</p>
-              {/* <p>New Total: £{(total - (total * (discountAmount / 100))).toFixed(2)}</p> */}
               <input type="text" id="discountInput" placeholder="Apply Discount Code" onKeyDown={checkKeyDown} style={{ textAlign: "center", color: "black" }} />
               {loggedIn === "false" && (
               <Link href={"/login"}>

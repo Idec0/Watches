@@ -47,6 +47,8 @@ function CheckoutPage() {
 
   const [isSelected, setIsSelected] = useState(false);
 
+  const [saleAmount, setSaleAmount] = useState(0);
+
   const isClient = typeof window !== 'undefined'; // Check if window is defined
 
   // code to pass a varibale through links
@@ -99,7 +101,37 @@ function CheckoutPage() {
     if(address_id !== ''){
       getAddress(address_id);
     }
+    GetBannerUrl();
   }, []);
+
+  const GetBannerUrl = async () => {
+    try {      
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_sales")}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+      
+      // get valid banner
+      for (const sale in result){
+        const start_date = new Date(result[sale].sale_start_date);
+        const end_date = new Date(result[sale].sale_end_date);
+        start_date.setFullYear(currentDate.getFullYear());
+        end_date.setFullYear(currentDate.getFullYear());
+        if (currentDate >= start_date && currentDate <= end_date) {
+          setSaleAmount(result[sale].sale_amount);
+          return; 
+        } else {
+          setSaleAmount(0);
+        }        
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const handleCheckboxChange = (e) => {
     setIsSelected(e.target.checked);
@@ -202,12 +234,27 @@ function CheckoutPage() {
                     </u>
                   </h1>
                   <p style={{fontSize: '20px'}}>Qty: {watch[5]}</p>
-                  <p style={{fontSize: '20px'}}>£{watch[3]}</p>
+                  {saleAmount !== 0 && (
+                    <p style={{fontSize: '20px'}}>
+                      <span style={{textDecoration: 'line-through'}}>£{ watch[3] }</span>
+                      &nbsp;&nbsp;£{(watch[3] - (watch[3] * (saleAmount / 100))).toFixed(2)}
+                    </p>
+                  )}
+                  {saleAmount === 0 && (
+                    <p style={{fontSize: '20px'}}>
+                      £{ watch[3] }                  
+                    </p>
+                  )}
                 </div>                
               </div>
             ))}
             <div className="price">
-              <p>Total: £{price}</p>
+              {saleAmount === 0 && (
+                <p>Total: £{price}</p>
+              )}
+              {saleAmount !== 0 && (
+                <p>Total: £{(price - (price * (saleAmount / 100))).toFixed(2)}</p>
+              )}
             </div>
           <div className='paymentDetails'>
               <div className='payment-container-items'>
@@ -246,6 +293,7 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
   const [clientSecret, setClientSecret] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [price, setPrice] = useState(0);
+  const [saleAmount, setSaleAmount] = useState(0);
 
   useEffect(() => {
     // Fetch client secret from your server
@@ -271,8 +319,37 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
     }
 
     fetchClientSecret();
-
+    GetBannerUrl();
   }, []);
+
+  const GetBannerUrl = async () => {
+    try {      
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_sales")}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+      
+      // get valid banner
+      for (const sale in result){
+        const start_date = new Date(result[sale].sale_start_date);
+        const end_date = new Date(result[sale].sale_end_date);
+        start_date.setFullYear(currentDate.getFullYear());
+        end_date.setFullYear(currentDate.getFullYear());
+        if (currentDate >= start_date && currentDate <= end_date) {
+          setSaleAmount(result[sale].sale_amount);
+          return; 
+        } else {
+          setSaleAmount(0);
+        }        
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const cardElementOptions = {
     hidePostalCode: true, // Set to true to hide the postal code field
@@ -357,9 +434,12 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
 
       date.setDate(date.getDate() + 14);
       var deliveryDate = date.toJSON().slice(0, 10);
-
+      var finalAmount = price;
+      if(saleAmount !== 0){
+        finalAmount = (price - (price * (saleAmount / 100))).toFixed(2);
+      }
       // add new user to database
-      var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: price, deliveryDate: deliveryDate}
+      var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: finalAmount, deliveryDate: deliveryDate}
       const queryParams = new URLSearchParams(order).toString();
       const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
       if (!response.ok) {
