@@ -27,6 +27,8 @@ You can't order the fossil watch on its own with a discount or else it crashes -
 
 after you cancel your order, it needs to delete that order from the database
 
+When the user request a refund make it so something pops up, something like successful payment, which also says your money will be deposited back into your account within 14 days
+
 Maybe:
 
 If you use the search bar in favourite watches it only filters them not all watches
@@ -34,7 +36,6 @@ If you use the search bar in favourite watches it only filters them not all watc
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
-
 
 
 Links:
@@ -48,17 +49,18 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 Done Today:
 
 sale gets applied to every watch on view watches
-The basket and checkout page also displays the right amount if you apply the sale discount with a discount, and if you order a watch with both discounts active it charges you the right price
+The basket and checkout page also displays the right amount if you apply the sale discount and a discount, and if you order a watch with both discounts active it charges you the right price
 You now can't access the adminPanel unless you are admin even if you type in the link
 Made a banner slider on the main menu which also includes a sale banner if a sale is on
 I have found some banners to add to the banner slider
 fixed watches page not working on mobile
-fixed view watch dropdown text being to big
+fixed view watch dropdown text being too big
 I have tested the website on my iPhone 11 and it works very well, everything works as expected
 I have started to work on refunds - the user will be allow upto 24 hours to cancel their order
 It took me awhile to get access to the charge_id which i need to be able to make a refund in the future, this required me to rewrite my code in checkout and paymentIntent and alot of research since i couldn't figure out how you gain access but i finally got it sorted
 I have got the refund to work, so now users can get a refund if they request a refund within 24 hours
 next time i will make it so when they cancel an order it deletes the order from the order history so they can request multiple of refunds, even know request multiple doesn't affect anything
+The order history table is now scrollable so it fits on mobile
 */
 
 const WatchesPage = () => {

@@ -74,7 +74,7 @@ function OrderHistoryPage() {
   {
     return (
       <main style={{width: '100%'}}>
-         <div className='admin-panel-details' style={{margin: '10px 0', paddingTop: '10px'}}>
+         <div className='admin-panel-details  scrollable-table-2' style={{margin: '10px 0', paddingTop: '10px'}}>
             <table style={{width: '80%', margin: 'auto'}}>
               <tbody>
                 <tr>
