@@ -23,6 +23,8 @@ function LoadPage() {
 
 /* TODO:
 
+fix view watch dropdown text being to big
+
 Fix watches page not working on mobile - 'application error: a client-side exception has occurred (see the browser console for more information)'
 
 You can't order the fossil watch on its own with a discount or else it crashes - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string.

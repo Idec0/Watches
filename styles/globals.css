@@ -229,14 +229,17 @@ input {
 
 .generalDropdown {
   display: none;
+  font-size: 17px;
 }
 
 .strapDropdown {
   display: none;
+  font-size: 17px;
 }
 
 .movementDropdown {
   display: none;
+  font-size: 17px;
 }
 
 .dropDownStyle {
