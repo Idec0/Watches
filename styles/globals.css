@@ -1115,7 +1115,7 @@ tr {
   .watchPic {
     margin: auto;
   }
-  .watchPic img {
+  .watchPicImg {
     height: 500px;
   }
 }

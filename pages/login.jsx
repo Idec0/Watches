@@ -60,6 +60,7 @@ function IndexPage() {
               src={watchImage}
               alt="Picture of Watch banner"
               width={600}
+              className='watchPicImg'
             />
           </div>
           <div className='input'>
