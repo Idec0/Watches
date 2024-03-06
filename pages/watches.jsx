@@ -32,6 +32,8 @@ testing on mobile - iPhone XR is the same as the iPhone 11
 
 Maybe:
 
+add animation to banner slider
+
 If you use the search bar in favourite watches it only filters them not all watches
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
