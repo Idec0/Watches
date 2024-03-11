@@ -33,7 +33,7 @@ If you use the search bar in favourite watches it only filters them not all watc
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
 
-Clean up the favourites code for loading favWatches
+Clean up the favourites code for loading favWatches - all watches loads for a split second when loading favs
 
 
 Links:
@@ -52,7 +52,7 @@ I have make the refund successful page work on mobile
 I have tested the refund successful page on iPhone 11 and it works
 The refund is fully finished
 I have finally fixed the problem is favourite page not loading properly unless you were on the watches page but the problem is that i had to duplicate the watches page and added one line of code but I havn't gone throught the code to see which bits I don't need, so at some point I might go through it to clean up the code
-
+The problem now with fav is when you load it, it loads every watch and then displays the favourite watches but it does this instantly, but you can see every watch load for a split second, which can make the website not look as good
 */
 
 const WatchesPage = () => {
