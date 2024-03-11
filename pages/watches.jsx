@@ -287,12 +287,16 @@ const WatchesPage = () => {
       showFav(true);
       return;
     }
-    imgs = filteredData
-      .flatMap((brand) =>
-        brands
-          .filter((b) => b.brand_name.toLowerCase() === brand.toLowerCase())
-          .map((watch) => watch.image_url)
-      );
+    if(filteredData !== null){
+      imgs = filteredData
+        .flatMap((brand) =>
+          brands
+            .filter((b) => b.brand_name.toLowerCase() === brand.toLowerCase())
+            .map((watch) => watch.image_url)
+        );
+    }else{
+      imgs = [];
+    }
     newURL();
   };
 
