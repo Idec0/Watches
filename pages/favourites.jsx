@@ -27,7 +27,7 @@ const FavPage = () => {
   const [val, setVal] = useState("");
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
-  const [likedWatches, setLikedWatches] = useState(["['']"]);
+  const [likedWatches, setLikedWatches] = useState([""]);
   const [filteredData, setFilteredData] = useState([]);
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
   const [brands, setBrands] = useState(null);
@@ -92,6 +92,11 @@ const FavPage = () => {
 
   const SetLikedWatches1 = async () => {
     const storedLikedWatches = localStorage.getItem("likedWatches");
+    console.log(storedLikedWatches);
+    if(storedLikedWatches === ""){
+      storedLikedWatches.push("");
+      console.log(storedLikedWatches);
+    }
     await new Promise(resolve => setTimeout(resolve, 10));
     setLikedWatches(JSON.parse(storedLikedWatches));
   }

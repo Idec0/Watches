@@ -57,6 +57,7 @@ I have tested the refund successful page on iPhone 11 and it works
 The refund is fully finished
 I have finally fixed the problem is favourite page not loading properly unless you were on the watches page but the problem is that i had to duplicate the watches page and added one line of code but I havn't gone throught the code to see which bits I don't need, so at some point I might go through it to clean up the code
 The problem now with fav is when you load it, it loads every watch and then displays the favourite watches but it does this instantly, but you can see every watch load for a split second, which can make the website not look as good
+After fixing fav it has made hearting images not work and going on the fav page for the first time adds a null image
 */
 
 const WatchesPage = () => {
@@ -65,7 +66,7 @@ const WatchesPage = () => {
   const [val, setVal] = useState("");
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
-  const [likedWatches, setLikedWatches] = useState(["['']"]);
+  const [likedWatches, setLikedWatches] = useState([""]);
   const [filteredData, setFilteredData] = useState([]);
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
   const [brands, setBrands] = useState(null);
@@ -130,6 +131,11 @@ const WatchesPage = () => {
 
   const SetLikedWatches1 = async () => {
     const storedLikedWatches = localStorage.getItem("likedWatches");
+    console.log(storedLikedWatches);
+    if(storedLikedWatches === ""){
+      storedLikedWatches.push("");
+      console.log(storedLikedWatches);
+    }
     await new Promise(resolve => setTimeout(resolve, 10));
     setLikedWatches(JSON.parse(storedLikedWatches));
   }
