@@ -20,14 +20,13 @@ function LoadPage() {
   );
 }
 
-
 /* TODO:
-
-You can't order the fossil watch on its own with a discount or else it crashes - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string.
 
 styling for checkout page
 
-If you use the search bar in favourite watches it only filters them not all watches
+test to see what you can do when youre not logged in, can you break the website?
+
+redesign the empty basket design
 
 
 Maybe:
@@ -60,6 +59,8 @@ Theres a new problem, so if you heart more than one watch it errors
 I have fixed the problem with more than one liked watch caused an error
 Made it so when you filter watches in favourites it only filteres the favourites but it does it due to brand and not watch, so i will get it to filter just the watches which are hearted
 I have made it so now when you filter through favourite watches it only shows favourited watches
+when you try to access the basket with no watches it comes up with text and a button for you to visit the store - this works on all devices
+Fixed the problem when you ordered a fossil watch on its own with a discount it caused an error - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string. 
 */
 
 const WatchesPage = () => {

@@ -54,7 +54,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
                 <Link href={"/"}  style={{color:"white"}}>Home</Link>
               </li>
               <li>
-                <Link href={"/watches"}  style={{color:"white"}}>Watches</Link>
+                <Link href={"/watches"} style={{color:"white"}}>Watches</Link>
               </li>
               <li>
                 <button type="button" onClick={() => showCalc()}>

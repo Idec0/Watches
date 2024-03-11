@@ -171,6 +171,15 @@ function BasketPage() {
     }
   }
 
+  if (basketItems.length === 0) {
+    return (
+      <main>
+        <div className='basket-empty-text'>Your Cart Is Currently Empty!</div>
+        <a style={{ display: 'contents' }} href="/watches"><button className='basket-empty-button'>Return to Shop</button></a>
+      </main>
+    );
+  }
+
   return (
     <main style={{ display: "contents" }}>
       <div>{/* Your page content here */}</div>

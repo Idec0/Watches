@@ -850,6 +850,24 @@ tr {
   padding: 8px;
 }
 
+.basket-empty-text {
+  margin: 60px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5vh;
+  text-align: center;
+}
+
+.basket-empty-button {
+  border-radius: 12px;
+  background-color: lightblue;
+  color: black;
+  display: flex;
+  margin: auto;
+  font-size: 3vh;
+}
+
 
 @media (max-width: 1280px) {
   .displayMainViewWatch {

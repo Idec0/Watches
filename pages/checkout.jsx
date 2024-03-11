@@ -431,68 +431,71 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: price * 100,
+          amount: parseInt(price * 100),
         }),
         
       });
+      console.log(response);
       const data = await response.json();
+      console.log(data);
       setClientSecret(data.clientSecret);
       return data.paymentIntent;
     };
 
     const results = await fetchClientSecret();
     let chargeId = "null";
-    if (results.error) {
-      console.error(results.error.message);
-    } else {      
-      if (results.status === "succeeded") {
-        if (results && results.latest_charge) {
-          chargeId = results.latest_charge;
-        } else {
-          console.error('Error getting charge ID: No charges found');
-        }
-
-        // add new order 
-        try {
-          var date = new Date();
-          var orderDate = date.toJSON().slice(0, 10);
-
-          date.setDate(date.getDate() + 14);
-          var deliveryDate = date.toJSON().slice(0, 10);
-          var finalAmount = price;
-          if(saleAmount !== 0){
-            finalAmount = (price - (price * (saleAmount / 100))).toFixed(2);
-          }
-          // add new user to database
-          var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: finalAmount, deliveryDate: deliveryDate, charge_id: chargeId}
-          const queryParams = new URLSearchParams(order).toString();
-          const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-        }catch (error) {
-          console.error('Error fetching data:', error);
-        }
-
-        // reset basket
-        localStorage.setItem("Basket", "[]");
-
-        // save data if selected
-        if(isSelected){
-          // add new address
-          var username = localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false;
-
-          var info = {firstname: firstname.value, lastname: lastname.value, addressLine1: addressLine1.value, addressLine2: addressLine2.value, city: city.value, postcode: postcode.value, phoneNumber: phoneNumber.value, email: email, username: username}
-          const queryParams = new URLSearchParams(info).toString();
-          const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }          
-        }
-
-        // Redirect or show success message
-        window.location.href ="/successful";
+    console.log(results);
+    if(results === undefined){
+      console.log("results === undefined");
+      return;
+    }
+    if (results.status === "succeeded") {
+      if (results && results.latest_charge) {
+        chargeId = results.latest_charge;
+      } else {
+        console.error('Error getting charge ID: No charges found');
       }
+
+      // add new order 
+      try {
+        var date = new Date();
+        var orderDate = date.toJSON().slice(0, 10);
+
+        date.setDate(date.getDate() + 14);
+        var deliveryDate = date.toJSON().slice(0, 10);
+        var finalAmount = price;
+        if(saleAmount !== 0){
+          finalAmount = (price - (price * (saleAmount / 100))).toFixed(2);
+        }
+        // add new user to database
+        var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: finalAmount, deliveryDate: deliveryDate, charge_id: chargeId}
+        const queryParams = new URLSearchParams(order).toString();
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+      }catch (error) {
+        console.error('Error fetching data:', error);
+      }
+
+      // reset basket
+      localStorage.setItem("Basket", "[]");
+
+      // save data if selected
+      if(isSelected){
+        // add new address
+        var username = localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false;
+
+        var info = {firstname: firstname.value, lastname: lastname.value, addressLine1: addressLine1.value, addressLine2: addressLine2.value, city: city.value, postcode: postcode.value, phoneNumber: phoneNumber.value, email: email, username: username}
+        const queryParams = new URLSearchParams(info).toString();
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }          
+      }
+
+      // Redirect or show success message
+      window.location.href ="/successful";
     }
   };
 
