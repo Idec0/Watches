@@ -75,10 +75,10 @@ function IndexPage() {
   {
     return (
       <main>
-        <img
+        <a href='/watches'><img
           src={bannerUrl[currentImageIndex]}
           alt="Picture of Watch banner"
-        />
+        /></a>
       </main>
     );
   }

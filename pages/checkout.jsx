@@ -302,6 +302,9 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
 
     if (typeof window !== 'undefined') {
       setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
+      if(loggedIn === false){
+        window.location.href = "/login";
+      }
     }
 
     GetBannerUrl();

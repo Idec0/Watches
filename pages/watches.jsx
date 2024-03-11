@@ -22,9 +22,9 @@ function LoadPage() {
 
 /* TODO:
 
-styling for checkout page
+styling for checkout page, view watch, watches, added an item to your basket
 
-test to see what you can do when youre not logged in, can you break the website?
+test to see what you can do when you're not logged in, can you break the website?
 
 redesign the empty basket design
 
@@ -63,6 +63,9 @@ when you try to access the basket with no watches it comes up with text and a bu
 Fixed the problem when you ordered a fossil watch on its own with a discount it caused an error - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string. 
 when you search for words in the admin Panel it keeps all the words highlighted until you refresh - I might keep it like this since it can be useful for alot of people
 Fixed problem with stripe not charging the right amount - i forgot to apply the sales discount to it, but now the price is right
+Clicking on a banner takes you to the watches page
+If they access the checkout page through the link: https://watches-ruby.vercel.app/checkout, then you can make an order which will cause an error
+Made it so the user can't access the checkout page unless they are logged in even if they try to access it through https://watches-ruby.vercel.app/checkout
 */
 
 const WatchesPage = () => {
