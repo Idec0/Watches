@@ -25,17 +25,15 @@ function LoadPage() {
 
 You can't order the fossil watch on its own with a discount or else it crashes - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string.
 
-make sure the refund pages work on mobile
-
 styling for checkout page
 
 if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
 
+to fix likedWatches page - maybe remake the whole page
 
 Maybe:
 
 If you use the search bar in favourite watches it only filters them not all watches
-
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
 
