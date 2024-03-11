@@ -194,6 +194,17 @@ export default async function handler(request, response) {
       await client.query('COMMIT')
       return response.status(200).json("Successful");
     }
+    // delete order
+    if(discountCode.length > 12 && discountCode.slice(0, 12) === "delete_order"){
+      const queryParams = new URLSearchParams(discountCode);
+      const order_id = queryParams.get("delete_order");
+      await client.query('BEGIN');
+      await client.query(
+        'DELETE FROM orders WHERE id = $1',[order_id]
+      );
+      await client.query('COMMIT')
+      return response.status(200).json("Successful");
+    }
 
     // add new discount
     if(discountCode.length > 12 && discountCode.slice(0, 12) === "add_discount"){

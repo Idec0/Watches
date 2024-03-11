@@ -60,7 +60,23 @@ function OrderHistoryPage() {
       const data = await response.json();
       console.log(data);
     };
+    const deleteOrder = async (order_id) => {
+      try {
+        const order_to_delete = { delete_order: order_id };
+        const queryParams = new URLSearchParams(order_to_delete).toString();
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+      }catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
     executeRefund(order.charge_id, order.price);
+    deleteOrder(order.id);
+    window.location.href = "/refundSuccessful";
+    // window.location.reload();
   }
 
   const canCancel = (order_date) => {
