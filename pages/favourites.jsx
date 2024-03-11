@@ -98,7 +98,6 @@ const FavPage = () => {
     }
     if(storedLikedWatches === ""){
       storedLikedWatches.push("");
-      console.log(storedLikedWatches);
     }
     await new Promise(resolve => setTimeout(resolve, 10));
     setLikedWatches(JSON.parse(storedLikedWatches));
