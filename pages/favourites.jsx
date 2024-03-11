@@ -330,13 +330,12 @@ const FavPage = () => {
       
       const storedLikedWatches = localStorage.getItem("likedWatches");
       let likedWatchesList = JSON.parse(storedLikedWatches);
+      let likedWatchesImages = [];
 
       if(likedWatchesList !== null){
-        const likedWatchImages = likedWatchesList.map(
+        likedWatchImages = likedWatchesList.map(
           (index) => imgList.flat()[index]
         );
-      }else{
-        likedWatchesList = [];
       }
 
       imgs = likedWatchImages;
