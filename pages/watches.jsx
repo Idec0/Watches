@@ -24,8 +24,6 @@ function LoadPage() {
 
 styling for checkout page, view watch, watches, added an item to your basket
 
-test to see what you can do when you're not logged in, can you break the website?
-
 redesign the empty basket design
 
 
@@ -47,11 +45,11 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 Done Today:
 
 When you cancel your order it now deletes that order from the database
-When you cancel an order, a refund successful text pops up so the user knows the refund was acknowledged and has gone through
+When you cancel an order, a refund successful text pops up so the user knows the refund was acknowledged
 I have make the refund successful page work on mobile
 I have tested the refund successful page on iPhone 11 and it works
 The refund is fully finished
-I have finally fixed the problem is favourite page not loading properly unless you were on the watches page but the problem is that i had to duplicate the watches page and added one line of code but I havn't gone throught the code to see which bits I don't need, so at some point I might go through it to clean up the code
+I have finally fixed the problem with the favourite page not loading properly unless you were on the watches page but the problem is that i had to duplicate the watches page and added one line of code but I haven't gone throught the code to see which bits I don't need, so at some point I might go through it to clean up the code
 The problem now with fav is when you load it, it loads every watch and then displays the favourite watches but it does this instantly, but you can see every watch load for a split second, which can make the website not look as good
 After fixing fav it has made hearting images not work and going on the fav page for the first time adds a null image
 Fixed the problem with null image and not being able to heart watches
@@ -65,7 +63,8 @@ when you search for words in the admin Panel it keeps all the words highlighted 
 Fixed problem with stripe not charging the right amount - i forgot to apply the sales discount to it, but now the price is right
 Clicking on a banner takes you to the watches page
 If they access the checkout page through the link: https://watches-ruby.vercel.app/checkout, then you can make an order which will cause an error
-Made it so the user can't access the checkout page unless they are logged in even if they try to access it through https://watches-ruby.vercel.app/checkout
+Made it so the user can't access the checkout and adminPanel page unless they are logged in even if they try to access it through https://watches-ruby.vercel.app/checkout or https://watches-ruby.vercel.app/adminPanel
+I have tested the whole website while not signed in and the user can't break the website
 */
 
 const WatchesPage = () => {

@@ -15,10 +15,6 @@ export default async function handler(req, res) {
       payment_method: 'pm_card_visa',
       confirm: true,
     });
-    console.log("a");
-    console.log(paymentIntent);
-    console.log("b");
-    console.log(paymentIntent.latest_charge);
 
     res.status(200).json({ clientSecret: paymentIntent.client_secret, paymentIntent: paymentIntent });
   } catch (error) {

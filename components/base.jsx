@@ -36,7 +36,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
-      setAdmin(result.user[0].admin);
+      setAdmin(result.user[0] ? result.user[0].admin : false);
     }catch (error) {
       console.error('Error fetching data:', error);
     }

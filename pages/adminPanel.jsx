@@ -36,7 +36,8 @@ function AdminPage() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
-      if(!result.user[0].admin){
+      const isAdmin = result.user[0] ? result.user[0].admin : false;
+      if(!isAdmin){
         window.location.href="/";
       }
     }catch (error) {
