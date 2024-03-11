@@ -52,7 +52,9 @@ Done Today:
 
 When you cancel your order it now deletes that order from the database
 When you cancel an order, a refund successful text pops up so the user knows the refund was acknowledged and has gone through
-
+I have make the refund successful page work on mobile
+I have tested the refund successful page on iPhone 11 and it works
+The refund is fully finished
 */
 
 const WatchesPage = () => {
