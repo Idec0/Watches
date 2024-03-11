@@ -56,7 +56,10 @@ I have finally fixed the problem is favourite page not loading properly unless y
 The problem now with fav is when you load it, it loads every watch and then displays the favourite watches but it does this instantly, but you can see every watch load for a split second, which can make the website not look as good
 After fixing fav it has made hearting images not work and going on the fav page for the first time adds a null image
 Fixed the problem with null image and not being able to heart watches
-
+Theres a new problem, so if you heart more than one watch it errors
+I have fixed the problem with more than one liked watch caused an error
+Made it so when you filter watches in favourites it only filteres the favourites but it does it due to brand and not watch, so i will get it to filter just the watches which are hearted
+I have made it so now when you filter through favourite watches it only shows favourited watches
 */
 
 const WatchesPage = () => {
@@ -83,6 +86,10 @@ const WatchesPage = () => {
 
   // Parse the variable back into an array
   let imgs = variable ? variable.split(',') : [];
+  
+  if(imgs.length > 1 && imgs[0] === ""){
+    imgs = [];
+  }
   // end of code to pass a varibale through links
 
   // Wrap code that relies on client-side features in a check for window
@@ -376,8 +383,9 @@ const WatchesPage = () => {
       const likedWatchImages = likedWatchesList.map(
         (index) => imgList.flat()[index]
       );
-
+            
       imgs = likedWatchImages;
+      
       setFilteredData(
         [...new Set(data.filter((op) => likedWatchImages.includes(brands[op.toLowerCase()])))]
       );
@@ -428,7 +436,9 @@ const WatchesPage = () => {
           ? {}
           : { filter: "saturate(0%) hue-rotate(0deg)" };
     }
+    
     const index = imagePositionMap[img][0];
+
     if (typeof window !== 'undefined' && localStorage) {
       let list = [];
       if(localStorage.getItem("likedWatches") !== null){

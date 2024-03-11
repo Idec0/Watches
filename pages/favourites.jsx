@@ -31,6 +31,7 @@ const FavPage = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
   const [brands, setBrands] = useState(null);
+  const [favBrands, setFavBrands] = useState([]);
   const [saleAmount, setSaleAmount] = useState(0);
 
   const isClient = typeof window !== 'undefined'; // Check if window is defined
@@ -45,6 +46,10 @@ const FavPage = () => {
 
   // Parse the variable back into an array
   let imgs = variable ? variable.split(',') : [];
+
+  if(imgs.length > 1 && imgs[0] === ""){
+    imgs = [];
+  }
   // end of code to pass a varibale through links
 
   // Wrap code that relies on client-side features in a check for window
@@ -56,8 +61,8 @@ const FavPage = () => {
 
       SetLikedWatches1();
 
-      GetBannerUrl();
-
+      GetBannerUrl();     
+      setFavBrands([]);
     }
   }, []);  
 
@@ -252,6 +257,7 @@ const FavPage = () => {
 
   const filterImage = () => {
     if(imgs[0] === "showFav"){
+      setFavBrands([]);
       setLoadingFavorites(true);
       showFav(true);
       return;
@@ -262,6 +268,23 @@ const FavPage = () => {
           .filter((b) => b.brand_name.toLowerCase() === brand.toLowerCase())
           .map((watch) => watch.image_url)
       );
+
+    let likedImgsList = []
+    for (const index in likedWatches){
+      likedImgsList.push(imgList[likedWatches[index]]);
+    }
+    
+    let indexToRemove = [];
+    const imgsLength = imgs.length;
+    for (let i = 0; i < imgsLength; i++) {  
+      for (const likedImg in likedImgsList){
+        if(imgs[i] === likedImgsList[likedImg]){
+          indexToRemove.push(likedImgsList[likedImg]);
+        }
+      }      
+    }
+    imgs = indexToRemove;
+    
     newURL();
   };
 
@@ -302,9 +325,8 @@ const FavPage = () => {
 
   const checkKeyDown = (e) => {
     const updatedValue = e.target.value;
-    
     setFilteredData(
-      [...new Set(data.filter((op) => op.toLowerCase().includes(updatedValue.toLowerCase())))]
+      [...new Set(favBrands.filter((op) => op.toLowerCase().includes(updatedValue.toLowerCase())))]
     );
     setReload(true);
   };
@@ -422,6 +444,13 @@ const FavPage = () => {
       
   };
 
+  const setFavBrandData = (brand) => {
+    if(brand in favBrands === false){
+      const prevFavBrands = favBrands;
+      setFavBrands(prevFavBrands => [...prevFavBrands, brand]);
+    }
+  }
+
   return (
     <main>
       <div className="centerHeader">
@@ -459,7 +488,7 @@ const FavPage = () => {
                   style={getImgStyle(index, img)}
                 />
               </div>
-              <img src={img} alt={`Watch ${index}`} />
+              <img src={img} alt={`Watch ${index}`} onLoad={() => setFavBrandData(imagePositionMap[img][1])} />
               <div className="center">        
                 <h1>
                   <b style={{textTransform: 'capitalize'}}>
