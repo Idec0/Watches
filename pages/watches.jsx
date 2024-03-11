@@ -130,8 +130,11 @@ const WatchesPage = () => {
   }
 
   const SetLikedWatches1 = async () => {
-    const storedLikedWatches = localStorage.getItem("likedWatches");
-    console.log(storedLikedWatches);
+    let storedLikedWatches = localStorage.getItem("likedWatches");
+    if(storedLikedWatches === null){
+      localStorage.setItem("likedWatches", "[]");
+      storedLikedWatches = localStorage.getItem("likedWatches");
+    }
     if(storedLikedWatches === ""){
       storedLikedWatches.push("");
       console.log(storedLikedWatches);
@@ -371,13 +374,10 @@ const WatchesPage = () => {
       
       const storedLikedWatches = localStorage.getItem("likedWatches");
       let likedWatchesList = JSON.parse(storedLikedWatches);
-      let likedWatchesImages = [];
 
-      if(likedWatchesList !== null){
-        likedWatchImages = likedWatchesList.map(
-          (index) => imgList.flat()[index]
-        );
-      }
+      const likedWatchImages = likedWatchesList.map(
+        (index) => imgList.flat()[index]
+      );
 
       imgs = likedWatchImages;
       setFilteredData(
