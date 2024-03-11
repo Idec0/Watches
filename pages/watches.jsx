@@ -27,9 +27,13 @@ You can't order the fossil watch on its own with a discount or else it crashes -
 
 styling for checkout page
 
-Maybe:
-
 If you use the search bar in favourite watches it only filters them not all watches
+
+when you load favourite page for the first time 
+
+can't heart watches
+
+Maybe:
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
 
@@ -61,7 +65,7 @@ const WatchesPage = () => {
   const [val, setVal] = useState("");
   const [reload, setReload] = useState(true);
   const [isRedArray, setIsRedArray] = useState([]);
-  const [likedWatches, setLikedWatches] = useState([""]);
+  const [likedWatches, setLikedWatches] = useState(["['']"]);
   const [filteredData, setFilteredData] = useState([]);
   const [loadingFavorites, setLoadingFavorites] = useState(false); // fix infinite loop for fav page
   const [brands, setBrands] = useState(null);
