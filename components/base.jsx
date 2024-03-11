@@ -62,7 +62,7 @@ const Navbar = ({ appVisible, setAppVisible }) => {
                 </button>
               </li>
               <li>
-                <Link href={"/watches?imgs=showFav"}>❤️</Link>
+                <Link href={"/favourites?imgs=showFav"}>❤️</Link>
               </li>
 
               <Link href={"/basket"}>🛒</Link>

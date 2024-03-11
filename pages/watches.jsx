@@ -27,15 +27,13 @@ You can't order the fossil watch on its own with a discount or else it crashes -
 
 styling for checkout page
 
-if you click likedWatches page while viewing watches page it works but any other page and it will show all watches so you have to reclick the favourites page button
-
-to fix likedWatches page - maybe remake the whole page
-
 Maybe:
 
 If you use the search bar in favourite watches it only filters them not all watches
 
 admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
+
+Clean up the favourites code for loading favWatches
 
 
 Links:
@@ -53,6 +51,8 @@ When you cancel an order, a refund successful text pops up so the user knows the
 I have make the refund successful page work on mobile
 I have tested the refund successful page on iPhone 11 and it works
 The refund is fully finished
+I have finally fixed the problem is favourite page not loading properly unless you were on the watches page but the problem is that i had to duplicate the watches page and added one line of code but I havn't gone throught the code to see which bits I don't need, so at some point I might go through it to clean up the code
+
 */
 
 const WatchesPage = () => {
@@ -91,6 +91,7 @@ const WatchesPage = () => {
       SetLikedWatches1();
 
       GetBannerUrl();
+
     }
   }, []);  
 
@@ -228,24 +229,27 @@ const WatchesPage = () => {
     }
   }
   
-  if (brands && typeof brands === 'object'  && Object.keys(brands).length > 0) {
-
-    // Sort the array by brand_name and product name
-    const sortedProductName = brands.sort((a, b) => a.product_name.localeCompare(b.product_name));
-    const sortedBrands = sortedProductName.sort((a, b) => a.brand_name.localeCompare(b.brand_name));
-
-    const brandsArray =  sortedBrands ? Object.entries(sortedBrands) : [];
-
-    for (const [brandKey, brandData] of brandsArray) {
-      const { brand_name, image_url, product_name, price } = brandData;
-      
-      data.push(brand_name);
-      imgList.push(image_url);
-
-      imagePositionMap[image_url] = [watchListIndex, brand_name, product_name, price];
-      watchListIndex++;
+  const loadBrands = () => {
+    if (brands && typeof brands === 'object'  && Object.keys(brands).length > 0) {
+  
+      // Sort the array by brand_name and product name
+      const sortedProductName = brands.sort((a, b) => a.product_name.localeCompare(b.product_name));
+      const sortedBrands = sortedProductName.sort((a, b) => a.brand_name.localeCompare(b.brand_name));
+  
+      const brandsArray =  sortedBrands ? Object.entries(sortedBrands) : [];
+  
+      for (const [brandKey, brandData] of brandsArray) {
+        const { brand_name, image_url, product_name, price } = brandData;
+        
+        data.push(brand_name);
+        imgList.push(image_url);
+        
+        imagePositionMap[image_url] = [watchListIndex, brand_name, product_name, price];
+        watchListIndex++;
+      }
     }
   }
+  loadBrands();
 
   // If imgs is empty, set it to the default list
   if (imgs.length === 0) {
@@ -346,11 +350,15 @@ const WatchesPage = () => {
   }, [reload, filterImage, newURL]);
   
 
-  const showFav = () => {
+  const showFav = async () => {
+
     if (likedWatches.length > 0 ) {
       // If there are liked watches, update the imgs array and filteredData
       
-      const likedWatchImages = likedWatches.map(
+      const storedLikedWatches = localStorage.getItem("likedWatches");
+      const likedWatchesList = JSON.parse(storedLikedWatches);
+
+      const likedWatchImages = likedWatchesList.map(
         (index) => imgList.flat()[index]
       );
 
