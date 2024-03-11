@@ -5,7 +5,8 @@ const stripe = new stripePackage(process.env.STRIPE_SECRET_KEY);
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { chargeId, amount } = req.body;
-    const new_amount = parseInt(amount, 10);
+    const new_amount = parseInt((amount * 100) , 10);
+    console.log(new_amount);
     try {
       // Create a refund for the charge
       const refund = await stripe.refunds.create({

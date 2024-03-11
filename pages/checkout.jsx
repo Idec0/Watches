@@ -425,16 +425,22 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
     // });
 
     const fetchClientSecret = async () => {
+      let finalAmount = price;
+      if(saleAmount !== 0){
+        finalAmount = (price - (price * (saleAmount / 100))).toFixed(2);
+      }
+
       const response = await fetch("/api/paymentIntent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: parseInt(price * 100),
+          amount: parseInt(finalAmount * 100),
         }),
         
       });
+      
       console.log(response);
       const data = await response.json();
       console.log(data);

@@ -61,6 +61,8 @@ Made it so when you filter watches in favourites it only filteres the favourites
 I have made it so now when you filter through favourite watches it only shows favourited watches
 when you try to access the basket with no watches it comes up with text and a button for you to visit the store - this works on all devices
 Fixed the problem when you ordered a fossil watch on its own with a discount it caused an error - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string. 
+when you search for words in the admin Panel it keeps all the words highlighted until you refresh - I might keep it like this since it can be useful for alot of people
+Fixed problem with stripe not charging the right amount - i forgot to apply the sales discount to it, but now the price is right
 */
 
 const WatchesPage = () => {
