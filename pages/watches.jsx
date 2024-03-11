@@ -370,11 +370,15 @@ const WatchesPage = () => {
       // If there are liked watches, update the imgs array and filteredData
       
       const storedLikedWatches = localStorage.getItem("likedWatches");
-      const likedWatchesList = JSON.parse(storedLikedWatches);
+      let likedWatchesList = JSON.parse(storedLikedWatches);
 
-      const likedWatchImages = likedWatchesList.map(
-        (index) => imgList.flat()[index]
-      );
+      if(likedWatchesList !== null){
+        const likedWatchImages = likedWatchesList.map(
+          (index) => imgList.flat()[index]
+        );
+      }else{
+        likedWatchesList = [];
+      }
 
       imgs = likedWatchImages;
       setFilteredData(

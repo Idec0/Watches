@@ -336,7 +336,7 @@ const FavPage = () => {
           (index) => imgList.flat()[index]
         );
       }else{
-        likedWatchesList = []
+        likedWatchesList = [];
       }
 
       imgs = likedWatchImages;
