@@ -28,17 +28,13 @@ Test website on mobile after new changes
 
 Check the robustness of the website
 
-Change the checkout page to use strip built in page
-
-Add auto fill address
-
-Styling for checkout page
-
 
 Maybe:  
 
 add payments form in checkout from stripe
+
 Add auto complete address in checkout page either from stripe or Google Places API
+
 
 Links:
 
