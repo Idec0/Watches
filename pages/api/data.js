@@ -66,7 +66,7 @@ export default async function handler(request, response) {
       return response.status(200).json({ imgs });
     }
 
-    // checks if user is admin
+    // checks if user is admin 
     if(discountCode.length > 7 && discountCode.slice(0, 7) === "isAdmin"){
       const queryParams = new URLSearchParams(discountCode);
       const username = queryParams.get("isAdmin");
@@ -340,6 +340,28 @@ export default async function handler(request, response) {
       );
       await client.query('COMMIT')
       return;
+    }
+
+    // reset users suspension
+    if(discountCode.length > 16 && discountCode.slice(0, 16) === "reset_suspension"){
+      const queryParams = new URLSearchParams(discountCode);
+      const username = queryParams.get("reset_suspension");
+
+      await client.query('BEGIN');
+      await client.query(
+        "UPDATE users SET suspended_date = $2 WHERE username = $1", [username, "none"]
+      );
+      await client.query('COMMIT')
+      return;
+    }
+
+    // checks users suspension
+    if(discountCode.length > 14 && discountCode.slice(0, 14) === "userSuspension"){
+      const queryParams = new URLSearchParams(discountCode);
+      const username = queryParams.get("userSuspension");
+      result = await client.query('SELECT * FROM users WHERE username = $1', [username]);
+      const user = result.rows;
+      return response.status(200).json({ user });
     }
 
     // $1 prevents SQL injections

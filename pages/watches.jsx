@@ -24,17 +24,14 @@ function LoadPage() {
 
 styling for checkout page, view watch, watches, added an item to your basket
 
+suspended - checks your date and if its that date then change date to none
+
 redesign the empty basket design
-
-being suspended shows a page saying you're account is suspend and for how long
-
-being banned shows a page saying you're account has been permantly banned
-
-being banned for suspended means you can't access any pages, except for login and create an account
 
 test website on mobile after new changes
 
 check the robustness of the website
+
 
 Maybe:
 
@@ -50,7 +47,10 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 Done Today:
 
 Changed the user table to add suspended_date and ban, this will be used for editing users in the admin panel - this will allow admin to suspend and also ban users
-on the admin panel have have added it so you can now view all users, this gives the admin(s) the ability to give / take admin abilities, also the ability to ban, unban, and suspend certain users
+On the admin panel have have added it so you can now view all users, this gives the admin(s) the ability to give / take admin abilities, also the ability to ban, unban, and suspend certain users
+Made it so if your account is banned or suspended you can't access any page, the only option you can do is logout.
+If you're are suspended or banned, it will bring you to the suspended or banned page
+Cleaned up the suspended and banned code to make it not duplicated, since I have now moved the code into base.jsx so the code is only written twice, since checkout doesn't use base but thats only twice instead on each page
 
 */
 
@@ -90,11 +90,8 @@ const WatchesPage = () => {
     if (typeof window !== 'undefined') {
       const storedIsRedArray = localStorage.getItem("isRedArray");
       setIsRedArray(storedIsRedArray ? JSON.parse(storedIsRedArray) : []);
-
       SetLikedWatches1();
-
       GetBannerUrl();
-
     }
   }, []);  
 

@@ -38,7 +38,7 @@ function AdminPage() {
       }
       const result = await response.json();
       const isAdmin = result.user[0] ? result.user[0].admin : false;
-      if(!isAdmin){
+      if(!isAdmin || result.user[0].ban === "true" || result.user[0].suspended_date !== "none"){
         window.location.href="/";
       }
     }catch (error) {
@@ -444,9 +444,10 @@ function AdminPage() {
     if (userElement.innerHTML === "Save") {
       userElement.innerHTML = "Edit";      
       userDeleteElement.style.display = 'none';
-      discountType.push(userSuspendedUntilElement.children[0].value);
+      discountType.push(userSuspendedUntilElement.children[0].value ? userSuspendedUntilElement.children[0].value : "none");
       discountType.push(userBanElement.children[0].value);
       discountType.push(userAdminElement.children[0].value);
+      console.log()
 
       for (let i = 0; i < elements.length - 1; i++) {
         elements[i + 1].innerHTML = discountType[i];
@@ -488,8 +489,8 @@ function AdminPage() {
         inputElement.classList.add('admin-panel-details-table-watches-input');
         elements[i].innerHTML = "";
         if(discountType[i] === user.suspended_date){
-          inputElement.placeholder = "YYYY-MM-DD";
-          inputElement.title = "YYYY-MM-DD";
+          inputElement.placeholder = "DD-MM-YYYY";
+          inputElement.title = "DD-MM-YYYY";
         }
         elements[i].appendChild(inputElement);
       }

@@ -27,8 +27,8 @@ function SaveAddressPage() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       var username = localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false;
+      displayAddresses(username);
     }
-    displayAddresses(username);
     setAmount(get_amount);
   }, []);
 

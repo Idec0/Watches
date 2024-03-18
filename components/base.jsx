@@ -20,11 +20,36 @@ const Navbar = ({ appVisible, setAppVisible }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      userSuspendedandBanned(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
       setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
       
       SetAdmin(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
     }
   }, []); 
+
+  const userSuspendedandBanned = async(username) => {
+    // get user info
+    try {
+      var user = {userSuspension: username}
+      const queryParams = new URLSearchParams(user).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      const date = await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      if(date.user[0].ban === "true" || date.user[0].suspended_date !== "none"){
+        if(date.user[0].ban === "true"){
+          window.location.href="/banned";
+        }
+        else{
+          window.location.href="/suspended";
+        }
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const SetAdmin = async(username) => {
     // check if admin

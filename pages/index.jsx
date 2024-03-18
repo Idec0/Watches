@@ -66,12 +66,6 @@ function IndexPage() {
     }
   }
 
-  const changeBannerSlider = () => {
-    if(bannerUrl.length > 0){
-
-    }
-  }
-
   {
     return (
       <main>

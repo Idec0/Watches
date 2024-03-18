@@ -305,10 +305,35 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
       if(loggedIn === false){
         window.location.href = "/login";
       }
+      userSuspendedandBanned(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
     }
 
     GetBannerUrl();
   }, []);
+
+  const userSuspendedandBanned = async(username) => {
+    // get user info
+    try {
+      var user = {userSuspension: username}
+      const queryParams = new URLSearchParams(user).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      const date = await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      if(date.user[0].ban === "true" || date.user[0].suspended_date !== "none"){
+        if(date.user[0].ban === "true"){
+          window.location.href="/banned";
+        }
+        else{
+          window.location.href="/suspended";
+        }
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const GetBannerUrl = async () => {
     try {      

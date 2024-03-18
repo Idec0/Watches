@@ -21,8 +21,8 @@ function OrderHistoryPage() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       var username = localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false;
+      displayOrders(username);
     }
-    displayOrders(username);
 
   }, []);
 
