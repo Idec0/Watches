@@ -22,8 +22,6 @@ function LoadPage() {
 
 /* TODO:
 
-Styling for view watch, watches
-
 Test website on mobile after new changes
 
 Check the robustness of the website
