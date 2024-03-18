@@ -504,6 +504,7 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
           finalAmount = (price - (price * (saleAmount / 100))).toFixed(2);
         }
         // add new user to database
+        console.log(basketItems.length);
         var order = {newOrder: "True", user: loggedIn, orderDate: orderDate, products: basketItems, price: finalAmount, deliveryDate: deliveryDate, charge_id: chargeId}
         const queryParams = new URLSearchParams(order).toString();
         const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
