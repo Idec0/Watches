@@ -22,10 +22,6 @@ function LoadPage() {
 
 /* TODO:
 
-Test website on mobile after new changes
-
-Check the robustness of the website
-
 
 Maybe:  
 
@@ -54,6 +50,8 @@ Changed style to item added successfully
 Researching and playing around with styles on watches page
 Planning to change the checkout page, so I have been looking through stripes built in payment forms to see which one will fit bests with my webstite - found out that stripe can do auto complete address but I can't seem to get it to work so I will leave it for now, but might use it in the future, or I might try to use googles one, but that one requires you to register with Google Places API to use it
 I have had a look into getting AI to rate my website but the ones which are free weren't good and didn't work
+Tested the new changes of the website on mobile#
+Tested the robustness of the website
 */
 
 const WatchesPage = () => {
