@@ -17,6 +17,7 @@ function AdminPage() {
   const [title, setTitle] = useState("Admin Panel");
   const [discounts, setDiscounts] = useState([]);
   const [sales, setSales] = useState([]);
+  const [users, setUsers] = useState([]);
   const [watches, setWatches] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -84,6 +85,19 @@ function AdminPage() {
         }
         const result = await response.json();
         setSales(result);
+      }catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    if(text === "Edit Users"){
+      try {
+        // get users
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent("get_users")}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        setUsers(result.users);
       }catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -383,7 +397,6 @@ function AdminPage() {
 
   const deleteSale = async (sale) => {
     try {
-      // add new user to database
       const sale_to_delete = { delete_sale: sale.id };
       const queryParams = new URLSearchParams(sale_to_delete).toString();
       const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
@@ -395,6 +408,107 @@ function AdminPage() {
       console.error('Error fetching data:', error);
     }
     setDisplayTitle("Edit Sales");
+  }
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.ctrlKey && event.key === 'f') {
+        event.preventDefault();
+        document.getElementById('searchInput').focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
+  const editUser = async (user) => {
+    var userElement = document.getElementById(user.id);
+    var usernameElement = document.getElementById(`${user.id} username`);
+    var userSuspendedUntilElement = document.getElementById(`${user.id} suspended until`);
+    var userBanElement = document.getElementById(`${user.id} ban`);
+    var userAdminElement = document.getElementById(`${user.id} admin`);
+    var userDeleteElement = document.getElementById(`${user.id} delete`);
+
+    let elements = [];
+    elements.push(usernameElement);
+    elements.push(userSuspendedUntilElement);
+    elements.push(userBanElement);
+    elements.push(userAdminElement);
+
+    let discountType = []
+
+    if (userElement.innerHTML === "Save") {
+      userElement.innerHTML = "Edit";      
+      userDeleteElement.style.display = 'none';
+      discountType.push(userSuspendedUntilElement.children[0].value);
+      discountType.push(userBanElement.children[0].value);
+      discountType.push(userAdminElement.children[0].value);
+
+      for (let i = 0; i < elements.length - 1; i++) {
+        elements[i + 1].innerHTML = discountType[i];
+      }
+
+      elements[0].title = discountType[4];
+
+      // save changes
+      try {
+        var user = {save_user_changes: "True", user_id: user.id, user_suspended_until: discountType[0], user_ban: discountType[1], user_admin: discountType[2]}
+        const queryParams = new URLSearchParams(user).toString();
+        const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+      }catch (error) {
+        console.error('Error fetching data:', error);
+      }
+
+      setDisplayTitle("Edit Users");
+
+    }else{
+      userElement.innerHTML = "Save";
+      userDeleteElement.style.display = 'block';
+      discountType.push(user.username);
+      discountType.push(user.suspended_date);
+      discountType.push(user.ban);
+      discountType.push(user.admin);
+
+      for (let i = 0; i < elements.length; i++) {
+        if(discountType[i] === user.username){
+          continue;
+        }
+
+        var inputElement = document.createElement("input");
+    
+        inputElement.type = "text";
+        inputElement.value = discountType[i];
+        inputElement.classList.add('admin-panel-details-table-watches-input');
+        elements[i].innerHTML = "";
+        if(discountType[i] === user.suspended_date){
+          inputElement.placeholder = "YYYY-MM-DD";
+          inputElement.title = "YYYY-MM-DD";
+        }
+        elements[i].appendChild(inputElement);
+      }
+    }
+  }
+
+  const deleteUser = async (user) => {
+    try {
+      const user_to_delete = { delete_user: user.id };
+      const queryParams = new URLSearchParams(user_to_delete).toString();
+      const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+    }catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    setDisplayTitle("Edit Users");
   }
 
   useEffect(() => {
@@ -455,6 +569,7 @@ function AdminPage() {
             <button onClick={() => setDisplayTitle("Add a New Discounts")}>Add a New Discount</button>
             <button onClick={() => setDisplayTitle("Edit Sales")}>Edit Sales</button>
             <button onClick={() => setDisplayTitle("Add a New Sale")}>Add a New Sale</button>
+            <button onClick={() => setDisplayTitle("Edit Users")}>Edit Users</button>
           </div>
         </div>
         <div className='item1'>
@@ -591,6 +706,40 @@ function AdminPage() {
                 <input className='admin-panel-details-text-input' placeholder='End Date (MM-DD)' id="new_sale_end_date" />
                 <button className='admin-panel-details-text-input' onClick={() => addNewSale()} style={{backgroundColor: '#13204b'}}>Add New Sale</button>
               </>
+            )}
+            {title === "Edit Users" && (
+              <div className="scrollable-table-2">
+                <input
+                  id="searchInput"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Find"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleFind();
+                    }
+                  }}
+                />
+                <table style={{margin: 'auto'}}>
+                  <tr>
+                    <th>Username</th>
+                    <th>Suspended Until</th>
+                    <th>Ban</th>
+                    <th>Admin</th>
+                  </tr>
+                  {users.map((user) => (
+                    <tr key={user.id}>
+                      <td id={`${user.id} username`}>{user.username}</td>
+                      <td id={`${user.id} suspended until`}>{user.suspended_date}</td>                      
+                      <td id={`${user.id} ban`}>{user.ban}</td>
+                      <td id={`${user.id} admin`}>{user.admin ? 'true' : 'false'}</td>
+                      <button className='admin-panel-details-button' onClick={() => editUser(user)} style={{ marginLeft: '10px'}} id={user.id}>Edit</button>
+                      <button className='admin-panel-details-button' onClick={() => deleteUser(user)} style={{ color: 'red', display: 'none', marginLeft: '10px'}} id={`${user.id} delete`}>Delete</button>
+                    </tr>
+                  ))}
+                </table>
+              </div>
             )}
           </div>
         </div>

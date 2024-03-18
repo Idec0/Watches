@@ -26,12 +26,17 @@ styling for checkout page, view watch, watches, added an item to your basket
 
 redesign the empty basket design
 
+being suspended shows a page saying you're account is suspend and for how long
+
+being banned shows a page saying you're account has been permantly banned
+
+being banned for suspended means you can't access any pages, except for login and create an account
+
+test website on mobile after new changes
+
+check the robustness of the website
 
 Maybe:
-
-admin panel - view customer accounts - only the neccessary details - maybe the ability to give / take admin abilities to other customer, also the ability to ban, unban, suspend
-
-Clean up the favourites code for loading favWatches - all watches loads for a split second when loading favs
 
 
 Links:
@@ -44,27 +49,9 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
 
-When you cancel your order it now deletes that order from the database
-When you cancel an order, a refund successful text pops up so the user knows the refund was acknowledged
-I have make the refund successful page work on mobile
-I have tested the refund successful page on iPhone 11 and it works
-The refund is fully finished
-I have finally fixed the problem with the favourite page not loading properly unless you were on the watches page but the problem is that i had to duplicate the watches page and added one line of code but I haven't gone throught the code to see which bits I don't need, so at some point I might go through it to clean up the code
-The problem now with fav is when you load it, it loads every watch and then displays the favourite watches but it does this instantly, but you can see every watch load for a split second, which can make the website not look as good
-After fixing fav it has made hearting images not work and going on the fav page for the first time adds a null image
-Fixed the problem with null image and not being able to heart watches
-Theres a new problem, so if you heart more than one watch it errors
-I have fixed the problem with more than one liked watch caused an error
-Made it so when you filter watches in favourites it only filteres the favourites but it does it due to brand and not watch, so i will get it to filter just the watches which are hearted
-I have made it so now when you filter through favourite watches it only shows favourited watches
-when you try to access the basket with no watches it comes up with text and a button for you to visit the store - this works on all devices
-Fixed the problem when you ordered a fossil watch on its own with a discount it caused an error - Missing value for stripe.confirmCardPayment intent secret: value should be a client_secret string. 
-when you search for words in the admin Panel it keeps all the words highlighted until you refresh - I might keep it like this since it can be useful for alot of people
-Fixed problem with stripe not charging the right amount - i forgot to apply the sales discount to it, but now the price is right
-Clicking on a banner takes you to the watches page
-If they access the checkout page through the link: https://watches-ruby.vercel.app/checkout, then you can make an order which will cause an error
-Made it so the user can't access the checkout and adminPanel page unless they are logged in even if they try to access it through https://watches-ruby.vercel.app/checkout or https://watches-ruby.vercel.app/adminPanel
-I have tested the whole website while not signed in and the user can't break the website
+Changed the user table to add suspended_date and ban, this will be used for editing users in the admin panel - this will allow admin to suspend and also ban users
+on the admin panel have have added it so you can now view all users, this gives the admin(s) the ability to give / take admin abilities, also the ability to ban, unban, and suspend certain users
+
 */
 
 const WatchesPage = () => {

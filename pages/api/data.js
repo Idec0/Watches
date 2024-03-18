@@ -291,7 +291,7 @@ export default async function handler(request, response) {
 
       await client.query('BEGIN');
       await client.query(
-        "INSERT INTO users (username, password, firstname, surname, admin, email) VALUES ($1, $2, $3, $4, $5, $6)",[queryParams.get("username"), hash, queryParams.get("firstname"), queryParams.get("lastname"), false, queryParams.get("email")]
+        "INSERT INTO users (username, password, firstname, surname, admin, email, suspended_date, ban) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",[queryParams.get("username"), hash, queryParams.get("firstname"), queryParams.get("lastname"), false, queryParams.get("email"), "none", "false"]
       );
       await client.query('COMMIT');
       return;
@@ -309,6 +309,37 @@ export default async function handler(request, response) {
       } else {
         return response.status(200).json('Unauthorized');
       } 
+    }
+    if(discountCode === "get_users"){
+      result = await client.query('SELECT * FROM users');
+      const users = result.rows;
+      return response.status(200).json({ users });
+    }
+    // delete user
+    if(discountCode.length > 11 && discountCode.slice(0, 11) === "delete_user"){
+      const queryParams = new URLSearchParams(discountCode);
+      const user_id = queryParams.get("delete_user");
+      await client.query('BEGIN');
+      await client.query(
+        'DELETE FROM user WHERE id = $1',[user_id]
+      );
+      await client.query('COMMIT')
+      return response.status(200).json("Successful");
+    }
+    // save user changes
+    if(discountCode.length > 17 && discountCode.slice(0, 17) === "save_user_changes"){
+      const queryParams = new URLSearchParams(discountCode);
+      const user_id = queryParams.get("user_id");
+      const user_suspended_until = queryParams.get("user_suspended_until");
+      const user_ban = queryParams.get("user_ban");
+      const user_admin = queryParams.get("user_admin");
+
+      await client.query('BEGIN');
+      await client.query(
+        "UPDATE users SET suspended_date = $2, ban = $3, admin = $4 WHERE id = $1", [user_id, user_suspended_until, user_ban, user_admin]
+      );
+      await client.query('COMMIT')
+      return;
     }
 
     // $1 prevents SQL injections

@@ -604,7 +604,10 @@ input {
 }
 
 .admin-panel-container button{
-  padding-top: 50px;
+  margin-top: 30px;
+}
+.admin-panel-container button:last-child {
+  margin-bottom: 30px;
 }
 
 .sidebar {
