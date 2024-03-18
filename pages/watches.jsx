@@ -41,17 +41,17 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
 
-Changed the user table to add suspended_date and ban, this will be used for editing users in the admin panel - this will allow admin to suspend and also ban users
-On the admin panel have have added it so you can now view all users, this gives the admin(s) the ability to give / take admin abilities, also the ability to ban, unban, and suspend certain users
+Changed the user table in the database to add suspended_date and ban, this will be used for editing users in the admin panel - this will allow admin to suspend and also ban users
+On the admin panel I have added it so you can now view all users, this gives the admin(s) the ability to give / take admin abilities, also the ability to ban, unban, and suspend certain users
 Made it so if your account is banned or suspended you can't access any page, the only option you can do is logout.
-If you're are suspended or banned, it will bring you to the suspended or banned page
-Cleaned up the suspended and banned code to make it not duplicated, since I have now moved the code into base.jsx so the code is only written twice, since checkout doesn't use base but thats only twice instead on each page
-I have made it so if you're suspended, the wesbite checks the date you get unsuspended and if its that date then it changes date to none, so you are unsuspended automatically
-Changed style to item added successfully
+If you are suspended or banned, it will bring you to the suspended or banned page
+Cleaned up the suspended and banned code to make it not duplicated, since I have now moved the code into base.jsx the code is only written twice, since checkout doesn't use base but thats only twice instead of each page
+I have made it so if you are suspended, the website checks the date you get unsuspended and if its that date then it changes date to none, so you are unsuspended automatically
+Changed style to item added successfully, also added round borders on most pages to make it look clean and more modern
 Researching and playing around with styles on watches page
-Planning to change the checkout page, so I have been looking through stripes built in payment forms to see which one will fit bests with my webstite - found out that stripe can do auto complete address but I can't seem to get it to work so I will leave it for now, but might use it in the future, or I might try to use googles one, but that one requires you to register with Google Places API to use it
+Planning to change the checkout page, so I have been looking through stripes built in payment forms to see which one will fit best with my webstite - found out that stripe can do auto complete address but I can't seem to get it to work so I will leave it for now, but might use it in the future, or I might try to use googles one, but that one requires you to register with Google Places API to use it
 I have had a look into getting AI to rate my website but the ones which are free weren't good and didn't work
-Tested the new changes of the website on mobile#
+Tested the new changes of the website on mobile
 Tested the robustness of the website - you can't order one of every watch
 Fixed it so you can now order every watch
 */
