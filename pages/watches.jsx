@@ -29,6 +29,7 @@ add payments form in checkout from stripe
 
 Add auto complete address in checkout page either from stripe or Google Places API
 
+Footer
 
 Links:
 
