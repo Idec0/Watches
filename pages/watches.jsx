@@ -22,19 +22,23 @@ function LoadPage() {
 
 /* TODO:
 
-styling for checkout page, view watch, watches, added an item to your basket
+Styling for view watch, watches
 
-suspended - checks your date and if its that date then change date to none
+Test website on mobile after new changes
 
-redesign the empty basket design
+Check the robustness of the website
 
-test website on mobile after new changes
+Change the checkout page to use strip built in page
 
-check the robustness of the website
+Add auto fill address
+
+Styling for checkout page
 
 
-Maybe:
+Maybe:  
 
+add payments form in checkout from stripe
+Add auto complete address in checkout page either from stripe or Google Places API
 
 Links:
 
@@ -51,7 +55,10 @@ On the admin panel have have added it so you can now view all users, this gives 
 Made it so if your account is banned or suspended you can't access any page, the only option you can do is logout.
 If you're are suspended or banned, it will bring you to the suspended or banned page
 Cleaned up the suspended and banned code to make it not duplicated, since I have now moved the code into base.jsx so the code is only written twice, since checkout doesn't use base but thats only twice instead on each page
-
+I have made it so if you're suspended, the wesbite checks the date you get unsuspended and if its that date then it changes date to none, so you are unsuspended automatically
+Changed style to item added successfully
+Researching and playing around with styles on watches page
+Planning to change the checkout page, so I have been looking through stripes built in payment forms to see which one will fit bests with my webstite - found out that stripe can do auto complete address but I can't seem to get it to work so I will leave it for now, but might use it in the future, or I might try to use googles one, but that one requires you to register with Google Places API to use it
 */
 
 const WatchesPage = () => {

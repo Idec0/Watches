@@ -182,7 +182,8 @@ input {
 }
 
 .watches-background {
-  background-color: lightblue;
+  background-color: #dadada;
+  /* background-color: lightblue; */
   width: 200px;
   height: 400px;
 }
@@ -298,12 +299,16 @@ input {
   display: grid;
   width: 30%;
   height: 30%;
-  background-color: lightblue;
+  background-color: #13204b;
   position: absolute;
+  border-radius: 18px;
+}
+.goTobasket p, .goTobasket u {
+  color: white;
 }
 
 .goTobasket button {
-  background-color: paleturquoise;
+  background-color: #1ec5d8;
   height: 30%;
   width: 30%;
   padding: 0;
@@ -539,6 +544,7 @@ input {
   position: relative;
   color: white;
   padding-top: 100px;
+  border-radius: 18px;
 }
 
 .successful-child-container p, .successful-child-container h1 , .successful-child-container u {

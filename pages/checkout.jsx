@@ -199,6 +199,7 @@ function CheckoutPage() {
                 <p className = 'login-right-content-p flex-input'>{firstnameText}</p>
                 <p className = 'login-right-content-p flex-input'>{lastnameText}</p>
               </div>
+              <div id="address-element"></div>
               <input placeholder='Address Line 1' id="addressLine1" onChange={() => handleChange("addressLine1", event)} value={inputValueAddressLine1}></input>
               <p className = 'login-right-content-p'>{addressLine1Text}</p>
               <input placeholder='Address Line 2' id="addressLine2" onChange={() => handleChange("addressLine2", event)} value={inputValueAddressLine2}></input>
@@ -301,11 +302,12 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
     setPrice(amount_num);
 
     if (typeof window !== 'undefined') {
-      setLoggedIn(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
-      if(loggedIn === false){
+      const loggedInBool = localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false;
+      setLoggedIn(loggedInBool);
+      if(loggedInBool === false){
         window.location.href = "/login";
       }
-      userSuspendedandBanned(localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn") : false);
+      userSuspendedandBanned(loggedInBool);
     }
 
     GetBannerUrl();
