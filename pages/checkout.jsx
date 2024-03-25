@@ -260,20 +260,7 @@ function CheckoutPage() {
     }
   };
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        // Clicked outside of the component
-        // Handle your logic here
-      }
-    };
-
-    document.addEventListener('click', handleOutsideClick);
-
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, []);
+  // document.addEventListener("click", handleBlur);
 
   return (
     <main>

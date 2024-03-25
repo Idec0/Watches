@@ -59,7 +59,8 @@ Fixed the error when address result was null, it would cause an error
 Made the suggest address work on all devices
 I have finished suggested addresses, you area now able to click on the suggested address and it will auto fill the inputs, I was able to do this with an API from Geoapify
 The order history is in order
-Devs team tested the website and found bugs
+Devs team tested the website and found bugs and improvements
+had problems with vercel not allowing me to deploy if I used event listenter which is why the project wasn't upto date, when the team used it
 */
 
 const WatchesPage = () => {
