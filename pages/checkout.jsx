@@ -260,24 +260,6 @@ function CheckoutPage() {
     }
   };
 
-  const wrapperRef = useRef(null);
-
-  useEffect(() => {
-    const handleBlur = (event) => {
-      const suggestedAddressElement = document.getElementById("suggestedAddress");
-      if (suggestedAddressElement && !suggestedAddressElement.contains(event.target)) {
-        // Clicked outside of suggestedAddress div
-        closeSuggestedAddress();
-      }
-    };
-
-    document.addEventListener('click', handleBlur);
-
-    return () => {
-      document.removeEventListener('click', handleBlur);
-    };
-  }, []);
-
   // document.addEventListener("click", handleBlur);
 
   return (
