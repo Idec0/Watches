@@ -9,6 +9,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useStripe, useElements, CardElement, Elements } from "@stripe/react-stripe-js";
 
 import Link from 'next/link';
+import { forEachChild } from 'typescript';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
@@ -44,6 +45,7 @@ function CheckoutPage() {
   const [inputValuePostcode, setInputValuePostcode] = useState('');
   const [inputValuePhoneNumber, setInputValuePhoneNumber] = useState('');
   const [inputValueEmail, setInputValueEmail] = useState('');
+  const [selectedAddresses, setSelectedAddresses] = useState([]);
 
   const [isSelected, setIsSelected] = useState(false);
 
@@ -138,7 +140,10 @@ function CheckoutPage() {
   };
 
   const handleChange = (section, event) => {
-    console.log(section);
+    var requestOptions = {
+      method: 'GET',
+    };
+
     if(section === "firstname"){
       setInputValueFirstname(event.target.value);
     }
@@ -147,15 +152,19 @@ function CheckoutPage() {
     }
     if(section === "addressLine1"){
       setInputValueAddressLine1(event.target.value);
+      findAddress();
     }    
     if(section === "addressLine2"){
       setInputValueAddressLine2(event.target.value);
+      findAddress();
     }
     if(section === "city"){
       setInputValueCity(event.target.value);
+      findAddress();
     }
     if(section === "postcode"){
       setInputValuePostcode(event.target.value);
+      getAddressByPostCode(requestOptions);    
     }
     if(section === "phoneNumber"){
       setInputValuePhoneNumber(event.target.value);
@@ -164,6 +173,84 @@ function CheckoutPage() {
       setInputValueEmail(event.target.value);
     }
   };
+
+  // auto complete address
+
+  const getAddressByPostCode = async (requestOptions) => {
+    var postcode = document.getElementById("postcode").value;
+    if(postcode !== ""){
+      var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+      autoFillAddressContainerElement.style.display = "block";
+      autoFillAddressContainerElement.style.top = "312px";
+      var orderSummaryContainerInputElement = document.getElementById("orderSummaryContainerInput");
+      orderSummaryContainerInputElement.style.bottom = "270px";
+    }else{
+      var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+      autoFillAddressContainerElement.style.display = "none";
+      var orderSummaryContainerInputElement = document.getElementById("orderSummaryContainerInput");
+      orderSummaryContainerInputElement.style.bottom = "0px";
+      return;
+    }
+    fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${postcode}&type=postcode&format=json&apiKey=671175ba7c404133a88e557b522272e9`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        setSelectedAddresses(result.results[0]);
+      })
+      .catch(error => console.log('error', error));
+  }
+
+  const getAddressByText = async (requestOptions, searchText) => {
+    const text = searchText.join("%2C");
+    fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&format=json&apiKey=671175ba7c404133a88e557b522272e9`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        setSelectedAddresses(result.results[0]);  
+      })
+      .catch(error => console.log('error', error));
+    
+  }   
+
+  const findAddress = () => {
+    var requestOptions = {
+      method: 'GET',
+    };
+
+    let text = [];
+    var addressLine1 = document.getElementById("addressLine1").value;
+    console.log(addressLine1 !== ""); 
+    if(addressLine1 !== ""){
+      text.push(addressLine1);
+    };
+    var addressLine2 = document.getElementById("addressLine2").value;
+    if(addressLine2 !== ""){
+      text.push(addressLine2);
+    }
+    var city = document.getElementById("city").value;
+    if(city !== ""){
+      text.push(city);
+    }
+    getAddressByText(requestOptions, text);
+
+    if(text.length > 0){
+      var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+      autoFillAddressContainerElement.style.display = "block";
+      autoFillAddressContainerElement.style.top = "114px";
+      var orderSummaryContainerInputElement = document.getElementById("orderSummaryContainerInput");
+      orderSummaryContainerInputElement.style.bottom = "270px";
+    }
+    else{
+      var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+      autoFillAddressContainerElement.style.display = "none";
+      var orderSummaryContainerInputElement = document.getElementById("orderSummaryContainerInput");
+      orderSummaryContainerInputElement.style.bottom = "0px";
+    }
+  }
+
+  const selectedAddress = () => {
+    var suggestedAddressElement = document.getElementById("suggestedAddress");
+    console.log(suggestedAddress);
+    console.log(suggestedAddressElement.children[0].value);
+  }
 
   return (
     <main>
@@ -190,7 +277,14 @@ function CheckoutPage() {
               />{" "}
               Save Address?
             </label>
-            <div className='order-summary-container-input'>
+            <div className='autoFillAddressContainer' id="autoFillAddressContainer">
+              <div id="suggestedAddress" style={{cursor: 'pointer'}} onClick={() => selectedAddress()}>
+                <p>{selectedAddresses.address_line1}</p>
+                <p>{selectedAddresses.city}</p>
+                <p>{selectedAddresses.postcode}</p>
+              </div>
+            </div>
+            <div className='order-summary-container-input' id="orderSummaryContainerInput">
               <div style={{display: 'flex'}}>
                 <input className = 'flex-input' placeholder='First Name' id="firstname" onChange={() => handleChange("firstname", event)} value={inputValueFirstname}></input>
                 <input className = 'flex-input' placeholder='Last Name' id="lastname" onChange={() => handleChange("lastname", event)} value={inputValueLastname}></input>
@@ -540,7 +634,7 @@ const CheckoutForm = ({ amount, setFirstnameText, setLastnameText, setAddressLin
     <>
       <CardElement options={cardElementOptions} />
       <button type="submit" onClick={() => handlePayment()} disabled={!stripe}>
-        Place Order
+        Pay
       </button>      
     </>
   );

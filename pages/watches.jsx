@@ -22,16 +22,27 @@ function LoadPage() {
 
 /* TODO:
 
+Add auto complete address in checkout page from Geoapify
+
+clickable suggested address
+
+style the suggested address dropdown
+
+fix error with addressline1 - error occures when you type a in address line 1
+
 
 Maybe:  
 
-add payments form in checkout from stripe
+change style for checkout page
 
-Add auto complete address in checkout page either from stripe or Google Places API
+add payments form in checkout from stripe
 
 Footer
 
+
 Links:
+
+API - Geoapify - https://apidocs.geoapify.com/docs/geocoding/address-autocomplete/#autocomplete
 
 stripe (Track Payments) - https://dashboard.stripe.com/test/products?active=true
 
@@ -41,19 +52,12 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
 
-Changed the user table in the database to add suspended_date and ban, this will be used for editing users in the admin panel - this will allow admin to suspend and also ban users
-On the admin panel I have added it so you can now view all users, this gives the admin(s) the ability to give / take admin abilities, also the ability to ban, unban, and suspend certain users
-Made it so if your account is banned or suspended you can't access any page, the only option you can do is logout.
-If you are suspended or banned, it will bring you to the suspended or banned page
-Cleaned up the suspended and banned code to make it not duplicated, since I have now moved the code into base.jsx the code is only written twice, since checkout doesn't use base but thats only twice instead of each page
-I have made it so if you are suspended, the website checks the date you get unsuspended and if its that date then it changes date to none, so you are unsuspended automatically
-Changed style to item added successfully, also added round borders on most pages to make it look clean and more modern
-Researching and playing around with styles on watches page
-Planning to change the checkout page, so I have been looking through stripes built in payment forms to see which one will fit best with my webstite - found out that stripe can do auto complete address but I can't seem to get it to work so I will leave it for now, but might use it in the future, or I might try to use googles one, but that one requires you to register with Google Places API to use it
-I have had a look into getting AI to rate my website but the ones which are free weren't good and didn't work
-Tested the new changes of the website on mobile
-Tested the robustness of the website - you can't order one of every watch
-Fixed it so you can now order every watch
+I have looked at alot fo examples of different checkout pages, including ones which you can build with stripe, but I can't find one which works well with mine, so I have left the page as it is
+I have tried to get an api key to help with auto addresses but the problem I have had is finding one which is free and doesn't require a credit card, Google Places API is very good and is free but it require a credit card, and others I have found cost money.
+I have found a api for free to auto complete addresses from Geoapify, I have made an account and got the api key but now I have to find out how to use it.
+I have spent alot of time but have managed to be able to get the right return values for address Line 1, city, and postcode but the problem is with address line 2 since it doesn't return the right values, instead it returns the whole address, so for now I will leave address line 2 blank
+Added a container which appears when you type in the address field and it will show suggested addresses, which changes as you're typing, but for now it only shows one suggested address
+
 */
 
 const WatchesPage = () => {
