@@ -57,7 +57,8 @@ I have tried to get an api key to help with auto addresses but the problem I hav
 I have found a api for free to auto complete addresses from Geoapify, I have made an account and got the api key but now I have to find out how to use it.
 I have spent alot of time but have managed to be able to get the right return values for address Line 1, city, and postcode but the problem is with address line 2 since it doesn't return the right values, instead it returns the whole address, so for now I will leave address line 2 blank
 Added a container which appears when you type in the address field and it will show suggested addresses, which changes as you're typing, but for now it only shows one suggested address
-
+Fixed the error when address result was null, it would cause an error
+Made the suggest address work on all devices
 */
 
 const WatchesPage = () => {

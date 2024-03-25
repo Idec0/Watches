@@ -881,14 +881,14 @@ tr {
 }
 
 .autoFillAddressContainer {
+  position: absolute;
+  z-index: 1;
+  width: 365px;  
+  top: 111px;
+  display: none;
   background-color: white;
   color: black;
   font-size: 3vh;
-  position: relative;
-  z-index: 1;
-  height: 30vh;
-  top: 114px;
-  display: none;
 }
 
 @media (max-width: 1280px) {

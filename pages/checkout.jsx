@@ -181,14 +181,10 @@ function CheckoutPage() {
     if(postcode !== ""){
       var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
       autoFillAddressContainerElement.style.display = "block";
-      autoFillAddressContainerElement.style.top = "312px";
-      var orderSummaryContainerInputElement = document.getElementById("orderSummaryContainerInput");
-      orderSummaryContainerInputElement.style.bottom = "270px";
+      autoFillAddressContainerElement.style.top = "309px";
     }else{
       var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
       autoFillAddressContainerElement.style.display = "none";
-      var orderSummaryContainerInputElement = document.getElementById("orderSummaryContainerInput");
-      orderSummaryContainerInputElement.style.bottom = "0px";
       return;
     }
     fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${postcode}&type=postcode&format=json&apiKey=671175ba7c404133a88e557b522272e9`, requestOptions)
@@ -206,8 +202,7 @@ function CheckoutPage() {
       .then(result => {
         setSelectedAddresses(result.results[0]);  
       })
-      .catch(error => console.log('error', error));
-    
+      .catch(error => console.log('error', error));    
   }   
 
   const findAddress = () => {
@@ -234,23 +229,38 @@ function CheckoutPage() {
     if(text.length > 0){
       var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
       autoFillAddressContainerElement.style.display = "block";
-      autoFillAddressContainerElement.style.top = "114px";
-      var orderSummaryContainerInputElement = document.getElementById("orderSummaryContainerInput");
-      orderSummaryContainerInputElement.style.bottom = "270px";
+      autoFillAddressContainerElement.style.top = "111px";
     }
     else{
       var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
       autoFillAddressContainerElement.style.display = "none";
-      var orderSummaryContainerInputElement = document.getElementById("orderSummaryContainerInput");
-      orderSummaryContainerInputElement.style.bottom = "0px";
     }
   }
 
   const selectedAddress = () => {
     var suggestedAddressElement = document.getElementById("suggestedAddress");
-    console.log(suggestedAddress);
-    console.log(suggestedAddressElement.children[0].value);
+    console.log(suggestedAddressElement.children[0]);
+    console.log(suggestedAddressElement.children[0].textContent);
+    setInputValueAddressLine1(suggestedAddressElement.children[0].textContent);
+    setInputValueCity(suggestedAddressElement.children[1].textContent);
+    setInputValuePostcode(suggestedAddressElement.children[2].textContent);
+    closeSuggestedAddress();
   }
+
+  const closeSuggestedAddress = () => {
+    var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+    autoFillAddressContainerElement.style.display = "none";
+  }
+
+  const handleBlur = (event) => {
+    const suggestedAddressElement = document.getElementById("suggestedAddress");
+    if (suggestedAddressElement && !suggestedAddressElement.contains(event.target)) {
+      // Clicked outside of suggestedAddress div
+      closeSuggestedAddress();
+    }
+  };
+
+  document.addEventListener("click", handleBlur);
 
   return (
     <main>
@@ -277,14 +287,16 @@ function CheckoutPage() {
               />{" "}
               Save Address?
             </label>
-            <div className='autoFillAddressContainer' id="autoFillAddressContainer">
-              <div id="suggestedAddress" style={{cursor: 'pointer'}} onClick={() => selectedAddress()}>
-                <p>{selectedAddresses.address_line1}</p>
-                <p>{selectedAddresses.city}</p>
-                <p>{selectedAddresses.postcode}</p>
+            <div className='order-summary-container-input'>
+              <div className='autoFillAddressContainer' id="autoFillAddressContainer">
+                {selectedAddresses !== undefined && (
+                  <div id="suggestedAddress" style={{cursor: 'pointer'}} onClick={() => selectedAddress()}>
+                    <p style={{color: 'black'}}>{selectedAddresses.address_line1}</p>
+                    <p style={{color: 'black'}}>{selectedAddresses.city}</p>
+                    <p style={{color: 'black'}}>{selectedAddresses.postcode}</p>
+                  </div>
+                )}
               </div>
-            </div>
-            <div className='order-summary-container-input' id="orderSummaryContainerInput">
               <div style={{display: 'flex'}}>
                 <input className = 'flex-input' placeholder='First Name' id="firstname" onChange={() => handleChange("firstname", event)} value={inputValueFirstname}></input>
                 <input className = 'flex-input' placeholder='Last Name' id="lastname" onChange={() => handleChange("lastname", event)} value={inputValueLastname}></input>
@@ -306,7 +318,7 @@ function CheckoutPage() {
               <p className = 'login-right-content-p'>{phoneNumberText}</p>
               <input placeholder='Email Address' id="email" onChange={() => handleChange("email", event)} value={inputValueEmail}></input>
               <p className = 'login-right-content-p'>{emailText}</p>
-            </div>
+            </div>           
           </div>
         </div>
         <div className='items'>
