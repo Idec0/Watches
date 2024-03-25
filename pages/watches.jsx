@@ -24,7 +24,7 @@ function LoadPage() {
 
 Add more content to the front page
 
-when you heart a watch, make the heart stay
+when you heart a watch, make the heart stay displayed even when you're not hovering over it
 
 make it easier for mobile on watch view - since you can't hover - therefore you have to click on it which can be annoying
 
@@ -50,7 +50,7 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
 
-I have looked at alot fo examples of different checkout pages, including ones which you can build with stripe, but I can't find one which works well with mine, so I have left the page as it is
+I have looked at alot of examples of different checkout pages, including ones which you can build with stripe, but I can't find one which works well with mine, so I have left the page as it is
 I have tried to get an api key to help with auto addresses but the problem I have had is finding one which is free and doesn't require a credit card, Google Places API is very good and is free but it require a credit card, and others I have found cost money.
 I have found a api for free to auto complete addresses from Geoapify, I have made an account and got the api key but now I have to find out how to use it.
 I have spent alot of time but have managed to be able to get the right return values for address Line 1, city, and postcode but the problem is with address line 2 since it doesn't return the right values, instead it returns the whole address, so for now I will leave address line 2 blank
@@ -60,7 +60,7 @@ Made the suggest address work on all devices
 I have finished suggested addresses, you area now able to click on the suggested address and it will auto fill the inputs, I was able to do this with an API from Geoapify
 The order history is in order
 Devs team tested the website and found bugs and improvements
-had problems with vercel not allowing me to deploy if I used event listenter which is why the project wasn't upto date, when the team used it
+had problems with vercel not allowing me to deploy if I used event listener which is why the project wasn't upto date, when the team used it
 */
 
 const WatchesPage = () => {
