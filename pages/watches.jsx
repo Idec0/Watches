@@ -59,6 +59,7 @@ I have spent alot of time but have managed to be able to get the right return va
 Added a container which appears when you type in the address field and it will show suggested addresses, which changes as you're typing, but for now it only shows one suggested address
 Fixed the error when address result was null, it would cause an error
 Made the suggest address work on all devices
+I have finished suggested addresses, you area now able to click on the suggested address and it will auto fill the inputs, I was able to do this with an API from Geoapify
 */
 
 const WatchesPage = () => {

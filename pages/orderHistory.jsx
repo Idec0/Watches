@@ -36,6 +36,7 @@ function OrderHistoryPage() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
+      result.sort((a, b) => new Date(b.orderdate) - new Date(a.orderdate));
       setOrders(result);
     }catch (error) {
       console.error('Error fetching data:', error);
