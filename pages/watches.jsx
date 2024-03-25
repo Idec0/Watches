@@ -61,6 +61,7 @@ I have finished suggested addresses, you area now able to click on the suggested
 The order history is in order
 Devs team tested the website and found bugs and improvements
 had problems with vercel not allowing me to deploy if I used event listener which is why the project wasn't upto date, when the team used it
+
 */
 
 const WatchesPage = () => {
