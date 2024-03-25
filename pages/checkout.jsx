@@ -289,7 +289,7 @@ function CheckoutPage() {
             </label>
             <div className='order-summary-container-input'>
               <div className='autoFillAddressContainer' id="autoFillAddressContainer">
-                {selectedAddresses !== undefined && "address_line1" in selectedAddresses && (
+                {selectedAddresses !== undefined && (
                   <div id="suggestedAddress" style={{cursor: 'pointer'}} onClick={() => selectedAddress()}>
                     <p style={{color: 'black'}}>{selectedAddresses.address_line1}</p>
                     <p style={{color: 'black'}}>{selectedAddresses.city}</p>
