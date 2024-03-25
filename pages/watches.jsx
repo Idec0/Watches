@@ -22,8 +22,18 @@ function LoadPage() {
 
 /* TODO:
 
+Add more content to the front page
+
+when you heart a watch, make the heart stay
+
+make it easier for mobile on watch view - since you can't hover - therefore you have to click on it which can be annoying
+
+create an account is broken, when you signup it says username taken, but still makes your account without you knowing, or it just doesn't let you create an account
+
 
 Maybe:  
+
+footer
 
 
 Links:
@@ -47,7 +57,7 @@ Fixed the error when address result was null, it would cause an error
 Made the suggest address work on all devices
 I have finished suggested addresses, you area now able to click on the suggested address and it will auto fill the inputs, I was able to do this with an API from Geoapify
 The order history is in order
-I have fully finished the website, and I have tested it
+Devs team tested the website and found bugs
 */
 
 const WatchesPage = () => {
@@ -419,7 +429,7 @@ const WatchesPage = () => {
     if(img === 'showFav'){
       return isRedArray[imgIndex]
           ? {}
-          : { filter: "saturate(0%) hue-rotate(0deg)" };
+          : { filter: "saturate(0%) hue-rotate(0deg)" };    
     }
     
     const index = imagePositionMap[img][0];
@@ -484,7 +494,7 @@ const WatchesPage = () => {
         {imgs.map((img, index) => (
           <div className="column" key={index}>
             <div className="watches-background">
-              <div className="overlay">
+              <div className="overlay">  
                 <Image
                   className="favicon"
                   width={30}
