@@ -263,17 +263,18 @@ function CheckoutPage() {
   const wrapperRef = useRef(null);
 
   useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        // Clicked outside of the component
-        // Handle your logic here
+    const handleBlur = (event) => {
+      const suggestedAddressElement = document.getElementById("suggestedAddress");
+      if (suggestedAddressElement && !suggestedAddressElement.contains(event.target)) {
+        // Clicked outside of suggestedAddress div
+        closeSuggestedAddress();
       }
     };
 
-    document.addEventListener('click', handleOutsideClick);
+    document.addEventListener('click', handleBlur);
 
     return () => {
-      document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener('click', handleBlur);
     };
   }, []);
 
