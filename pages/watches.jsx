@@ -47,6 +47,7 @@ Fixed the error when address result was null, it would cause an error
 Made the suggest address work on all devices
 I have finished suggested addresses, you area now able to click on the suggested address and it will auto fill the inputs, I was able to do this with an API from Geoapify
 The order history is in order
+I have fully finished the website, and I have tested it
 */
 
 const WatchesPage = () => {
