@@ -22,22 +22,8 @@ function LoadPage() {
 
 /* TODO:
 
-Add auto complete address in checkout page from Geoapify
-
-clickable suggested address
-
-style the suggested address dropdown
-
-fix error with addressline1 - error occures when you type a in address line 1
-
 
 Maybe:  
-
-change style for checkout page
-
-add payments form in checkout from stripe
-
-Footer
 
 
 Links:
@@ -60,6 +46,7 @@ Added a container which appears when you type in the address field and it will s
 Fixed the error when address result was null, it would cause an error
 Made the suggest address work on all devices
 I have finished suggested addresses, you area now able to click on the suggested address and it will auto fill the inputs, I was able to do this with an API from Geoapify
+The order history is in order
 */
 
 const WatchesPage = () => {
