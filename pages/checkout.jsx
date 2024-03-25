@@ -260,7 +260,20 @@ function CheckoutPage() {
     }
   };
 
-  // document.addEventListener("click", handleBlur);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        // Clicked outside of the component
+        // Handle your logic here
+      }
+    };
+
+    document.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   return (
     <main>

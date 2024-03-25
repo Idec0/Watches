@@ -28,7 +28,9 @@ when you heart a watch, make the heart stay
 
 make it easier for mobile on watch view - since you can't hover - therefore you have to click on it which can be annoying
 
-create an account is broken, when you signup it says username taken, but still makes your account without you knowing, or it just doesn't let you create an account
+create an account is broken, when you signup it says username taken, but still makes your account without you knowing, or it just doesn't let you create an account - might have to do with ban
+
+document.addEventListener("click", handleBlur); not letting me build to vercel - this means the address drop down wont close
 
 
 Maybe:  
