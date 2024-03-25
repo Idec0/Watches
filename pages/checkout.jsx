@@ -260,7 +260,7 @@ function CheckoutPage() {
     }
   };
 
-  // document.addEventListener("click", handleBlur);
+  document.addEventListener("click", handleBlur);
 
   return (
     <main>
