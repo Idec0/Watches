@@ -259,7 +259,6 @@ function CheckoutPage() {
       closeSuggestedAddress();
     }
   };
-
   document.addEventListener("click", handleBlur);
 
   return (
