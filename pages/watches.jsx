@@ -22,20 +22,10 @@ function LoadPage() {
 
 /* TODO:
 
-Add more content to the front page
-
-when you heart a watch, make the heart stay displayed even when you're not hovering over it
-
-make it easier for mobile on watch view - since you can't hover - therefore you have to click on it which can be annoying
-
-create an account is broken, when you signup it says username taken, but still makes your account without you knowing, or it just doesn't let you create an account - might have to do with ban
-
 document.addEventListener("click", handleBlur); not letting me build to vercel - this means the address drop down wont close
 
 
 Maybe:  
-
-footer
 
 
 Links:
@@ -50,17 +40,10 @@ e-commerce website - https://e-commerce-bc.payloadcms.app
 
 Done Today:
 
-I have looked at alot of examples of different checkout pages, including ones which you can build with stripe, but I can't find one which works well with mine, so I have left the page as it is
-I have tried to get an api key to help with auto addresses but the problem I have had is finding one which is free and doesn't require a credit card, Google Places API is very good and is free but it require a credit card, and others I have found cost money.
-I have found a api for free to auto complete addresses from Geoapify, I have made an account and got the api key but now I have to find out how to use it.
-I have spent alot of time but have managed to be able to get the right return values for address Line 1, city, and postcode but the problem is with address line 2 since it doesn't return the right values, instead it returns the whole address, so for now I will leave address line 2 blank
-Added a container which appears when you type in the address field and it will show suggested addresses, which changes as you're typing, but for now it only shows one suggested address
-Fixed the error when address result was null, it would cause an error
-Made the suggest address work on all devices
-I have finished suggested addresses, you area now able to click on the suggested address and it will auto fill the inputs, I was able to do this with an API from Geoapify
-The order history is in order
-Devs team tested the website and found bugs and improvements
-had problems with vercel not allowing me to deploy if I used event listener which is why the project wasn't upto date, when the team used it
+when you use a touch screen device the heart and view button on watches will be displayed automatically since users can't hover, therefore it makes it easier to use for all devices
+when you heart a watch, the heart will stay displayed even when you're not hovering over it, this makes it easier for user to see which ones they have hearted
+Fixed Create an account so now you can make a new account
+Fixed problem when you try making an account it says username taken and doesn't take you to home page, but now it takes you to the home page but it can take upto 6 seconds before it takes you
 
 */
 
@@ -432,8 +415,8 @@ const WatchesPage = () => {
   const getImgStyle = (imgIndex, img) => {
     if(img === 'showFav'){
       return isRedArray[imgIndex]
-          ? {}
-          : { filter: "saturate(0%) hue-rotate(0deg)" };    
+          ? {display: "block"}
+          : {filter: "saturate(0%) hue-rotate(0deg)"};    
     }
     
     const index = imagePositionMap[img][0];
@@ -448,20 +431,20 @@ const WatchesPage = () => {
         const num = list.indexOf(index);
         if(num === -1){
           return isRedArray[index]
-          ? {}
-          : { filter: "saturate(0%) hue-rotate(0deg)" };
+          ? {display: "block"}
+          : {filter: "saturate(0%) hue-rotate(0deg)"};
         }
         if(isRedArrayList[num] === "true"){
           if (localStorage.getItem("isRedArray")[num] === "true") {
             return isRedArray[likedWatches[index]]
-              ? {}
-              : { filter: "saturate(0%) hue-rotate(0deg)" };
+              ? {display: "block"}
+              : { filter: "saturate(0%) hue-rotate(0deg)"};
           }
         }
       } else{
         return isRedArray[index]
-          ? {}
-          : { filter: "saturate(0%) hue-rotate(0deg)" };
+          ? {display: "block"}
+          : {filter: "saturate(0%) hue-rotate(0deg)"};
       }
         
     } else {

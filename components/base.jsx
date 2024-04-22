@@ -37,14 +37,18 @@ const Navbar = ({ appVisible, setAppVisible }) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      if(date.user[0].ban === "true" || date.user[0].suspended_date !== "none"){
-        if(date.user[0].ban === "true"){
-          window.location.href="/banned";
-        }
-        else{
-          window.location.href="/suspended";
-        }
-      }
+      try{
+        if(date.user[0].ban === "true" || date.user[0].suspended_date !== "none"){
+          if(date.user[0].ban === "true"){
+            window.location.href="/banned";
+          }
+          else{
+            window.location.href="/suspended";
+          }
+        } 
+      }catch{
+        console.log("Ban is undefined:date.user[0].ban ")
+      }      
 
     }catch (error) {
       console.error('Error fetching data:', error);

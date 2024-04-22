@@ -290,11 +290,12 @@ export default async function handler(request, response) {
       //const passwordMatch = await bcrypt.compare(password, hash);
 
       await client.query('BEGIN');
+      console.log(queryParams.get("email"));
       await client.query(
         "INSERT INTO users (username, password, firstname, surname, admin, email, suspended_date, ban) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",[queryParams.get("username"), hash, queryParams.get("firstname"), queryParams.get("lastname"), false, queryParams.get("email"), "none", "false"]
       );
       await client.query('COMMIT');
-      return;
+      return response.status(200).json('User Added Successfully');
     }
     // login info
     if(discountCode.length > 5 && discountCode.slice(0, 5) === "email"){

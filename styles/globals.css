@@ -932,6 +932,9 @@ tr {
 
 }
 @media (max-width: 1024px) {
+  .overlay .favicon, .overlay .button{
+    display: block;
+  }
   .displayMainViewWatch {
     height: 350px;
     width: 350px;
@@ -983,6 +986,9 @@ tr {
 }
 
 @media (max-width: 768px) {
+  .overlay .favicon, .overlay .button{
+    display: block;
+  }
   .displayMainViewWatch {
     height: 250px;
     width: 250px;
@@ -1061,6 +1067,9 @@ tr {
 }
 
 @media (max-width: 480px) {
+  .overlay .favicon, .overlay .button{
+    display: block;
+  }
   .displayMainViewWatch {
     height: 250px;
     width: 250px;

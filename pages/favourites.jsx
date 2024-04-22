@@ -407,7 +407,7 @@ const FavPage = () => {
   const getImgStyle = (imgIndex, img) => {
     if(img === 'showFav'){
       return isRedArray[imgIndex]
-          ? {}
+          ? {display: "block"}
           : { filter: "saturate(0%) hue-rotate(0deg)" };
     }
     const index = imagePositionMap[img][0];
@@ -421,19 +421,19 @@ const FavPage = () => {
         const num = list.indexOf(index);
         if(num === -1){
           return isRedArray[index]
-          ? {}
+          ? {display: "block"}
           : { filter: "saturate(0%) hue-rotate(0deg)" };
         }
         if(isRedArrayList[num] === "true"){
           if (localStorage.getItem("isRedArray")[num] === "true") {
             return isRedArray[likedWatches[index]]
-              ? {}
+              ? {display: "block"}
               : { filter: "saturate(0%) hue-rotate(0deg)" };
           }
         }
       } else{
         return isRedArray[index]
-          ? {}
+          ? {display: "block"}
           : { filter: "saturate(0%) hue-rotate(0deg)" };
       }
         

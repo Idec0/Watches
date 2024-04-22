@@ -73,8 +73,8 @@ function IndexPage() {
         }
 
         if(email !== "" && email.includes("@") && email.indexOf('@') !== email.length - 1 && email.includes(".") && email.indexOf('.') !== email.length - 1 && email.length < 256){
-          var email = {emailCheck: email}
-          const queryParams = new URLSearchParams(email).toString();
+          var email_check = {emailCheck: email}
+          const queryParams = new URLSearchParams(email_check).toString();
           const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -102,12 +102,16 @@ function IndexPage() {
         }   
 
         // add new user to database
+        console.log("a");
         var user = {username: username, password: password, firstname: firstname, lastname: lastname, email: email}
         const queryParams = new URLSearchParams(user).toString();
         const response = await fetch(`/api/data?discount_code=${encodeURIComponent(queryParams)}`);
+        console.log("b");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        console.log("asd");
+        window.location.href="/";
         //const result = await response.json();
       }catch (error) {
         console.error('Error fetching data:', error);
