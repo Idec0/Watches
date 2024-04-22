@@ -177,13 +177,13 @@ function CheckoutPage() {
   // auto complete address
 
   const getAddressByPostCode = async (requestOptions) => {
-    var postcode = document.getElementById("postcode").value;
+    var postcode = window.document.getElementById("postcode").value;
     if(postcode !== ""){
-      var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+      var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
       autoFillAddressContainerElement.style.display = "block";
       autoFillAddressContainerElement.style.top = "309px";
     }else{
-      var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+      var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
       autoFillAddressContainerElement.style.display = "none";
       return;
     }
@@ -211,34 +211,34 @@ function CheckoutPage() {
     };
 
     let text = [];
-    var addressLine1 = document.getElementById("addressLine1").value;
+    var addressLine1 = window.document.getElementById("addressLine1").value;
     console.log(addressLine1 !== ""); 
     if(addressLine1 !== ""){
       text.push(addressLine1);
     };
-    var addressLine2 = document.getElementById("addressLine2").value;
+    var addressLine2 = window.document.getElementById("addressLine2").value;
     if(addressLine2 !== ""){
       text.push(addressLine2);
     }
-    var city = document.getElementById("city").value;
+    var city = window.document.getElementById("city").value;
     if(city !== ""){
       text.push(city);
     }
     getAddressByText(requestOptions, text);
 
     if(text.length > 0){
-      var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+      var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
       autoFillAddressContainerElement.style.display = "block";
       autoFillAddressContainerElement.style.top = "111px";
     }
     else{
-      var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+      var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
       autoFillAddressContainerElement.style.display = "none";
     }
   }
 
   const selectedAddress = () => {
-    var suggestedAddressElement = document.getElementById("suggestedAddress");
+    var suggestedAddressElement = window.document.getElementById("suggestedAddress");
     console.log(suggestedAddressElement.children[0]);
     console.log(suggestedAddressElement.children[0].textContent);
     setInputValueAddressLine1(suggestedAddressElement.children[0].textContent);
@@ -248,7 +248,7 @@ function CheckoutPage() {
   }
 
   const closeSuggestedAddress = () => {
-    var autoFillAddressContainerElement = document.getElementById("autoFillAddressContainer");
+    var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
     autoFillAddressContainerElement.style.display = "none";
   }
 
@@ -259,7 +259,7 @@ function CheckoutPage() {
       closeSuggestedAddress();
     }
   };
-  document.addEventListener("click", handleBlur);
+  window.document.addEventListener("click", handleBlur);
 
   return (
     <main>
