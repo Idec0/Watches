@@ -98,7 +98,6 @@ function CheckoutPage() {
         products.push(parsedBasket[i][2] + " x" +  parsedBasket[i][5]);
       }
       setProductItems(products);
-      document.addEventListener("click", handleBlur);
     }
     setPrice(amount?amount:0);
     if(address_id !== ''){
@@ -260,7 +259,7 @@ function CheckoutPage() {
       closeSuggestedAddress();
     }
   };
-  // document.addEventListener("click", handleBlur);
+  document.addEventListener("click", handleBlur);
 
   return (
     <main>
