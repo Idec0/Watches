@@ -253,7 +253,7 @@ function CheckoutPage() {
   }
 
   const handleBlur = (event) => {
-    const suggestedAddressElement = document.getElementById("suggestedAddress");
+    const suggestedAddressElement = window.document.getElementById("suggestedAddress");
     if (suggestedAddressElement && !suggestedAddressElement.contains(event.target)) {
       // Clicked outside of suggestedAddress div
       closeSuggestedAddress();
