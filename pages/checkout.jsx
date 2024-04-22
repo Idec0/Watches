@@ -177,22 +177,24 @@ function CheckoutPage() {
   // auto complete address
 
   const getAddressByPostCode = async (requestOptions) => {
-    var postcode = window.document.getElementById("postcode").value;
-    if(postcode !== ""){
-      var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
-      autoFillAddressContainerElement.style.display = "block";
-      autoFillAddressContainerElement.style.top = "309px";
-    }else{
-      var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
-      autoFillAddressContainerElement.style.display = "none";
-      return;
-    }
-    fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${postcode}&type=postcode&format=json&apiKey=671175ba7c404133a88e557b522272e9`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        setSelectedAddresses(result.results[0]);
-      })
-      .catch(error => console.log('error', error));
+    if (typeof window !== 'undefined') {
+      var postcode = window.document.getElementById("postcode").value;
+      if(postcode !== ""){
+        var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
+        autoFillAddressContainerElement.style.display = "block";
+        autoFillAddressContainerElement.style.top = "309px";
+      }else{
+        var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
+        autoFillAddressContainerElement.style.display = "none";
+        return;
+      }
+      fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${postcode}&type=postcode&format=json&apiKey=671175ba7c404133a88e557b522272e9`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          setSelectedAddresses(result.results[0]);
+        })
+        .catch(error => console.log('error', error));
+    }    
   }
 
   const getAddressByText = async (requestOptions, searchText) => {
@@ -206,60 +208,71 @@ function CheckoutPage() {
   }   
 
   const findAddress = () => {
-    var requestOptions = {
-      method: 'GET',
-    };
-
-    let text = [];
-    var addressLine1 = window.document.getElementById("addressLine1").value;
-    console.log(addressLine1 !== ""); 
-    if(addressLine1 !== ""){
-      text.push(addressLine1);
-    };
-    var addressLine2 = window.document.getElementById("addressLine2").value;
-    if(addressLine2 !== ""){
-      text.push(addressLine2);
-    }
-    var city = window.document.getElementById("city").value;
-    if(city !== ""){
-      text.push(city);
-    }
-    getAddressByText(requestOptions, text);
-
-    if(text.length > 0){
-      var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
-      autoFillAddressContainerElement.style.display = "block";
-      autoFillAddressContainerElement.style.top = "111px";
-    }
-    else{
-      var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
-      autoFillAddressContainerElement.style.display = "none";
+    if (typeof window !== 'undefined') {
+      var requestOptions = {
+        method: 'GET',
+      };
+  
+      let text = [];
+      var addressLine1 = window.document.getElementById("addressLine1").value;
+      console.log(addressLine1 !== ""); 
+      if(addressLine1 !== ""){
+        text.push(addressLine1);
+      };
+      var addressLine2 = window.document.getElementById("addressLine2").value;
+      if(addressLine2 !== ""){
+        text.push(addressLine2);
+      }
+      var city = window.document.getElementById("city").value;
+      if(city !== ""){
+        text.push(city);
+      }
+      getAddressByText(requestOptions, text);
+  
+      if(text.length > 0){
+        var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
+        autoFillAddressContainerElement.style.display = "block";
+        autoFillAddressContainerElement.style.top = "111px";
+      }
+      else{
+        var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
+        autoFillAddressContainerElement.style.display = "none";
+      }
     }
   }
+    
 
   const selectedAddress = () => {
-    var suggestedAddressElement = window.document.getElementById("suggestedAddress");
-    console.log(suggestedAddressElement.children[0]);
-    console.log(suggestedAddressElement.children[0].textContent);
-    setInputValueAddressLine1(suggestedAddressElement.children[0].textContent);
-    setInputValueCity(suggestedAddressElement.children[1].textContent);
-    setInputValuePostcode(suggestedAddressElement.children[2].textContent);
-    closeSuggestedAddress();
+    if (typeof window !== 'undefined'){
+      var suggestedAddressElement = window.document.getElementById("suggestedAddress");
+      console.log(suggestedAddressElement.children[0]);
+      console.log(suggestedAddressElement.children[0].textContent);
+      setInputValueAddressLine1(suggestedAddressElement.children[0].textContent);
+      setInputValueCity(suggestedAddressElement.children[1].textContent);
+      setInputValuePostcode(suggestedAddressElement.children[2].textContent);
+      closeSuggestedAddress();
+    }    
   }
 
   const closeSuggestedAddress = () => {
-    var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
-    autoFillAddressContainerElement.style.display = "none";
+    if (typeof window !== 'undefined'){
+      var autoFillAddressContainerElement = window.document.getElementById("autoFillAddressContainer");
+      autoFillAddressContainerElement.style.display = "none";
+    }    
   }
 
   const handleBlur = (event) => {
-    const suggestedAddressElement = window.document.getElementById("suggestedAddress");
-    if (suggestedAddressElement && !suggestedAddressElement.contains(event.target)) {
-      // Clicked outside of suggestedAddress div
-      closeSuggestedAddress();
+    if (typeof window !== 'undefined'){
+      const suggestedAddressElement = window.document.getElementById("suggestedAddress");
+      if (suggestedAddressElement && !suggestedAddressElement.contains(event.target)) {
+        // Clicked outside of suggestedAddress div
+        closeSuggestedAddress();
+      }
     }
   };
-  window.document.addEventListener("click", handleBlur);
+  if (typeof window !== 'undefined'){
+    window.document.addEventListener("click", handleBlur);
+  }
 
   return (
     <main>
