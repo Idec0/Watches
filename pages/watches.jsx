@@ -44,7 +44,7 @@ when you use a touch screen device the heart and view button on watches will be 
 when you heart a watch, the heart will stay displayed even when you're not hovering over it, this makes it easier for user to see which ones they have hearted
 Fixed Create an account so now you can make a new account
 Fixed problem when you try making an account it says username taken and doesn't take you to home page, but now it takes you to the home page but it can take upto 6 seconds before it takes you
-
+Tried deploying project to vercel but it fails due to event listener
 */
 
 const WatchesPage = () => {
